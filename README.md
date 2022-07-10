@@ -1,5 +1,6 @@
+# Get Latest Version
 
-https://api.getfiddler.com/linux/latest-linux
+api(dot)getfiddler(dot)com/linux/latest-linux
 
 ## get ilasm (ildasm)
 
@@ -12,22 +13,27 @@ https://api.getfiddler.com/linux/latest-linux
 
 ## main.xxxx.js
 
-打开 `ClientApp/dist/main.3f983221e4e1aade.js` 搜索 `updateUserLicense` 查看修改详情
+打开 `fiddler/resources/app/out/WebServer/ClientApp/dist/main.xxx.js` 搜索 `updateUserLicense` 
+
+函数开始处添加：（请将 `Ie` 替换为参数名称）
+
+```javascript
+Ie.licenseInfo.currentLicense = "Pro"
+Ie.licenseInfo.hasExpiredTrial = false
+Ie.licenseInfo.isTrialAvailable = false
+Ie.licenseInfo.hasValidLicense = true
+```
 
 ## Fiddler.WebUi.il
 
-> 修改 `main.js` 前需要先修改此处 （有文件校验）
+> 修改此文件去除文件校验
 
-```c#
-// il line: 135843
-string mainBytes = ElectronMainConstants.mainBytes;
-if (mainBytes == null || !mainBytes.Equals(result, StringComparison.OrdinalIgnoreCase))
-{
-    // 报错点
-    error = string.Format(errorTemplatePrefix, "calculating") + errorTemplateSuffix + " Support";
-    // il line: 135843
-    return false;
-}
+对两个函数 `TryOpenClientMainScript` 与 `TryOpenElectronMainScript` 做相同操作
+
+删除函数内以下代码之前的所有代码
+```
+IL_0208:  /* 17   |                  */ ldc.i4.1
+IL_0209:  /* 2A   |                  */ ret
 ```
 
 ## FiddlerBackendSDK.il
