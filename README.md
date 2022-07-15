@@ -46,3 +46,7 @@ IL_0209:  /* 2A   |                  */ ret
 ### method '<>c__DisplayClass18_0'::'<GetBestAccount>b__0'
 
 删除 IL_0000 - IL_0019 , 在 IL_001e 前插入 `ldc.i4.1`  (即函数体直接返回 `true` )
+
+## 禁用更新
+
+修改 `fiddler/resources/app/out/main.js`，搜索 `e.settingsService.get().autoUpdateSettings.disabled` 替换为 `true||e.settingsService.get().autoUpdateSettings.disabled`
