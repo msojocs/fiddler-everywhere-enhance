@@ -47,6 +47,25 @@ IL_0209:  /* 2A   |                  */ ret
 
 删除 IL_0000 - IL_0019 , 在 IL_001e 前插入 `ldc.i4.1`  (即函数体直接返回 `true` )
 
+from
+```c#
+public AccountDTO GetBestAccount(UserWithBestAccountDTO user)
+{
+	if (user.BestEverywhereAccountId != null)
+	{
+		return user.Accounts.FirstOrDefault((UserAccountDTO x) => x.Id == user.BestEverywhereAccountId.Value);
+	}
+	return null;
+}
+```
+to
+```c#
+public AccountDTO GetBestAccount(UserWithBestAccountDTO user)
+{
+	return user.Accounts.FirstOrDefault((UserAccountDTO x) => true);
+}
+```
+
 ## 禁用更新
 
 修改 `fiddler/resources/app/out/main.js`，搜索 `e.settingsService.get().autoUpdateSettings.disabled` 替换为 `true||e.settingsService.get().autoUpdateSettings.disabled`
