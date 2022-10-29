@@ -69,3 +69,7 @@ public AccountDTO GetBestAccount(UserWithBestAccountDTO user)
 ## 禁用更新
 
 修改 `fiddler/resources/app/out/main.js`，搜索 `e.settingsService.get().autoUpdateSettings.disabled` 替换为 `true||e.settingsService.get().autoUpdateSettings.disabled`
+
+## Some Detail
+
+[Let me see](./DETAIL.MD)
