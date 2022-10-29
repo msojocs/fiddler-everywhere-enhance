@@ -2,6 +2,9 @@
 
 api(dot)getfiddler(dot)com/linux/latest-linux
 
+## NOTICE
+
+If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 ## get ilasm (ildasm)
 
 1. dotnet new console -n test
