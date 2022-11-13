@@ -1,6 +1,10 @@
 # Get Latest Version
 
+## Linux
 api(dot)getfiddler(dot)com/linux/latest-linux
+
+## Windows
+api(dot)getfiddler(dot)com/win/latest
 
 ## NOTICE
 
