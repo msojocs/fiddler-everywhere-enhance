@@ -25,7 +25,7 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 函数开始处添加：（请将 `Ie` 替换为参数名称）
 
 ```javascript
-Ie.licenseInfo.currentLicense = "Pro"
+Ie.licenseInfo.currentLicense = "Enterprise"
 Ie.licenseInfo.hasExpiredTrial = false
 Ie.licenseInfo.isTrialAvailable = false
 Ie.licenseInfo.hasValidLicense = true
