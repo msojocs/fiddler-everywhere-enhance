@@ -80,3 +80,11 @@ public AccountDTO GetBestAccount(UserWithBestAccountDTO user)
 ## Some Detail
 
 [Let me see](./DETAIL.MD)
+	
+## 免责声明
+	
+本仓库仅供技术学习交流使用，如有下载相关文件，请在学习后24小时内删除相关内容。
+
+请勿将本项目内容用于非法用途，使用者在使用时即视为对行为可能产生的任何不良后果负责。
+	
+由于传播、利用此工具所提供的信息而造成的任何直接或者间接的后果及损失，均由使用者本人负责，作者不为此承担任何责任。
