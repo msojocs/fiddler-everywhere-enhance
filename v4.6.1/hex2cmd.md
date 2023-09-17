@@ -1,7 +1,9 @@
 ## op code
 
 /* 17   |                  */ ldc.i4.1
+
 /* 18   |                  */ ldc.i4.2
+
 /* 2A   |                  */ ret
 
 ## Fiddler.WebUi
@@ -23,3 +25,11 @@ if (t)
 }
 // ok
 ``` 
+
+step3: 0x0006C7F9 16 -> 18 dist/main.xxx.js检查跳过
+
+## FiddlerBackendSDK
+
+step1: 0x00048270 16 -> 18 自身Hash检查跳过
+0x00012004 2B 05 -> 17 2A
+`FirstOrDefault((LicenseSeatDTO x) => x.Id == CS$<>8__locals1.user.BestEverywhereAccountId.Value);` -> `FirstOrDefault((LicenseSeatDTO x) => true);`
