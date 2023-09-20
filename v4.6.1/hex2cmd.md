@@ -32,10 +32,10 @@ step3: 0x0006C7F9 16 -> 18 dist/main.xxx.js检查跳过
 
 step1: 0x00048270 16 -> 18 自身Hash检查跳过
 
-step2: 0x00012004 2B 05 -> 17 2A
+step2: 0x00012004 2B 05 -> 17 2A    注意：自建服务器可能需要移除此变更
 `FirstOrDefault((LicenseSeatDTO x) => x.Id == CS$<>8__locals1.user.BestEverywhereAccountId.Value);` -> `FirstOrDefault((LicenseSeatDTO x) => true);`
 
-step3: 0x00001EEF 3B 47 00 00 00 -> 3B 26 00 00 00 GetBestAccount
-       0x00001EF4 38 42 00 00 00 -> 38 21 00 00 00 GetBestAccount
+step3: 0x00001EEF 3B 47 00 00 00 -> 3B 26 00 00 00 GetBestAccount 注意：自建服务器可能需要移除此变更
+       0x00001EF4 38 42 00 00 00 -> 38 21 00 00 00 GetBestAccount 注意：自建服务器可能需要移除此变更
 
 step4: 0x0000C9C4 11 03 -> 17 00 remove the validation of HTTP signature
