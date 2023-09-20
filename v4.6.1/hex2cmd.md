@@ -37,3 +37,5 @@ step2: 0x00012004 2B 05 -> 17 2A
 
 step3: 0x00001EEF 3B 47 00 00 00 -> 3B 26 00 00 00 GetBestAccount
        0x00001EF4 38 42 00 00 00 -> 38 21 00 00 00 GetBestAccount
+
+step4: 0x0000C9C4 11 03 -> 17 00 remove the validation of HTTP signature
