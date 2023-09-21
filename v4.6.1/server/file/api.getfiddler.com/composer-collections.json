@@ -1,0 +1,20 @@
+[
+  {
+    "id": "55555555-5555-5555-5555-555555555555",
+    "owner": "localuser@gmail.com",
+    "version": 1,
+    "name": "Hack Collection",
+    "description": "",
+    "createdAt": "2099-09-20T14:28:41.6395300Z",
+    "modifiedAt": "2099-09-20T14:29:20.9161810Z",
+    "folders": [],
+    "requests": [],
+    "sharedWith": [
+      {
+        "permissions": "Read, Update",
+        "email": "localuser123@gmail.com"
+      }
+    ],
+    "concurrencyToken": "\"2GxACg==\""
+  }
+]
