@@ -39,3 +39,8 @@ step3: 0x00001EEF 3B 47 00 00 00 -> 3B 26 00 00 00 GetBestAccount 注意：自�
        0x00001EF4 38 42 00 00 00 -> 38 21 00 00 00 GetBestAccount 注意：自建服务器可能需要移除此变更
 
 step4: 0x0000C9C4 11 03 -> 17 00 remove the validation of HTTP signature
+
+## main.xxx.js
+
+1. 搜索 `verifyResponse` 处理
+2. 删掉这一段：`.then((c) => t.verifyResponse(c?.headers, c?.body))`
