@@ -18,64 +18,26 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 5. export PATH=$(pwd)/bin/Release/netcoreapp3.1/linux-x64/publish:$PATH
 6. ilasm (ildasm)
 
-## main.xxxx.js
+# for v4.6.1
 
-打开 `fiddler/resources/app/out/WebServer/ClientApp/dist/main.xxx.js` 搜索 `updateUserLicense` 
+## Patch
 
-函数开始处添加：（请将 `Ie` 替换为参数名称）
+1. 下载Electron https://github.com/electron/electron/releases , 解压到`Electron`文件夹
+2. 复制 `Fiddler Everywhere/resources` -> `Electron/resources`
+3. 复制 `v4.6.1/Fiddler.WebUi/Fiddler.WebUi.dll` -> `Electron/resources/app/out/WebServer`
+4. 复制 `v4.6.1/FiddlerBackendSDK/FiddlerBackendSDK.dll` -> `Electron/resources/app/out/WebServer`
+5. 复制 `v4.6.1/server/file` -> `Electron/resources/app/out/file`
 
-```javascript
-Ie.licenseInfo.currentLicense = "Enterprise"
-Ie.licenseInfo.hasExpiredTrial = false
-Ie.licenseInfo.isTrialAvailable = false
-Ie.licenseInfo.hasValidLicense = true
-```
+## 修改 main.js
 
-## Fiddler.WebUi.il
+1. 打开 `resources/app/out/main.js`
+2. `v4.6.1/server/index.js` 的内容添加到 `resources/app/out/main.js` 开头
 
-> 修改此文件去除文件校验
+## 修改 main.xxx.js
 
-对两个函数 `TryOpenClientMainScript` 与 `TryOpenElectronMainScript` 做相同操作
-
-删除函数内以下代码之前的所有代码
-```
-IL_0208:  /* 17   |                  */ ldc.i4.1
-IL_0209:  /* 2A   |                  */ ret
-```
-
-## FiddlerBackendSDK.il
-
-### method FiddlerBackendSDK.User.UserClient::GetBestAccount
-
-删除 IL_000d - IL_0020 对应 if 语句
-删除 IL_003f - IL_0040 对应 `return null;` 语句
-
-### method '<>c__DisplayClass18_0'::'<GetBestAccount>b__0'
-
-删除 IL_0000 - IL_0019 , 在 IL_001e 前插入 `ldc.i4.1`  (即函数体直接返回 `true` )
-
-from
-```c#
-public AccountDTO GetBestAccount(UserWithBestAccountDTO user)
-{
-	if (user.BestEverywhereAccountId != null)
-	{
-		return user.Accounts.FirstOrDefault((UserAccountDTO x) => x.Id == user.BestEverywhereAccountId.Value);
-	}
-	return null;
-}
-```
-to
-```c#
-public AccountDTO GetBestAccount(UserWithBestAccountDTO user)
-{
-	return user.Accounts.FirstOrDefault((UserAccountDTO x) => true);
-}
-```
-
-## 禁用更新
-
-修改 `fiddler/resources/app/out/main.js`，搜索 `e.settingsService.get().autoUpdateSettings.disabled` 替换为 `true||e.settingsService.get().autoUpdateSettings.disabled`
+1. 打开 `resources/app/out/WebServer/ClientApp/dist/main.xxx.js`
+2. 替换所有 `https://api.getfiddler.com` 为 `http://127.0.0.1:5678/api.getfiddler.com`
+3. 搜索并删除 `.then(c=>t.verifyResponse(c?.headers,c?.body))`
 
 ## Some Detail
 
