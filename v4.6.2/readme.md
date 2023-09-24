@@ -36,7 +36,7 @@
 
 在 `./resources/app/out` 文件夹中搜索内容 `BrowserWindow(`
 
-在每个结果后面加上 `xx.webContents.openDevTools();`, 次数xx要替换为具体变量
+在每个结果后面加上 `xx.webContents.openDevTools();`, 其中xx要替换为具体变量
 
 在VS Code控制台输入内容回车 `& '.\Fiddler Everywhere.exe'`, 尝试启动软件；
 
