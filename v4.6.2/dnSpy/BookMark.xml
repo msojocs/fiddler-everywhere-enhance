@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <section _="eaa1be38-7a55-44af-ad93-5b7ee2327edd">
+    <section _="Bookmark" IsEnabled="True" Name="main.js全路径">
+      <section _="BML" __BMT="DotNetBody" AssemblyFullName="Fiddler.WebUi, Version=4.6.2.0, Culture=neutral, PublicKeyToken=dd6003d654b76fb2" ModuleName="D:\Software\Fiddler Everywhere\resources\app\out\WebServer\Fiddler.WebUi.dll" Offset="1131" Token="100673015" TokenString="System.Boolean Fiddler.Importers.RequestSystemImporter::CreateReader(System.String&amp;)" />
+    </section>
+    <section _="Bookmark" IsEnabled="True" Name="main.js hash比较">
+      <section _="BML" __BMT="DotNetBody" AssemblyFullName="Fiddler.WebUi, Version=4.6.2.0, Culture=neutral, PublicKeyToken=dd6003d654b76fb2" ModuleName="D:\Software\Fiddler Everywhere\resources\app\out\WebServer\Fiddler.WebUi.dll" Offset="1536" Token="100673015" TokenString="System.Boolean Fiddler.Importers.RequestSystemImporter::CreateReader(System.String&amp;)" />
+    </section>
+    <section _="Bookmark" IsEnabled="True" Name="main.js 内容">
+      <section _="BML" __BMT="DotNetBody" AssemblyFullName="Fiddler.WebUi, Version=4.6.2.0, Culture=neutral, PublicKeyToken=dd6003d654b76fb2" ModuleName="D:\Software\Fiddler Everywhere\resources\app\out\WebServer\Fiddler.WebUi.dll" Offset="294" Token="100673015" TokenString="System.Boolean Fiddler.Importers.RequestSystemImporter::CreateReader(System.String&amp;)" />
+    </section>
+    <section _="Bookmark" IsEnabled="True" Name="main.js hash验证不通过">
+      <section _="BML" __BMT="DotNetBody" AssemblyFullName="Fiddler.WebUi, Version=4.6.2.0, Culture=neutral, PublicKeyToken=dd6003d654b76fb2" ModuleName="D:\Software\Fiddler Everywhere\resources\app\out\WebServer\Fiddler.WebUi.dll" Offset="1595" Token="100673015" TokenString="System.Boolean Fiddler.Importers.RequestSystemImporter::CreateReader(System.String&amp;)" />
+    </section>
+    <section _="Bookmark" IsEnabled="True" Name="书签 6">
+      <section _="BML" __BMT="DotNetBody" AssemblyFullName="Fiddler.WebUi, Version=4.6.2.0, Culture=neutral, PublicKeyToken=dd6003d654b76fb2" ModuleName="D:\Software\Fiddler Everywhere\resources\app\out\WebServer\Fiddler.WebUi.dll" Offset="1587" Token="100673015" TokenString="System.Boolean Fiddler.Importers.RequestSystemImporter::CreateReader(System.String&amp;)" />
+    </section>
+  </section>
+</settings>

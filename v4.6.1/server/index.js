@@ -11,10 +11,10 @@
     let data = ''
     if (url != null) {
       const loc = path.resolve(__dirname, `./file/${url.pathname}`)
-      if (fs.existsSync(loc + '.json')) {
+      if (fs.existsSync(loc + '.json')) { // 在后面加上.json后缀，存在就用这个
         data = fs.readFileSync(loc + '.json').toString()
       }
-      else if (fs.existsSync(loc)) {
+      else if (fs.existsSync(loc)) { // 直接使用原始路径
         data = fs.readFileSync(loc).toString()
       }
     }
