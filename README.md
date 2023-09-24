@@ -41,7 +41,7 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 
 ## Some Detail
 
-[Let me see new](./v4.6.1./readme.md)
+[Let me see new](./v4.6.2/readme.md)
 
 [Let me see old](./DETAIL.MD)
 
