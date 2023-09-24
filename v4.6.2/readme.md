@@ -58,7 +58,7 @@
 ## 3.2 替换Electron
 
 1. 删除原有的文件，除了 `resources` 文件夹
-2. 将下载的Electron中的文件赋值过去，除了 `resources` 文件夹
+2. 将下载的Electron中的文件复制过去，除了 `resources` 文件夹
 3. 控制台输入 `& '.\electron.exe'` 回车，欸启动了。
 
    ![启动控制台输出,pic/3/2-1](./pic/3/2-1.png)
@@ -98,13 +98,13 @@
       IL代码中使用0与Equals比较，Equals取值有0和1，要让比较结果总是false，就把固定值0换成2;
 
       即 `ldc.i4.0` 换成 `ldc.i4.2`。
-  5. 你可以尝试再dnSpy中修改代码保存，这是行不通的，会报错，所以只能修改二进制代码。
+  5. 你可以尝试在dnSpy中修改代码保存，这是行不通的，会报错，所以只能修改二进制代码。
 
 ## 4.3 解除main.js校验
 
 直接在 VS Code 里面搜索十六进制，直到是唯一值（0x16FE013A），然后把 0x16 改成 0x18。(step1, Fiddler.WebUi.dll)
 
-前面有个十六进制地址，但那是包含偏移量的，所以与实际有差别。你可以直接打开一个新的这个dll，那么地址回事正确的，但是不如搜索来的快。
+前面有个十六进制地址，但那是包含偏移量的，所以与实际有差别。你可以直接打开一个新的这个dll，那么地址会是正确的，但是不如搜索来的快。
     
   ![搜索,pic/4/2-3](./pic/4/2-3.png)
 
@@ -179,7 +179,7 @@ Unhandled exception. System.TypeInitializationException: The type initializer fo
 
 > [Error] [Angular] Not able to fetch the minimum supported FE version. Error: Cannot find signature!
 
-搜素相关文本，可以看到一个 `verifyResponse` 的验证方法在检查签名；
+搜索相关文本，可以看到一个 `verifyResponse` 的验证方法在检查签名；
 
 搜索 `verifyResponse`，发现只有两个结果；那么很明显一个实现，一个调用，把调用删了就行。
 
