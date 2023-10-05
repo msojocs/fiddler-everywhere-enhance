@@ -1,0 +1,58 @@
+{
+  "sha": "3c79fad9f268154bcbe1fbd00208cb36fff0a756",
+  "version": "2.31.0.350-release-2.32.0",
+  "jamPluginMinVersionSupported": "1.0.0",
+  "everywhereMinVersionSupported": "3.9.0",
+  "jamFileSizeLimitInBytes": 104857600,
+  "jamVideoConfig": {
+    "mimeType": "video/webm;codecs=\"vp9\"",
+    "extension": "webm",
+    "bitsPerSecond": 128000,
+    "maxWidth": 3840,
+    "maxHeight": 2160,
+    "minFrameRate": 4,
+    "maxFrameRate": 30
+  },
+  "trialPeriods": {
+    "Everywhere": [
+      {
+        "days": 10,
+        "isDefault": true
+      }
+    ],
+    "Jam": [
+      {
+        "days": 14,
+        "isDefault": true
+      }
+    ]
+  },
+  "gracePeriodStartDate": "2021-06-29T00:00:00.0000000Z",
+  "gracePeriodEndDate": "2021-08-29T00:00:00.0000000Z",
+  "experiments": [
+    {
+      "name": "BuyNowExperiment",
+      "state": "Running",
+      "options": [
+        {
+          "id": 1,
+          "value": "Browser",
+          "isDefault": true,
+          "actions": [
+            "OpenPlans"
+          ]
+        },
+        {
+          "id": 2,
+          "value": "Dialog",
+          "actions": [
+            "OpenPlans",
+            "BuyProMonthly",
+            "BuyProAnnual",
+            "BuyEnterprise"
+          ]
+        }
+      ]
+    }
+  ]
+}
