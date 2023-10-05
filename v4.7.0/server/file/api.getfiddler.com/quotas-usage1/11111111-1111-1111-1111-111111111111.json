@@ -1,0 +1,44 @@
+{
+  "userId": "22222222-2222-2222-2222-222222222222",
+  "accountId": "11111111-1111-1111-1111-111111111111",
+  "totalAccountSize": {
+    "value": 0,
+    "allowed": 53687091200
+  },
+  "localSnapshots": {
+    "allowed": -1
+  },
+  "localAutoResponderRules": {
+    "allowed": -1
+  },
+  "localFilters": {
+    "allowed": -1
+  },
+  "sharedSnapshots": {
+    "value": 0,
+    "allowed": 1000
+  },
+  "snapshotSize": {
+    "allowed": 52428800
+  },
+  "snapshotSharedWithUsers": {
+    "allowed": -1
+  },
+  "sharedRuleSets": {
+    "value": 0,
+    "allowed": -1
+  },
+  "ruleSetSharedWithUsers": {
+    "allowed": -1
+  },
+  "sharedComposerRequests": {
+    "value": 0,
+    "allowed": -1
+  },
+  "composerRequestsSharedWithUsers": {
+    "allowed": -1
+  },
+  "localSessionsStatisticsLimit": {
+    "allowed": 100
+  }
+}
