@@ -1,0 +1,42 @@
+{
+  "totalCount": 1,
+  "totalUnreadCount": 1,
+  "events": [
+    {
+      "id": "f81f5ca0-d20f-4b8c-9db2-cd9ae21d1f77",
+      "type": "Notification",
+      "product": "Everywhere",
+      "sender": {
+        "id": "22222222-2222-2222-2222-222222222222",
+        "email": "localuser@gmail.com",
+        "name": "localuser",
+        "firstName": "local",
+        "lastName": "user",
+        "incomplete": false,
+        "internal": false,
+        "isEverywhereTrialUsed": true,
+        "everywhereTrialMachineId": "1111111111111111111111111111111111111111111111111111111111111111",
+        "isJamTrialUsed": false,
+        "createdAt": "2023-09-17T03:27:32.9103140Z",
+        "modifiedAt": "2023-09-17T07:21:06.8637380Z"
+      },
+      "receiver": {
+        "id": "22222222-2222-2222-2222-222222222222",
+        "email": "localuser@gmail.com",
+        "name": "localuser",
+        "firstName": "local",
+        "lastName": "user",
+        "incomplete": false,
+        "internal": false,
+        "isEverywhereTrialUsed": true,
+        "everywhereTrialMachineId": "1111111111111111111111111111111111111111111111111111111111111111",
+        "isJamTrialUsed": false,
+        "createdAt": "2023-09-17T03:27:32.9103140Z",
+        "modifiedAt": "2023-09-17T07:21:06.8637380Z"
+      },
+      "createdAt": "2023-09-17T07:21:06.8637380Z",
+      "payload": "{\"Product\":1,\"Account\":{\"Id\":\"11111111-1111-1111-1111-111111111111\",\"CreatedAt\":\"2023-09-17T07:21:06.8396421Z\",\"ModifiedAt\":\"2023-09-17T07:21:06.8396421Z\",\"Name\":\"localuser@gmail.com Everywhere account\",\"Product\":1,\"OwnerId\":\"22222222-2222-2222-2222-222222222222\",\"OwnerEmail\":\"localuser@gmail.com\",\"Status\":\"cancelled\",\"LicenseAccountId\":\"00000000-0000-0000-0000-000000000000\",\"LicensePlanName\":\"trial\",\"LicensePlanPeriod\":\"na\",\"LicenseIsCancelled\":true,\"LicenseCancelledOn\":\"2023-09-17T07:21:06.8368137Z\",\"LicensePaymentSource\":1,\"LicenseCreatedAt\":\"2023-09-17T07:21:06.8368137Z\",\"LicenseExpiresOn\":\"2023-09-27T07:21:06.8368137Z\",\"DaysToExpiration\":10,\"LastBillingCycleStart\":\"2023-09-17T07:21:06.836Z\",\"NextBillingCycleStart\":\"2023-09-27T07:21:06.8368137Z\",\"IsInactive\":false,\"Quotas\":[{\"Type\":\"TotalAccountSize\",\"Max\":53687091200,\"ManuallyAdjusted\":false},{\"Type\":\"LocalSnapshots\",\"Max\":-1,\"ManuallyAdjusted\":false},{\"Type\":\"LocalAutoResponderRules\",\"Max\":-1,\"ManuallyAdjusted\":false},{\"Type\":\"LocalFilters\",\"Max\":-1,\"ManuallyAdjusted\":false},{\"Type\":\"SnapshotSize\",\"Max\":52428800,\"ManuallyAdjusted\":false},{\"Type\":\"SharedSnapshots\",\"Max\":1000,\"ManuallyAdjusted\":false},{\"Type\":\"SnapshotSharedWithUsers\",\"Max\":-1,\"ManuallyAdjusted\":false},{\"Type\":\"AllowSnapshotHistory\",\"Max\":0,\"ManuallyAdjusted\":false},{\"Type\":\"SharedRuleSets\",\"Max\":-1,\"ManuallyAdjusted\":false},{\"Type\":\"RuleSetSharedWithUsers\",\"Max\":-1,\"ManuallyAdjusted\":false},{\"Type\":\"SharedComposerRequests\",\"Max\":-1,\"ManuallyAdjusted\":false},{\"Type\":\"ComposerRequestsSharedWithUsers\",\"Max\":-1,\"ManuallyAdjusted\":false},{\"Type\":\"LocalSessionsStatisticsLimit\",\"Max\":100,\"ManuallyAdjusted\":false},{\"Type\":\"BulkLicenseManagement\",\"Max\":0,\"ManuallyAdjusted\":false},{\"Type\":\"SupportSSO\",\"Max\":0,\"ManuallyAdjusted\":false},{\"Type\":\"Seats\",\"Max\":1,\"ManuallyAdjusted\":false}]},\"Id\":\"1d7d3c78-3a80-4ffa-a089-ad66e514e7ab\",\"CreatedAt\":\"2023-09-17T07:21:06.8606655Z\",\"Operation\":\"AccountActivated\",\"UserNotificationCounter\":1,\"Sender\":{\"Id\":\"22222222-2222-2222-2222-222222222222\",\"Email\":\"localuser@gmail.com\",\"Name\":\"ji ye\",\"FirstName\":\"ji\",\"LastName\":\"ye\",\"Incomplete\":false,\"Internal\":false,\"IsEverywhereTrialUsed\":false,\"EverywhereTrialMachineId\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"IsJamTrialUsed\":false,\"CreatedAt\":\"2023-09-17T03:27:32.910314Z\",\"ModifiedAt\":\"2023-09-17T03:28:16.102826Z\"},\"Receiver\":{\"Id\":\"22222222-2222-2222-2222-222222222222\",\"Email\":\"localuser@gmail.com\",\"Name\":\"ji ye\",\"FirstName\":\"ji\",\"LastName\":\"ye\",\"Incomplete\":false,\"Internal\":false,\"IsEverywhereTrialUsed\":false,\"EverywhereTrialMachineId\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"IsJamTrialUsed\":false,\"CreatedAt\":\"2023-09-17T03:27:32.910314Z\",\"ModifiedAt\":\"2023-09-17T03:28:16.102826Z\"}}",
+      "isRead": false
+    }
+  ]
+}
