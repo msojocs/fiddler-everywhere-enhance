@@ -1,3 +1,4 @@
 *.AppImage
 fiddler/
 api.getfiddler.com.zip
+.DS_Store
