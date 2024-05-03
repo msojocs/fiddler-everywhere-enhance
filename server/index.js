@@ -17,7 +17,15 @@
   http.createServer(async (req, res) => {
     const fullPath = req.url
     const url = new URL(fullPath, 'http://127.0.0.1:5678')
-    console.log(url.pathname)
+    console.log(req.method, url.pathname)
+    // let body = '';
+    // req.on('data', chunk => {
+    //   body += chunk.toString();
+    // });
+    // req.on('end', () => {
+    //   console.log(`Received data: ${body}`);
+    // });
+    
     let data = ''
     if (url != null) {
       try {
