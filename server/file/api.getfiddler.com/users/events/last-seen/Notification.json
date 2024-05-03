@@ -1,0 +1,131 @@
+{
+    "eventsLastRead": "2024-05-03T11:34:49.5292118Z",
+    "unreadEvents": 0,
+    "accounts": [
+        {
+            "isOwner": true,
+            "id": "bf2172a0-7c09-43ab-b6eb-8e64e44ed585",
+            "createdAt": "2024-04-13T02:59:37.5982200Z",
+            "modifiedAt": "2024-04-24T07:49:25.9929180Z",
+            "name": "localuser@mail.com Everywhere account",
+            "product": "Everywhere",
+            "ownerId": "22222222-2222-2222-2222-222222222222",
+            "ownerEmail": "localuser@mail.com",
+            "status": "inactive",
+            "licenseAccountId": "33333333-3333-3333-3333-333333333333",
+            "licensePlanName": "ENTERPRISE",
+            "licensePlanPeriod": "ENTERPRISE",
+            "licenseIsCancelled": true,
+            "licenseCancelledOn": "2099-04-13T02:59:48.4700000Z",
+            "licensePaymentSource": "Telerik",
+            "licenseCreatedAt": "2024-04-13T02:59:48.4700000Z",
+            "licenseExpiresOn": "2099-04-23T02:59:37.8200000Z",
+            "daysToExpiration": 9999,
+            "lastBillingCycleStart": "2024-04-13T02:59:48.4700000Z",
+            "nextBillingCycleStart": "2099-04-23T02:59:37.8200000Z",
+            "isInactive": false,
+            "quotas": [
+                {
+                    "type": "LocalSessionsStatisticsLimit",
+                    "max": 100,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "SnapshotSharedWithUsers",
+                    "max": -1,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "LocalAutoResponderRules",
+                    "max": -1,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "AllowSnapshotHistory",
+                    "max": 99,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "TotalAccountSize",
+                    "max": 53687091200,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "ComposerRequestsSharedWithUsers",
+                    "max": -1,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "RuleSetSharedWithUsers",
+                    "max": -1,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "SupportSSO",
+                    "max": 0,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "LocalSnapshots",
+                    "max": -1,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "LocalFilters",
+                    "max": -1,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "UserMachinesLimit",
+                    "max": 4,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "BulkLicenseManagement",
+                    "max": 0,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "SharedSnapshots",
+                    "max": 1000,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "SnapshotSize",
+                    "max": 52428800,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "SharedRuleSets",
+                    "max": -1,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "Seats",
+                    "max": 1,
+                    "manuallyAdjusted": false
+                },
+                {
+                    "type": "SharedComposerRequests",
+                    "max": -1,
+                    "manuallyAdjusted": false
+                }
+            ]
+        }
+    ],
+    "acceptedEverywhereEULAVersion": "4.8.1",
+    "disabledAnalyticsTracking": false,
+    "id": "22222222-2222-2222-2222-222222222222",
+    "email": "localuser@mail.com",
+    "name": "local user",
+    "firstName": "local",
+    "lastName": "user",
+    "username": "local user",
+    "incomplete": false,
+    "internal": false,
+    "isEverywhereTrialUsed": true,
+    "everywhereTrialMachineId": "1111111111111111111111111111111111111111111111111111111111111111",
+    "isJamTrialUsed": false,
+    "createdAt": "2021-02-18T09:06:02.8989980Z",
+    "modifiedAt": "2024-05-03T11:34:49.5295380Z"
+}
