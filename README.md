@@ -28,7 +28,7 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 1. 下载Electron https://github.com/electron/electron/releases , 解压到`Electron`文件夹
 2. 复制 `Fiddler Everywhere/resources` -> `Electron/resources`
 3. 复制 `v5.8.1/Fiddler.WebUi/Fiddler.WebUi.dll` -> `Electron/resources/app/out/WebServer`
-4. 复制 `v5.8.1/server/file` -> `Electron/resources/app/out/file`
+4. 复制 `server/file` -> `Electron/resources/app/out/file`
 
 ## 修改 main.js
 
