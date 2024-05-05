@@ -41,11 +41,23 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 2. 替换所有 `https://api.getfiddler.com` 为 `http://127.0.0.1:5678/api.getfiddler.com`
 3. 替换所有 `https://identify.getfiddler.com` 为 `http://127.0.0.1:5678/identify.getfiddler.com`
 
-## Some Detail
+# Some Detail
 
 [Let me see new](./v4.6.2/readme.md)
 
 [Let me see old](./old/DETAIL.MD)
+
+# Linux
+
+If you are using linux, you will not be able to use dnSpy.
+
+1. use https://github.com/SychicBoy/NETReactorSlayer to deobfuscator dll file
+2. find the key method. maybe difficult.
+3. il
+    1. decompile dll to il.
+    2. modify il file, compile il to dll.
+4. hex
+    1. use vscode to modify it.
 
 ## 免责声明
 	
