@@ -21,6 +21,40 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 5. export PATH=$(pwd)/bin/Release/netcoreapp3.1/linux-x64/publish:$PATH
 6. ilasm (ildasm)
 
+# for v5.9.0 v5.10.0
+
+## windows
+
+1. delete libfiddler.dll, rename `resources\app\out\WebServer\hostpolicy.dll` to `resources\app\out\WebServer\hostpolicy.original.dll`
+2. go to https://github.com/project-yukihana/Yukihana-patch/releases
+3. download `libfiddler` and `hostpolicy.dll`
+4. move `libfiddler.dll` to the root path of fiddler
+5. move `hostpolicy.dll` to `resources\app\out\WebServer`
+6. create file `resources\app\out\WebServer\patch.json`
+    
+    the content of `patch.json`:
+    ```
+    {
+        "ClientApp\\dist\\main.5f4387a481528ff0.js": {
+            "target": "ClientApp\\dist\\main.5f4387a481528ff0.original.js",
+            "content": "",
+            "cur": 0,
+            "start": 0,
+            "end": 1
+        },
+        "..\\main.js": {
+            "target": "..\\main.original.js",
+            "content": "",
+            "cur": 0,
+            "start": 0,
+            "end": 1
+        }
+    }
+    ```
+7. copy `ClientApp\\dist\\main.5f4387a481528ff0.js` to `ClientApp\\dist\\main.5f4387a481528ff0.original.js`
+8. copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
+9. modify file `main.5f4387a481528ff0.js` and file `main.5f4387a481528ff0.js` as usual.
+
 # for v5.8.1
 
 ## Patch
@@ -39,7 +73,7 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 
 1. 打开 `resources/app/out/WebServer/ClientApp/dist/main.xxx.js`
 2. 替换所有 `https://api.getfiddler.com` 为 `http://127.0.0.1:5678/api.getfiddler.com`
-3. 替换所有 `https://identify.getfiddler.com` 为 `http://127.0.0.1:5678/identify.getfiddler.com`
+3. 替换所有 `https://identity.getfiddler.com` 为 `http://127.0.0.1:5678/identity.getfiddler.com`
 
 # Some Detail
 
