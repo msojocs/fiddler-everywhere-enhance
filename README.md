@@ -53,7 +53,8 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
     ```
 7. copy `ClientApp\\dist\\main.5f4387a481528ff0.js` to `ClientApp\\dist\\main.5f4387a481528ff0.original.js`
 8. copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
-9. modify file `main.5f4387a481528ff0.js` and file `main.5f4387a481528ff0.js` as usual.
+9. modify file `main.5f4387a481528ff0.js` and file `main.js` as usual.
+10. copy `server/file` -> `Electron/resources/app/out/file`
 
 # for v5.8.1
 
