@@ -1,3 +1,7 @@
+# 耻辱柱（Hall Of Shame）
+
+[Hall Of Shame](./shame.md)
+
 # Get Latest Version
 
 ## Linux
