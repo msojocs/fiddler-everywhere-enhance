@@ -2,6 +2,8 @@
 
 ## starxg
 
+在某宝进行售卖此软件，获得利益。
+
 ### 依据
 
 1. 打开：https://www.bilibili.com/read/cv30511923/ backup: https://web.archive.org/web/20240530094607/https://www.bilibili.com/read/cv30511923/
