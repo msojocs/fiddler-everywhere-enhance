@@ -60,6 +60,16 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 9. modify file `main.5f4387a481528ff0.js` and file `main.js` as usual.
 10. copy `server/file` -> `Electron/resources/app/out/file`
 
+## Linux
+
+Please use old method.
+
+Perhaps I will add support for it if I have some free time.
+
+## Mac 
+
+Please use old method.
+
 # for v5.8.1
 
 ## Patch
