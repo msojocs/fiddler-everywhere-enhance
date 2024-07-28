@@ -25,7 +25,7 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 5. export PATH=$(pwd)/bin/Release/netcoreapp3.1/linux-x64/publish:$PATH
 6. ilasm (ildasm)
 
-# for v5.9.0 v5.10.0
+# for v5.9.0 v5.10.0 and later
 
 ## windows
 
@@ -58,13 +58,52 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 7. copy `ClientApp\\dist\\main.5f4387a481528ff0.js` to `ClientApp\\dist\\main.5f4387a481528ff0.original.js`
 8. copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
 9. modify file `main.5f4387a481528ff0.js` and file `main.js` as usual.
-10. copy `server/file` -> `Electron/resources/app/out/file`
+10. copy `server/file` -> `Fiddler/resources/app/out/file`
 
 ## Linux
 
-Please use old method.
+1. delete libfiddler.so.
+2. go to https://github.com/project-yukihana/Yukihana-patch/releases
+3. download `libfiddler.so` and `libopen.so`
+4. move `libfiddler.so` to the root path of fiddler
+5. move `libopen.so` to `resources/app/out/WebServer`
+6. rename `resources/app/out/WebServer/Fiddler.WebUi` to `resources/app/out/WebServer/Fiddler.WebUi1`
+7. create file `resources/app/out/WebServer/Fiddler.WebUi`
+    
+    the content of `patch.json`:
+    ```shell
+    #!/bin/bash
+    export LD_PRELOAD=./libopen.so
+    ./Fiddler.WebUi1 $@
+    ```
+8. open directory `resources/app/out/WebServer/Fiddler.WebUi` and execute `chmod +x Fiddler.WebUi`
+9. create file `resources/app/out/WebServer/patch.json`
+    
+    the content of `patch.json`:
+    ```json
+    {
+        "ClientApp/dist/main-XSH4ELY7.js": {
+            "target": "ClientApp/dist/main-XSH4ELY7.original.js",
+            "content": "",
+            "cur": 0,
+            "start": 0,
+            "end": 1
+        },
+        "../main.js": {
+            "target": "../main.original.js",
+            "content": "",
+            "cur": 0,
+            "start": 0,
+            "end": 1
+        }
+    }
+    ```
+10. copy `ClientApp/dist/main-XSH4ELY7.js` to `ClientApp/dist/main-XSH4ELY7.original.js`
+11. copy `resources/app/out/main.js` to `resources/app/out/main.original.js`
+12. modify file `main-XSH4ELY7.js` and file `main.js` as usual.
+13. copy `server/file` -> `Fiddler/resources/app/out/file`
 
-Perhaps I will add support for it if I have some free time.
+> You may need to recompile `libfiddler` and `libopen` by yourself.
 
 ## Mac 
 
