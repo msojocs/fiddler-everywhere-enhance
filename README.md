@@ -62,21 +62,21 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 
 ## Linux
 
-1. delete libfiddler.so.
+1. delete `libfiddler.so`.
 2. go to https://github.com/project-yukihana/Yukihana-patch/releases
 3. download `libfiddler.so` and `libopen.so`
-4. move `libfiddler.so` to the root path of fiddler
+4. move `libfiddler.so` to the root path of fiddler.
 5. move `libopen.so` to `resources/app/out/WebServer`
 6. rename `resources/app/out/WebServer/Fiddler.WebUi` to `resources/app/out/WebServer/Fiddler.WebUi1`
 7. create file `resources/app/out/WebServer/Fiddler.WebUi`
     
-    the content of `patch.json`:
+    the content of `Fiddler.WebUi`:
     ```shell
     #!/bin/bash
     export LD_PRELOAD=./libopen.so
     ./Fiddler.WebUi1 $@
     ```
-8. open directory `resources/app/out/WebServer/Fiddler.WebUi` and execute `chmod +x Fiddler.WebUi`
+8. open directory `resources/app/out/WebServer` and execute `chmod +x Fiddler.WebUi`
 9. create file `resources/app/out/WebServer/patch.json`
     
     the content of `patch.json`:
