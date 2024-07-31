@@ -110,7 +110,7 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 1. delete `libfiddler.dylib`. (`Contents/Frameworks`)
 2. go to https://github.com/project-yukihana/Yukihana-patch/releases
 3. download `libfiddler.dylib` and `libopen.dylib`
-4. move `libfiddler.dylib` to the root path of fiddler.
+4. move `libfiddler.dylib` to `Contents/Frameworks`.
 5. move `libopen.dylib` to `Resources/app/out/WebServer`
 6. rename `Resources/app/out/WebServer/Fiddler.WebUi` to `Resources/app/out/WebServer/Fiddler.WebUi1`
 7. create file `Resources/app/out/WebServer/Fiddler.WebUi`
