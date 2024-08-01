@@ -12,20 +12,17 @@ api(dot)getfiddler(dot)com/linux/latest-linux
 
 api(dot)getfiddler(dot)com/win/latest
 
-## NOTICE
+## Mac
 
-If you are using windows, just try https://github.com/dnSpyEx/dnSpy
+### Intel
 
-## get ilasm (ildasm)
+api(dot)getfiddler(dot)com/mac/latest-mac
 
-1. dotnet new console -n test
-2. cd test
-3. dotnet add package Microsoft.NETCore.ILAsm (ILDAsm)
-4. dotnet publish -c Release --self-contained --runtime linux-x64
-5. export PATH=$(pwd)/bin/Release/netcoreapp3.1/linux-x64/publish:$PATH
-6. ilasm (ildasm)
+### Arm64
 
-# for v5.9.0 v5.10.0 and later
+api(dot)getfiddler(dot)com/mac-arm64/latest-mac
+
+# for v5.9.0 v5.10.0 and later (Maybe for all)
 
 ## windows
 
@@ -152,14 +149,7 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 
 > You may need to recompile `libfiddler` and `libopen` by yourself.
 
-# for v5.8.1
-
-## Patch
-
-1. 下载Electron https://github.com/electron/electron/releases , 解压到`Electron`文件夹
-2. 复制 `Fiddler Everywhere/resources` -> `Electron/resources`
-3. 复制 `v5.8.1/Fiddler.WebUi/Fiddler.WebUi.dll` -> `Electron/resources/app/out/WebServer`
-4. 复制 `server/file` -> `Electron/resources/app/out/file`
+# for xxx.js
 
 ## 修改 main.js
 
@@ -174,21 +164,9 @@ If you are using windows, just try https://github.com/dnSpyEx/dnSpy
 
 # Some Detail
 
-[Let me see new](./v4.6.2/readme.md)
+[Let me see old](./v4.6.2/readme.md)
 
-[Let me see old](./old/DETAIL.MD)
-
-# Linux
-
-If you are using linux, you will not be able to use dnSpy.
-
-1. use https://github.com/SychicBoy/NETReactorSlayer to deobfuscator dll file
-2. find the key method. maybe difficult.
-3. il
-    1. decompile dll to il.
-    2. modify il file, compile il to dll.
-4. hex
-    1. use vscode to modify it.
+[Let me see old old](./old/DETAIL.MD)
 
 ## 免责声明
 	
