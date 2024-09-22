@@ -36,6 +36,8 @@ You can find a list of available versions here: [Version History](https://www.te
 
 # Get Started - Patch / Enhance For v5.9.0 v5.10.0 and later (Maybe for all)
   > Note: For 5.17.0, `libfiddler.dll` is now renamed to `fiddler.dll`.
+  
+  > Note: So you need to get `Yukihana-Patch` release `1.1.0 +` for Fiddler Everywhere `5.17.0 +` 
 
 ## Windows
 
