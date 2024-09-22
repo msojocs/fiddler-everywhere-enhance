@@ -27,7 +27,7 @@ api(dot)getfiddler(dot)com/mac-arm64/latest-mac
 
 https://downloads.getfiddler.com/win/Fiddler%20Everywhere%20`(version)`.exe
 
-In the above link replace `(version)` with the versioon you want to download
+In the above link replace `(version)` with the version you want to download
 
 Ex: https://downloads.getfiddler.com/win/Fiddler%20Everywhere%205.17.0.exe to download `5.17.0`
 
@@ -43,7 +43,7 @@ You can find a list of available versions here: [Version History](https://www.te
 
 ### Special: Now you can Patch Fiddler Everywhere Automatically Too! - [Patch Automatically](https://github.com/sipsuru/fiddler-everywhere-patch-automated)
 
-### Patcch Manually: 
+### Patch Manually: 
 
 1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+) & Rename `resources\app\out\WebServer\hostpolicy.dll` to `resources\app\out\WebServer\hostpolicy.original.dll`
 2. Go to https://github.com/project-yukihana/Yukihana-patch/releases
@@ -77,7 +77,7 @@ You can find a list of available versions here: [Version History](https://www.te
     
 7. Copy `ClientApp\\dist\\main.XXXXXXXXXX.js` to `ClientApp\\dist\\main.XXXXXXXXXX.original.js`
 8. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
-9. Modify file `main.XXXXXXXXXX.js` and file `main.js` as instructed bellow.
+9. Modify file `main.XXXXXXXXXX.js` and file `main.js` as instructed below.
 10. Copy `server/file` -> `Fiddler/resources/app/out/file`
 
 > For windows, for more detailed info for noobs: [Windows Patch for Noobs](https://github.com/sipsuru/fiddler-everywhere-patch-manual)
@@ -88,7 +88,7 @@ You can find a list of available versions here: [Version History](https://www.te
 2. Go to https://github.com/project-yukihana/Yukihana-patch/releases
 3. Download `libfiddler.so` and `libopen.so`
 4. Move `libfiddler.so` to the root path of fiddler.
-5. Nove `libopen.so` to `resources/app/out/WebServer`
+5. Move `libopen.so` to `resources/app/out/WebServer`
 6. Rename `resources/app/out/WebServer/Fiddler.WebUi` to `resources/app/out/WebServer/Fiddler.WebUi1`
 7. Create file `resources/app/out/WebServer/Fiddler.WebUi`
     
@@ -125,7 +125,7 @@ You can find a list of available versions here: [Version History](https://www.te
     
 10. Copy `ClientApp/dist/main-XXXXXXXXXX.js` to `ClientApp/dist/main-XXXXXXXXXX.original.js`
 11. Copy `resources/app/out/main.js` to `resources/app/out/main.original.js`
-12. Modify file `main-XXXXXXXXXX.js` and file `main.js` as instructed bellow.
+12. Modify file `main-XXXXXXXXXX.js` and file `main.js` as instructed below.
 13. Copy `server/file` -> `Fiddler/resources/app/out/file`
 
 > You may need to recompile `libfiddler`(or fiddler.dll in 5.17.0+) and `libopen` by yourself.
@@ -172,12 +172,12 @@ You can find a list of available versions here: [Version History](https://www.te
     ```
 10. Copy `ClientApp/dist/main-XXXXXXXXX.js` to `ClientApp/dist/main-XSH4ELY7.original.js`
 11. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
-12. Modify file `main-XXXXXXXXXX.js` and file `main.js` as instructed bellow.
+12. Modify file `main-XXXXXXXXXX.js` and file `main.js` as instructed below.
 13. Copy `server/file` -> `Contents/Resources/app/out/file`
 
 > You may need to recompile `libfiddler` (or fiddler.dll in 5.17.0+) and `libopen` by yourself.
 
-# How to Modity main.XXXXXXXXXX.js & main.js
+# How to Modify main.XXXXXXXXXX.js & main.js
 
 ## For main.js
 
