@@ -128,11 +128,11 @@ You can find a list of available versions here: [Version History](https://www.te
 12. Modify file `main-XXXXXXXXXX.js` and file `main.js` as instructed below.
 13. Copy `server/file` -> `Fiddler/resources/app/out/file`
 
-> You may need to recompile `libfiddler`(or fiddler.dll in 5.17.0+) and `libopen` by yourself.
+> You may need to recompile `libfiddler` and `libopen` by yourself.
 
 ## Mac 
 
-1. Delete `libfiddler.dylib`. (or fiddler.dll in 5.17.0+) which's in (`Contents/Frameworks`)
+1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in (`Contents/Frameworks`)
 2. Go to https://github.com/project-yukihana/Yukihana-patch/releases
 3. Download `libfiddler.dylib` (or fiddler.dll in 5.17.0+) and `libopen.dylib` 
 4. Move `libfiddler.dylib` to `Contents/Frameworks`.
