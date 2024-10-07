@@ -37,7 +37,7 @@ You can find a list of available versions here: [Version History](https://www.te
 # Get Started - Patch / Enhance For v5.9.0 v5.10.0 and later (Maybe for all)
   > Note: For 5.17.0, `libfiddler.dll` is now renamed to `fiddler.dll`.
   
-  > Note: So you need to get `Yukihana-Patch` release `1.1.0 +` for Fiddler Everywhere `5.17.0 +` 
+  > Note: So you need to get `Yui-Patch` release `1.1.0 +` for Fiddler Everywhere `5.17.0 +` 
 
 ## Windows
 
@@ -46,7 +46,7 @@ You can find a list of available versions here: [Version History](https://www.te
 ### Patch Manually: 
 
 1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+) & Rename `resources\app\out\WebServer\hostpolicy.dll` to `resources\app\out\WebServer\hostpolicy.original.dll`
-2. Go to https://github.com/project-yukihana/Yukihana-patch/releases
+2. Go to https://github.com/project-yui/Yui-patch/releases
 3. Download `libfiddler` (or fiddler.dll in 5.17.0+) and `hostpolicy.dll`
 4. Move `libfiddler.dll` to the root path of fiddler
 5. Move `hostpolicy.dll` to `resources\app\out\WebServer`
@@ -85,7 +85,7 @@ You can find a list of available versions here: [Version History](https://www.te
 ## Linux
 
 1. Delete `libfiddler.so`.
-2. Go to https://github.com/project-yukihana/Yukihana-patch/releases
+2. Go to https://github.com/project-yui/Yui-patch/releases
 3. Download `libfiddler.so` and `libopen.so`
 4. Move `libfiddler.so` to the root path of fiddler.
 5. Move `libopen.so` to `resources/app/out/WebServer`
@@ -133,7 +133,7 @@ You can find a list of available versions here: [Version History](https://www.te
 ## Mac 
 
 1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in (`Contents/Frameworks`)
-2. Go to https://github.com/project-yukihana/Yukihana-patch/releases
+2. Go to https://github.com/project-yui/Yui-patch/releases
 3. Download `libfiddler.dylib` (or fiddler.dll in 5.17.0+) and `libopen.dylib` 
 4. Move `libfiddler.dylib` to `Contents/Frameworks`.
 5. Move `libopen.dylib` to `Resources/app/out/WebServer`
