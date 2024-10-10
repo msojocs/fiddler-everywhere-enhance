@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>Closing...</title>
+  </head>
+  <body>
+    <script>
+      window.close()
+    </script>
+  </body>
+</html>

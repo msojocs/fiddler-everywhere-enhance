@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    <iframe id="login" src="" style="border: none;"></iframe>
+    <script>
+      const url = new URL(location.href)
+      const state = url.searchParams.get('state')
+      let port = state
+      if (port.includes('&')) {
+        // v5.8.1
+        port = port.split('&')[0]
+      }
+      console.log('port:', port)
+      const loginUrl = `http://127.0.0.1:${port}?code=123&state=${port}`
+      document.getElementById('login').src = loginUrl
+      // fiddlerapp://login?code=9cf9248c6f02032ab3827a0f5e111de77f52eb2a3dcc9906e87fadaef91a998e&state=52022
+      setTimeout(() => {
+        window.close()
+      }, 1000)
+    </script>
+  </body>
+</html>

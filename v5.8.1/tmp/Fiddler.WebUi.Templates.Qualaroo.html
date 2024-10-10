@@ -1,0 +1,184 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body class="fe">
+  <script>
+    (function () {
+      'use strict';
+      window._kiq = window._kiq || [];
+      // don't allow auto loading of surveys and prompted from clevertap
+      window._kiq.push(['disableAuto']);
+      window._kiq.push(['disableAutoSelect']);
+
+      // This prevents the default Qualaroo resize events from firing which causes
+      // weird issues when loaded within an iframe.
+      // https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
+      window.addEventListener('resize', function (event) {
+        event.stopImmediatePropagation();
+      });
+
+      let lastEvent;
+
+      function postMessage() {
+        let args = [].slice.call(arguments),
+          sig = args.join();
+
+        if (lastEvent !== sig) {
+          parent.postMessage(args, '*');
+          lastEvent = sig;
+        }
+
+      }
+
+      window.closeRequested = () => {
+        postMessage('roo:event:closeRequested');
+      }
+
+      function addEventHandler(event, callback) {
+        window._kiq.push(['eventHandler', event, callback]);
+      }
+
+      function calculateDimensions() {
+        let container = document.getElementById('qual_ol'),
+          dims = { width: 0, height: 0 };
+
+        if (container) {
+          dims.width = container.offsetWidth;
+          dims.height = container.offsetHeight;
+        }
+
+        return dims;
+      }
+
+      if (window.parent && window.parent.postMessage) {
+        window._kiq.push(function () {
+          postMessage('roo:event:ready');
+        });
+
+        addEventHandler('show', function (survey_id, screen_id) {
+          postMessage('roo:event:show', survey_id, screen_id);
+        });
+
+        addEventHandler('close', function (survey_id) {
+          postMessage('roo:event:close', survey_id);
+        });
+
+        addEventHandler('nodeRendered', function (survey_id, screen_id, height) {
+          let dims = calculateDimensions();
+          postMessage('roo:event:nodeRendered', survey_id, screen_id, dims.width, dims.height);
+          // in some cases, the container is not updated when the even is fired, retry again on next event loop cycle (matrix type surveys which are larger)
+          setTimeout(() => {
+            dims = calculateDimensions();
+            postMessage('roo:event:updateDimensions', survey_id, screen_id, dims.width, dims.height);
+          });
+
+          // HACK: since submit event is fired after each step, we check if this is the final thank you screen
+          // we only want to track if the user completed the whole survey
+          let isThankYouScreen = document.querySelector('.qual_ol_check');
+          if (isThankYouScreen) {
+            postMessage('roo:event:submit', survey_id, screen_id);
+          }
+        });
+
+        // fired after each answer. Do not track it for now 
+        addEventHandler('submit', function (answers, survey_id, screen_id) {
+        });
+
+        addEventHandler('noTargetMatch', function () {
+          // if this is called, we will log an error message
+          // since qualaroo is not supposed to attempt to show surveys on its own
+          postMessage('roo:event:noTargetMatch');
+        });
+
+        window.addEventListener('message', function (event) {
+          if (event && Array.isArray(event.data) && event.data[0] === 'loadScript') {
+            window._kiq.push(['identify', event.data[2]]);
+            let d = document;
+            let f = d.getElementsByTagName('script')[0];
+            let s = d.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            // Add cache-buster to prevent electron caching the response, which causes us to be unable to show surveys
+            s.src = event.data[1] + `?ts=${Date.now()}}`;
+            f.parentNode.insertBefore(s, f);
+            s.onerror = (ev, source, lineno, colno, error) => {
+              const errMessage = error?.message || error?.toString() || ev?.message || 'unknown';
+              postMessage('roo:event:error', errMessage);
+            };
+          } else if (event && Array.isArray(event.data)) {
+            event.data[0] = event.data[0].replace('roo:', '');
+            window._kiq.push(event.data);
+          }
+
+        }, false);
+
+        postMessage('roo:requestConfig');
+      }
+    })();
+  </script>
+
+  <svg style="display: none;">
+    <symbol id="times" viewBox="0 0 320 512">
+      <path
+        d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z">
+      </path>
+    </symbol>
+  </svg>
+
+  <svg preserveAspectRatio="xMidYMid" class="x-button" onclick="closeRequested()">
+    <use href="#times" />
+  </svg>
+</body>
+<style>
+  .x-button {
+    position: absolute;
+    right: 8px;
+    top: 12px;
+    z-index: 100;
+    border: none;
+    height: 1em;
+    width: 1em;
+    fill: #D6D6D6;
+  }
+
+  .fe div#qual_ol.qual_ol {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1 !important;
+  }
+
+  .fe div#qual_ol div.qual_ol_box.qual_not_multi {
+    inset: 5px 0;
+  }
+
+  .fe div#qual_scrnr .qual_x_close.qual_opened,
+  .fe div#qual_ol .qual_x_close.qual_opened {
+    display: none;
+  }
+
+  .fe div#qual_ol .qual_ol_qtitle {
+    text-align: left;
+    color: #D6D6D6;
+    margin-top: 5px;
+    margin-left: 1.5em;
+    font-weight: 700;
+  }
+
+  .fe div#qual_tagline.qual_tagline {
+    display: none;
+  }
+
+  .fe div#qual_ol_stuff.qual_ol_stuff::-webkit-scrollbar {
+    width: 8px !important;
+  }
+
+  .fe div#qual_ol textarea.qual_ol_ans_text {
+    resize: none;
+  }
+</style>
+
+</html>
