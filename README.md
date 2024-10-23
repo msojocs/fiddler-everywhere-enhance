@@ -2,61 +2,58 @@
 
 [Hall Of Shame](./shame.md)
 
-# Get Latest Version
+# Get Latest Version of Fiddler Everywhere
 
-## Linux
+  - ### Linux - https://api.getfiddler.com/linux/latest-linux
 
-api(dot)getfiddler(dot)com/linux/latest-linux
+  - ### Windows - https://api.getfiddler.com/win/latest
 
-## Windows
+  - ### Mac
+    - ### Intel - https://api.getfiddler.com/mac/latest-mac
+    - ### Arm64 - https://api.getfiddler.com/mac-arm64/latest-mac
 
-api(dot)getfiddler(dot)com/win/latest
-
-## Mac
-
-### Intel
-
-api(dot)getfiddler(dot)com/mac/latest-mac
-
-### Arm64
-
-api(dot)getfiddler(dot)com/mac-arm64/latest-mac
-
-
-# How to Download Old Versiond of Fiddler Everywhere for *Windows*
-
-https://downloads.getfiddler.com/win/Fiddler%20Everywhere%20`(version)`.exe
-
-In the above link replace `(version)` with the version you want to download
-
-Ex: https://downloads.getfiddler.com/win/Fiddler%20Everywhere%205.17.0.exe to download `5.17.0`
-
-You can find a list of available versions here: [Version History](https://www.telerik.com/support/whats-new/fiddler-everywhere/release-history)
-
-
-# Get Started - Patch / Enhance For v5.9.0 v5.10.0 and later (Maybe for all)
-  > Note: For 5.17.0, `libfiddler.dll` is now renamed to `fiddler.dll`.
+# Get Old Versiond of Fiddler Everywhere
   
-  > Note: So you need to get `Yui-Patch` release `1.1.0 +` for Fiddler Everywhere `5.17.0 +` 
+  - ### Linux - https://downloads.getfiddler.com/linux/fiddler-everywhere-[version].AppImage
+
+  - ### Windows - https://downloads.getfiddler.com/win/Fiddler%20Everywhere%20[version].exe
+  
+  - ### Mac
+     - ### Intel - https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20[version].dmg
+     - ### Arm64 - https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%20[version].dmg
+
+  > [!NOTE]
+  > In the above links replace `[version]` with the version you want to download
+  > Ex: https://downloads.getfiddler.com/win/Fiddler%20Everywhere%205.19.0.exe to download `5.10.0` for Windows.
+  
+  > [!TIP] 
+  > You can find a list of available versions here: [Version History](https://www.telerik.com/support/whats-new/fiddler-everywhere/release-history)
+
+
+# Get Started - Patch / Enhance For v5.9.0 and later (Maybe for all)
+  > [!IMPORTANT]
+  > **For Windows**, for `5.17.0` & later, `libfiddler.dll` is now renamed to `fiddler.dll`.
+  > So you need to get `Yui-Patch` release `1.1.0 +` for Fiddler Everywhere `5.17.0` and later. 
 
 ## Windows
 
-### Special: Now you can Patch Fiddler Everywhere Automatically Too! - [Patch Automatically](https://github.com/sipsuru/fiddler-everywhere-patch-automated)
+> [!TIP]
+>  ## Now you can Patch Fiddler Everywhere Automatically Too! - [Patch Automatically](https://github.com/sipsuru/fiddler-everywhere-patch-automated)
 
 ### Patch Manually: 
 
 1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+) & Rename `resources\app\out\WebServer\hostpolicy.dll` to `resources\app\out\WebServer\hostpolicy.original.dll`
 2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `libfiddler` (or fiddler.dll in 5.17.0+) and `hostpolicy.dll`
-4. Move `libfiddler.dll` to the root path of fiddler
+3. Download `libfiddler` (or `fiddler.dll` in `5.17.0` and later) and `hostpolicy.dll`
+4. Move `libfiddler.dll` (or `fiddler.dll` in `5.17.0` and later) to the *root path* of Fiddler Everywhere
 5. Move `hostpolicy.dll` to `resources\app\out\WebServer`
 6. Create file `resources\app\out\WebServer\patch.json`
     
     the content of `patch.json`:
     ```json
     {
-        "ClientApp\\dist\\main.XXXXXXXXXX.js": {
-            "target": "ClientApp\\dist\\main.XXXXXXXXXX.original.js",
+        "ClientApp\\dist\\main-XXXXXXXX.js": {
+            "target": "ClientApp\\dist\\main-XXXXXXXX.original.js",
             "content": "",
             "cur": 0,
             "start": 0,
@@ -72,14 +69,16 @@ You can find a list of available versions here: [Version History](https://www.te
     }
     ```
 
-    > Note: XXXXXXXXXX is a random letters combination that differs from version to version.
+    > [!NOTE]
+    > XXXXXXXX is a random letters combination that differs from version to version.
 
     
-7. Copy `ClientApp\\dist\\main.XXXXXXXXXX.js` to `ClientApp\\dist\\main.XXXXXXXXXX.original.js`
+7. Copy `ClientApp\\dist\\main-XXXXXXXX.js` to `ClientApp\\dist\\main-XXXXXXXX.original.js`
 8. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
-9. Modify file `main.XXXXXXXXXX.js` and file `main.js` as instructed below.
+9. Modify file `main-XXXXXXXX.js` and file `main.js` as instructed below.
 10. Copy `server/file` -> `Fiddler/resources/app/out/file`
 
+> [!TIP]
 > For windows, for more detailed info for noobs: [Windows Patch for Noobs](https://github.com/sipsuru/fiddler-everywhere-patch-manual)
 
 ## Linux
@@ -98,14 +97,14 @@ You can find a list of available versions here: [Version History](https://www.te
     export LD_PRELOAD=./libopen.so
     ./Fiddler.WebUi1 $@
     ```
-8. open directory `resources/app/out/WebServer` and execute `chmod +x Fiddler.WebUi`
-9. create file `resources/app/out/WebServer/patch.json`
+8. Open directory `resources/app/out/WebServer` and execute `chmod +x Fiddler.WebUi`
+9. Create file `resources/app/out/WebServer/patch.json`
     
     the content of `patch.json`:
     ```json
     {
-        "ClientApp/dist/main-XXXXXXXXXX.js": {
-            "target": "ClientApp/dist/main-XXXXXXXXXX.original.js",
+        "ClientApp/dist/main-XXXXXXXX.js": {
+            "target": "ClientApp/dist/main-XXXXXXXX.original.js",
             "content": "",
             "cur": 0,
             "start": 0,
@@ -120,22 +119,24 @@ You can find a list of available versions here: [Version History](https://www.te
         }
     }
     ```
-    > Note: XXXXXXXXXX is a random letters combination that differs from version to version.
+    > [!NOTE]
+    > XXXXXXXX is a random letters combination that differs from version to version.
 
     
-10. Copy `ClientApp/dist/main-XXXXXXXXXX.js` to `ClientApp/dist/main-XXXXXXXXXX.original.js`
+10. Copy `ClientApp/dist/main-XXXXXXXX.js` to `ClientApp/dist/main-XXXXXXXX.original.js`
 11. Copy `resources/app/out/main.js` to `resources/app/out/main.original.js`
-12. Modify file `main-XXXXXXXXXX.js` and file `main.js` as instructed below.
+12. Modify file `main-XXXXXXXX.js` and file `main.js` as instructed below.
 13. Copy `server/file` -> `Fiddler/resources/app/out/file`
 
-> You may need to recompile `libfiddler` and `libopen` by yourself.
+> [!NOTE]
+> You may need to recompile `libfiddler.so` and `libopen.so` by yourself.
 
 ## Mac 
 
 1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in (`Contents/Frameworks`)
 2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `libfiddler.dylib` (or fiddler.dll in 5.17.0+) and `libopen.dylib` 
-4. Move `libfiddler.dylib` to `Contents/Frameworks`.
+3. Download `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) and `libopen.dylib` 
+4. Move `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) to `Contents/Frameworks`.
 5. Move `libopen.dylib` to `Resources/app/out/WebServer`
 6. Rename `Resources/app/out/WebServer/Fiddler.WebUi` to `Resources/app/out/WebServer/Fiddler.WebUi1`
 7. Create file `Resources/app/out/WebServer/Fiddler.WebUi`
@@ -154,8 +155,8 @@ You can find a list of available versions here: [Version History](https://www.te
     the content of `patch.json`:
     ```json
     {
-        "ClientApp/dist/main-XXXXXXXXXX.js": {
-            "target": "ClientApp/dist/main-XXXXXXXXXX.original.js",
+        "ClientApp/dist/main-XXXXXXXX.js": {
+            "target": "ClientApp/dist/main-XXXXXXXX.original.js",
             "content": "",
             "cur": 0,
             "start": 0,
@@ -170,27 +171,28 @@ You can find a list of available versions here: [Version History](https://www.te
         }
     }
     ```
-10. Copy `ClientApp/dist/main-XXXXXXXXX.js` to `ClientApp/dist/main-XSH4ELY7.original.js`
+10. Copy `ClientApp/dist/main-XXXXXXXX.js` to `ClientApp/dist/main-XXXXXXXX.original.js`
 11. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
-12. Modify file `main-XXXXXXXXXX.js` and file `main.js` as instructed below.
+12. Modify file `main-XXXXXXXX.js` and file `main.js` as instructed below.
 13. Copy `server/file` -> `Contents/Resources/app/out/file`
 
-> You may need to recompile `libfiddler` (or fiddler.dll in 5.17.0+) and `libopen` by yourself.
+> [!NOTE]
+> You may need to recompile `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) and `libopen.dylib` by yourself.
 
-# How to Modify main.XXXXXXXXXX.js & main.js
+# How to Modify main.XXXXXXXX.js & main.js
 
 ## For main.js
 
 1. Open `resources/app/out/main.js` in a text editor
 2. Open & copy content of `server/index.js` & append to `resources/app/out/main.js` at the begining.
 
-## For main.XXXXXXXXXX.js
+## For main-XXXXXXXX.js
 
-1. Open `resources/app/out/WebServer/ClientApp/dist/main.XXXXXXXXXX.js` in a text editor
+1. Open `resources/app/out/WebServer/ClientApp/dist/main-XXXXXXXX.js` in a text editor
 2. Find & Replace all - `https://api.getfiddler.com` with `http://127.0.0.1:5678/api.getfiddler.com`
 3. Find & Replace all - `https://identity.getfiddler.com` with `http://127.0.0.1:5678/identity.getfiddler.com`
 
-# Some Extra Details
+# Some Extra Information
 
 [Let me see old](./v4.6.2/readme.md)
 
