@@ -192,6 +192,33 @@
 2. Find & Replace all - `https://api.getfiddler.com` with `http://127.0.0.1:5678/api.getfiddler.com`
 3. Find & Replace all - `https://identity.getfiddler.com` with `http://127.0.0.1:5678/identity.getfiddler.com`
 
+# Change **First Name**, **Last Name** & **Email** (Additional)
+If you want to change default `first & last names` and `email`, you can edit, `resources/app/out/file/identity.getfiddler.com/oauth/token.json`. 
+  - Content of `token.json`
+    ```json
+      {
+        "id_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU4MDY4OTQzLWNlYmItNDY1OS1iNjZkLWZmZjY5NTg2NzA1ZCIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTU5MTE3ODcsImp0aSI6ImIwNWIxNjhiLTFiNjQtNDRlNy1iN2QzLWZiNWIzZDE3N2Y5YiIsInN1YiI6IjRmZGYzOWYzMmYyODRiMjhhMjFhYWFkMWYzNGI2OTk0IiwiZW1haWwiOiJqaXllY2FmZUBnbWFpbC5jb20iLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiIifV0sImN1c3RvbTpmaXJzdF9uYW1lIjoiam9jcyIsImN1c3RvbTpsYXN0X25hbWUiOiJtc28iLCJjdXN0b206Y291bnRyeSI6IjgzIiwibmJmIjoxNjk1OTExNzg3LCJleHAiOjE2OTU5MTUzODcsImlzcyI6Imh0dHBzOi8vaWRlbnRpdHkuZ2V0ZmlkZGxlci5jb20vIiwiYXVkIjoiZmlkZGxlciJ9.9sLm19DExaTaraNtdJnTWUibua3toHENsTcDwxg6022rcHHshA0esnebks7WLWBAG7svYVyWkPWKDuHbB3syTA",
+        "expires_in": 3539,
+        "token_type": "Bearer",
+        "user_info": {
+          "id": "4fdf39f32f284b28a21aaad1f34b6994",
+          "email": "user@gmail.com",
+          "firstName": "first",
+          "lastName": "last",
+          "country": "83",
+          "identities": [
+            {
+              "providerName": "Google"
+            }
+          ]
+        }
+      }
+    ```
+  - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values.
+
+> [!TIP]
+> You'll need to sign out and sign again after changing these values.
+
 # Some Extra Information
 
 [Let me see old](./v4.6.2/readme.md)
