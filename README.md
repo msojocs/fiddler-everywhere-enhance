@@ -19,11 +19,11 @@
   - ### Windows - https://downloads.getfiddler.com/win/Fiddler%20Everywhere%20[version].exe
   
   - ### Mac
-     - ### Intel - https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20[version].dmg
-     - ### Arm64 - https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%20[version].dmg
+     - ### Intel - <br>https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20[version].dmg
+     - ### Arm64 - <br>https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%20[version].dmg
 
   > [!NOTE]
-  > In the above links replace `[version]` with the version you want to download
+  > In the above links replace `[version]` with the version you want to download <br>
   > Ex: https://downloads.getfiddler.com/win/Fiddler%20Everywhere%205.19.0.exe to download `5.10.0` for Windows.
   
   > [!TIP] 
