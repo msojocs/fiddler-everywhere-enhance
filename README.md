@@ -12,7 +12,7 @@
     - ### Intel - https://api.getfiddler.com/mac/latest-mac
     - ### Arm64 - https://api.getfiddler.com/mac-arm64/latest-mac
 
-# Get Old Versiond of Fiddler Everywhere
+# Get Old Versions of Fiddler Everywhere
   
   - ### Linux - https://downloads.getfiddler.com/linux/fiddler-everywhere-[version].AppImage
 
