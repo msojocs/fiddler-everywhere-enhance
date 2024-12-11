@@ -132,6 +132,8 @@
 > You may need to recompile `libfiddler.so` and `libopen.so` by yourself.
 
 ## Mac 
+> [!Caution]
+> Not fully tested and may not be used!
 
 1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in (`Contents/Frameworks`)
 2. Go to https://github.com/project-yui/Yui-patch/releases
