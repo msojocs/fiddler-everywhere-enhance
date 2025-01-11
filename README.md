@@ -137,42 +137,22 @@
 
 1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in (`Contents/Frameworks`)
 2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) and `libopen.dylib` 
+3. Download `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) 
 4. Move `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) to `Contents/Frameworks`.
-5. Move `libopen.dylib` to `Resources/app/out/WebServer`
-6. Rename `Resources/app/out/WebServer/Fiddler.WebUi` to `Resources/app/out/WebServer/Fiddler.WebUi1`
-7. Create file `Resources/app/out/WebServer/Fiddler.WebUi`
+5. Clone this repository, open `hook/src`, run `dotnet publish`
+6. Open `hook/src/bin/Release/net8.0/publish`, Move `src.dll` and `0Harmony.dll` to `Resources/app/out/WebServer/lib`
+7. Rename `Resources/app/out/WebServer/Fiddler.WebUi` to `Resources/app/out/WebServer/Fiddler.WebUi1`
+8. Create file `Resources/app/out/WebServer/Fiddler.WebUi`
     
     the content of `Fiddler.WebUi`:
     ```shell
     #!/bin/bash
-    # export DYLD_PRINT_LIBRARIES=1
-    # export X=1
-    export DYLD_INSERT_LIBRARIES=./libopen.dylib
+    root_dir=$(cd `dirname $0` && pwd -P)
+    export DOTNET_STARTUP_HOOKS="$root_dir/lib/src.dll"
+
     ./Fiddler.WebUi1 $@
     ```
-8. Open directory `Resources/app/out/WebServer` and execute `chmod +x Fiddler.WebUi`
-9. Create file `Resources/app/out/WebServer/patch.json`
-    
-    the content of `patch.json`:
-    ```json
-    {
-        "ClientApp/dist/main-XXXXXXXX.js": {
-            "target": "ClientApp/dist/main-XXXXXXXX.original.js",
-            "content": "",
-            "cur": 0,
-            "start": 0,
-            "end": 1
-        },
-        "../main.js": {
-            "target": "../main.original.js",
-            "content": "",
-            "cur": 0,
-            "start": 0,
-            "end": 1
-        }
-    }
-    ```
+9. Open directory `Resources/app/out/WebServer` and execute `chmod +x Fiddler.WebUi`
 10. Copy `ClientApp/dist/main-XXXXXXXX.js` to `ClientApp/dist/main-XXXXXXXX.original.js`
 11. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
 12. Modify file `main-XXXXXXXX.js` and file `main.js` as instructed below.
