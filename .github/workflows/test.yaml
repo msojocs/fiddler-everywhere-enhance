@@ -9,7 +9,7 @@ on:
   push:
     tags:        
       - v*
-    branches: [ master, dev, ci]
+    branches: [ master, dev, mac]
   pull_request:
     branches: [ master ]
   # # Allows you to run this workflow manually from the Actions tab
