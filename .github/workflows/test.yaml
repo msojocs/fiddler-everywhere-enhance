@@ -36,10 +36,10 @@ jobs:
       - name: Test
         run: |
           wget https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%206.0.0.dmg -O fiddler.dmg
-          hdiutil attach fiddler.dmg
+          hdiutil mount fiddler.dmg
           ls -l /Volumes
           mkdir -p tmp
           cp -R /Volumes/fiddler/* ./tmp
-          hdiutil detach "/Volumes/fiddler"
+          hdiutil unmount "/Volumes/fiddler"
           cd "tmp/Fiddler Everywhere.app/Contents"
           ./MacOS/Fiddler\ Everywhere
