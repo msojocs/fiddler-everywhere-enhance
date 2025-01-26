@@ -47,7 +47,7 @@ jobs:
           wget https://github.com/project-yui/Yui-patch/releases/download/v1.1.3/yui-fiddler-mac-arm64-v1.1.3.dylib -O libfiddler.dylib
           cd ..
           mv Resources/app/out/main.js Resources/app/out/main.original.js
-          cat ../server/index.js > Resources/app/out/main.js
+          cat ../../../server/index.js > Resources/app/out/main.js
           cat Resources/app/out/main.original.js >> Resources/app/out/main.js
-          cp -R ../server/file Resources/app/out
+          cp -R ../../../server/file Resources/app/out
           ./MacOS/Fiddler\ Everywhere
