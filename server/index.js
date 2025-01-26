@@ -1,3 +1,124 @@
+
+(() => {
+  const { app, BrowserWindow } = require('electron')
+  const path = require('path')
+  const fs = require('fs')
+  const sp = require('child_process')
+  const originalSpwan = sp.spawn
+  sp.spawn = function(...args) {
+    console.info('spwan:', args[0])
+    if (args[0].includes('Fiddler.WebUi'))
+    {
+      // 启动后端服务前指向原始的main.js文件
+      const pkg = path.resolve(__dirname, '../package.json')
+      console.info('modify package.json', pkg)
+      const data = JSON.parse(fs.readFileSync(pkg).toString())
+      data.main = "out/main.original.js"
+      fs.writeFileSync(pkg, JSON.stringify(data, null, 4))
+      
+      // 还原mian-xxx.js文件
+      console.info('recover mian-xxx.js')
+      const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
+      const match = index.match(/main-.*?\.js/)
+      console.info('match result:', match)
+      const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
+      let mainXJs = fs.readFileSync(mainXJsPath).toString()
+      mainXJs = mainXJs.replace(/http:\/\/127\.0\.0\.1:5678\//g, 'https://')
+      fs.writeFileSync(mainXJsPath, mainXJs)
+    }
+    /**@type {dV.ChildProcessWithoutNullStreams} */
+    const result = originalSpwan.apply(this, args)
+    return result
+  }
+
+  app.on('quit', () => {
+    const pkg = path.resolve(__dirname, '../package.json')
+    const data = JSON.parse(fs.readFileSync(pkg).toString())
+    data.main = "out/main.js"
+    fs.writeFileSync(pkg, JSON.stringify(data, null, 4))
+  })
+
+  const originalBrowserWindow = BrowserWindow;
+
+  const hookBrowserWindow = (OriginalBrowserWindow) => {
+    function HookedBrowserWindow(options) {
+      // 修改或增加构造函数的选项
+      try {
+        if (options) {
+          options.frame = false
+          if (options.webPreferences) {
+            options.webPreferences.devTools = true
+          }
+        }
+        console.log('======HookedBrowserWindow:', options)
+      }catch(e) {
+
+      }
+      // 使用修改后的选项调用原始构造函数
+      return new OriginalBrowserWindow(options);
+    }
+
+    // 复制原始构造函数的原型链并进行替换
+    HookedBrowserWindow.prototype = Object.create(OriginalBrowserWindow.prototype);
+    HookedBrowserWindow.prototype.constructor = HookedBrowserWindow;
+    Object.setPrototypeOf(HookedBrowserWindow, OriginalBrowserWindow);
+
+    return HookedBrowserWindow;
+  };
+
+  // 使用替换的构造函数
+  const HookedBrowserWindow = hookBrowserWindow(originalBrowserWindow);
+
+  const ModuleLoadHook = {
+    electron: (module) => {
+      return {
+        ...module,
+        BrowserWindow: HookedBrowserWindow
+      }
+    },
+  }
+  const { Module } = require("module");
+  const original_load = Module._load;
+  // console.log('Module:', Module)
+  Module._load = (...args) => {
+    const loaded_module = original_load(...args);
+    // console.log('load', args[0])
+    if (ModuleLoadHook[args[0]]) {
+      return ModuleLoadHook[args[0]](loaded_module)
+    }
+    else {
+      return loaded_module;
+    }
+  }
+  
+  // hook loadURL
+  const originloadURL = BrowserWindow.prototype.loadURL;
+  BrowserWindow.prototype.loadURL = function(...args){
+    this.setMinimumSize(300, 300);
+    // 设置UA，有些番剧播放链接Windows会403
+    this.webContents.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) bilibili_pc/1.9.1 Chrome/98.0.4758.141 Electron/17.4.11 Safari/537.36')
+    console.log('=====loadURL', args)
+    // DevTools切换
+    this.webContents.on("before-input-event", (event, input) => {
+      if (input.key === "F12" && input.type === "keyUp") {
+        this.webContents.toggleDevTools();
+      }
+    });
+    if (args[0].includes('index.html'))
+    {
+      // 修改mian-xxx.js文件
+      console.info('modify mian-xxx.js')
+      const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
+      const match = index.match(/main-.*?\.js/)
+      const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
+      let mainXJs = fs.readFileSync(mainXJsPath).toString()
+      mainXJs = mainXJs.replace(/https:\/\/api\.getfiddler\.com/g, 'http://127.0.0.1:5678/api.getfiddler.com')
+      mainXJs = mainXJs.replace(/https:\/\/identity\.getfiddler\.com/g, 'http://127.0.0.1:5678/identity.getfiddler.com')
+      fs.writeFileSync(mainXJsPath, mainXJs)
+    }
+    return originloadURL.apply(this, args)
+  };
+})();
 (async () => {
   const http = require('http')
   const path = require('path')
@@ -17,7 +138,10 @@
   http.createServer(async (req, res) => {
     const fullPath = req.url
     const url = new URL(fullPath, 'http://127.0.0.1:5678')
-    console.log(req.method, url.pathname)
+    console.log(req.method, req.headers.host, url.pathname)
+    if (req.headers.host.includes('getfiddler.com')) {
+      url.pathname = `/${req.headers.host}${url.pathname}`
+    }
     // let body = '';
     // req.on('data', chunk => {
     //   body += chunk.toString();
