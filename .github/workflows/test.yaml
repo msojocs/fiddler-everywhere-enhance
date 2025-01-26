@@ -19,6 +19,7 @@ jobs:
   build-app:
     name: Build Base Packages
     runs-on: macos-latest
+    timeout-minutes: 3
 
     strategy:
       matrix:
