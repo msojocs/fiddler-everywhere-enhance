@@ -1,0 +1,45 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Test
+
+on:
+  release:
+    types: [published]
+  push:
+    tags:        
+      - v*
+    branches: [ master, dev, ci]
+  pull_request:
+    branches: [ master ]
+  # # Allows you to run this workflow manually from the Actions tab
+  # workflow_dispatch:
+
+jobs:
+  build-app:
+    name: Build Base Packages
+    runs-on: macos-13
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        ARCH: ['x64']
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+
+      - name: Test
+        run: |
+          wget https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%206.0.0.dmg fiddler.dmg
+          hdiutil attach fiddler.dmg
+          ls -l /Volumes
+          mkdir -p tmp
+          cp -R /Volumes/fiddler/* ./tmp
+          hdiutil detach "/Volumes/fiddler"
+          cd "tmp/Fiddler Everywhere.app/Contents"
+          ./MacOS/Fiddler\ Everywhere
