@@ -70,14 +70,14 @@
 
 1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in (`Contents/Frameworks`)
 2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) and `libopen.dylib` 
+3. Download `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) 
 4. Move `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) to `Contents/Frameworks`.
 5. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
 6. Modify file `main.js` as instructed below.
 7. Copy `server/file` -> `Contents/Resources/app/out/file`
 
 > [!NOTE]
-> You may need to recompile `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) and `libopen.dylib` by yourself.
+> You may need to recompile `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) by yourself.
 
 # How to modify main.js
 
