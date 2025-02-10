@@ -64,7 +64,7 @@
 7. Copy `server/file` -> `Fiddler/resources/app/out/file`
 
 > [!NOTE]
-> You may need to recompile `libfiddler.so` and `libopen.so` by yourself.
+> You may need to recompile `libfiddler.so` by yourself.
 
 ## Mac 
 
