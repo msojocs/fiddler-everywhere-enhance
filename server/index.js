@@ -18,7 +18,7 @@ const port = 5678;
       data.main = "out/main.original.js"
       fs.writeFileSync(pkg, JSON.stringify(data, null, 4))
       // 还原mian-xxx.js文件
-      console.info('Descover main-XXXXXXX.js (Or main.XXXXXXXXXXXXX.js in old versions)')
+      console.info('Recover main-XXXXXXX.js (Or main.XXXXXXXXXXXXX.js in old versions)')
       const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
       const match = index.match(/main.*?\.js/)
       console.info('Match result:', match)
