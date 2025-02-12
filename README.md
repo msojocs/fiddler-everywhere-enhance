@@ -77,7 +77,7 @@
 
 1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in `Contents/Frameworks`
 2. Go to https://github.com/project-yui/Yui-patch/releases
-3. 3. Download `yui-fiddler-mac-[arch]-vx.x.x.dylib`
+3. Download `yui-fiddler-mac-[arch]-vx.x.x.dylib`
 4. - If you patch Fiddler Everywhere 5.16.0 or earlier, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `libfiddler.dylib`
    - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `fiddler.dylib`
 5. Move `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) to `Contents/Frameworks`
