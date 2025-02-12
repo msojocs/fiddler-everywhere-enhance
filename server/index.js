@@ -18,9 +18,9 @@ const port = 5678;
       data.main = "out/main.original.js"
       fs.writeFileSync(pkg, JSON.stringify(data, null, 4))
       // 还原mian-xxx.js文件
-      console.info('Recover mian-xxx.js')
+      console.info('Descover main-XXXXXXX.js (Or main.XXXXXXXXXXXXX.js in old versions)')
       const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
-      const match = index.match(/main-.*?\.js/)
+      const match = index.match(/main.*?\.js/)
       console.info('Match result:', match)
       const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
       let mainXJs = fs.readFileSync(mainXJsPath).toString()
@@ -110,9 +110,9 @@ const port = 5678;
     if (args[0].includes('index.html'))
     {
       // 修改mian-xxx.js文件
-      console.info('Modify mian-xxx.js')
+      console.info('Modify main-XXXXXXX.js (Or main.XXXXXXXXXXXXX.js in old versions)')
       const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
-      const match = index.match(/main-.*?\.js/)
+      const match = index.match(/main.*?\.js/)
       const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
       let mainXJs = fs.readFileSync(mainXJsPath).toString()
       mainXJs = mainXJs.replace(/https:\/\/api\.getfiddler\.com/g, `http://127.0.0.1:${port}/api.getfiddler.com`)
