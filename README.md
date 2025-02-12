@@ -1,6 +1,6 @@
-# 耻辱柱（Hall Of Shame）
+# [耻辱柱（Hall of Shame)](./shame.md)
 
-[Hall Of Shame](./shame.md)
+---
 
 # Get Latest Version of Fiddler Everywhere
 
@@ -24,16 +24,20 @@
 
   > [!NOTE]
   > In the above links replace `[version]` with the version you want to download <br>
-  > Ex: https://downloads.getfiddler.com/win/Fiddler%20Everywhere%205.19.0.exe to download `5.10.0` for Windows.
+  > Ex: https://downloads.getfiddler.com/win/Fiddler%20Everywhere%205.19.0.exe to download `5.19.0` for Windows.
   
   > [!TIP] 
   > You can find a list of available versions here: [Version History](https://www.telerik.com/support/whats-new/fiddler-everywhere/release-history)
 
+---
 
 # Get Started - Patch / Enhance For v5.9.0 and later (Maybe for all)
   > [!IMPORTANT]
-  > **For Windows**, for `5.17.0` & later, `libfiddler.dll` is now renamed to `fiddler.dll`.
-  > So you need to get `Yui-Patch` release `1.1.0 +` for Fiddler Everywhere `5.17.0` and later. 
+  > **For Windows**:
+  >  - If you're using Fiddler Everywhere 5.16.0 or earlier, look for `libfiddler.dll` instead of `fiddler.dll`.
+  >  - In version 5.17.0 and later, it was renamed to `fiddler.dll`.
+
+--- 
 
 ## Windows
 
@@ -44,20 +48,21 @@
 
 1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+).
 2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `libfiddler` (or `fiddler.dll` in `5.17.0` and later).
-4. Move `libfiddler.dll` (or `fiddler.dll` in `5.17.0` and later) to the *root path* of Fiddler Everywhere
-5. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
-6. Modify file `main.js` as instructed below.
-7. Copy `server/file` -> `Fiddler/resources/app/out/file`
+3. Download `yui-fiddler-win32-x86_64-vx.x.x.dll`
+4. - If you patch Fiddler Everywhere 5.16.0 or earlier, rename `yui-fiddler-win32-x86_64-vx.x.x.dll` to `libfiddler.dll`
+   - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-win32-x86_64-vx.x.x.dll` to `fiddler.dll`
+5. Move `fiddler.dll` (or `libfiddler.dll` in `5.16.0` and erlier) to the *root folder* of Fiddler Everywhere
+6. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
+7. Modify file `main.js` as instructed below.
+8. Copy `server/file` -> `Fiddler/resources/app/out/file`
 
-> [!TIP]
-> For windows, for more detailed info for noobs: [Windows Patch for Noobs](https://github.com/sipsuru/fiddler-everywhere-patch-manual)
+  ---
 
 ## Linux
 
 1. Delete `libfiddler.so`.
 2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `libfiddler.so`
+3. Download `yui-libfiddler-linux-x86_64-vx.x.x.so` & rename it to `libfiddler.so`
 4. Move `libfiddler.so` to the root path of fiddler.
 5. Copy `resources/app/out/main.js` to `resources/app/out/main.original.js`
 6. Modify file `main.js` as instructed below.
@@ -66,25 +71,31 @@
 > [!NOTE]
 > You may need to recompile `libfiddler.so` by yourself.
 
+  ---
+
 ## Mac 
 
-1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in (`Contents/Frameworks`)
+1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in `Contents/Frameworks`
 2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) 
-4. Move `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) to `Contents/Frameworks`.
-5. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
-6. Modify file `main.js` as instructed below.
-7. Copy `server/file` -> `Contents/Resources/app/out/file`
+3. 3. Download `yui-fiddler-mac-[arch]-vx.x.x.dylib`
+4. - If you patch Fiddler Everywhere 5.16.0 or earlier, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `libfiddler.dylib`
+   - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `fiddler.dylib`
+5. Move `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) to `Contents/Frameworks`
+6. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
+7. Modify file `main.js` as instructed below.
+8. Copy `server/file` -> `Contents/Resources/app/out/file`
 
 > [!NOTE]
-> You may need to recompile `libfiddler.dylib` (or `fiddler.dylib` in `5.17.0` and later) by yourself.
+> You may need to recompile `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) by yourself.
 
-# How to modify main.js
+  ---
 
-## For main.js
+# How to Modify `main.js`
 
 1. Open `resources/app/out/main.js` in a text editor
 2. Open & copy content of `server/index.js` & append to `resources/app/out/main.js` at the begining.
+
+  ---
 
 # Change **First Name**, **Last Name** & **Email** (Additional)
 If you want to change default `first & last names` and `email`, you can edit, `resources/app/out/file/identity.getfiddler.com/oauth/token.json`. 
@@ -111,13 +122,17 @@ If you want to change default `first & last names` and `email`, you can edit, `r
   - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values.
 
 > [!TIP]
-> You'll need to sign out and sign again after changing these values.
+> You may need to sign out and sign again after changing these values.
+
+---
 
 # Some Extra Information
 
 [Let me see old](./v4.6.2/readme.md)
 
 [Let me see old old](./old/DETAIL.MD)
+
+---
 
 ## 免责声明
 	
