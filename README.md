@@ -42,7 +42,7 @@
 ## Windows
 
 > [!TIP]
->  ## Now you can Patch Fiddler Everywhere Automatically Too! - [Patch Automatically](https://github.com/sipsuru/fiddler-everywhere-patch-automated)
+>  ## You may patch Fiddler Everywhere Automatically too! - [Patch Automatically](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
 
 ### Patch Manually: 
 
