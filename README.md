@@ -37,14 +37,14 @@
   >  - If you're using Fiddler Everywhere 5.16.0 or earlier, look for `libfiddler.dll` instead of `fiddler.dll`.
   >  - In version 5.17.0 and later, it was renamed to `fiddler.dll`.
 
+---
+
+> [!TIP]
+>  ## [You Can Patch Fiddler Everywhere Automatically for Windows & Linux!](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
+
 --- 
 
 ## Windows
-
-> [!TIP]
->  ## You may patch Fiddler Everywhere Automatically too! - [Patch Automatically](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
-
-### Patch Manually: 
 
 1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+).
 2. Go to https://github.com/project-yui/Yui-patch/releases
