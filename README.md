@@ -119,13 +119,15 @@ If you want to change default `first & last names` and `email`, you can edit, `r
         }
       }
     ```
-  - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values.
+  - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values. You can also change `country` and `provider`.
 
 > [!TIP]
 > You may need to sign out and sign again after changing these values.
 
 > [!CAUTION]
-> Signing out will erase all of your preferances and saved snapshots!
+> - If you change email of above `token.json`, Fiddler Everywhere consider that it's a new user and your "Saved Snapshots" will be unavailable to new user (new email).
+> - If you want to get those snapshots back, you'll have to change the email back.
+> - Changing `firstname`, `lastname`, `country`, `provider` won't affect.
 
 ---
 
