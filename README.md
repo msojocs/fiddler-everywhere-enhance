@@ -124,6 +124,9 @@ If you want to change default `first & last names` and `email`, you can edit, `r
 > [!TIP]
 > You may need to sign out and sign again after changing these values.
 
+> [!CAUTION]
+> Signing out will erase all of your preferances and saved snapshots!
+
 ---
 
 # Some Extra Information
