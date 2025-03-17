@@ -37,14 +37,14 @@
   >  - If you're using Fiddler Everywhere 5.16.0 or earlier, look for `libfiddler.dll` instead of `fiddler.dll`.
   >  - In version 5.17.0 and later, it was renamed to `fiddler.dll`.
 
+---
+
+> [!TIP]
+>  ## [You Can Patch Fiddler Everywhere Automatically for Windows & Linux!](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
+
 --- 
 
 ## Windows
-
-> [!TIP]
->  ## You may patch Fiddler Everywhere Automatically too! - [Patch Automatically](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
-
-### Patch Manually: 
 
 1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+).
 2. Go to https://github.com/project-yui/Yui-patch/releases
@@ -119,10 +119,15 @@ If you want to change default `first & last names` and `email`, you can edit, `r
         }
       }
     ```
-  - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values.
+  - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values. You can also change `country` and `provider`.
 
 > [!TIP]
 > You may need to sign out and sign again after changing these values.
+
+> [!CAUTION]
+> - If you change email of above `token.json`, Fiddler Everywhere consider that it's a new user and your "Saved Snapshots" will be unavailable to new user (new email).
+> - If you want to get those snapshots back, you'll have to change the email back.
+> - Changing `firstname`, `lastname`, `country`, `provider` won't affect.
 
 ---
 
