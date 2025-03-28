@@ -43,10 +43,17 @@ jobs:
           cp -R /Volumes/fiddler/* ./tmp
           hdiutil detach "/Volumes/fiddler"
           cd "tmp/Fiddler Everywhere.app/Contents"
+          # tmp/Fiddler Everywhere.app/Contents
+
           cd Frameworks
+          # tmp/Fiddler Everywhere.app/Contents/Frameworks
+
           rm libfiddler.dylib
           wget https://github.com/project-yui/Yui-patch/releases/download/v1.1.3/yui-fiddler-mac-arm64-v1.1.3.dylib -O libfiddler.dylib
+          
           cd ..
+          # tmp/Fiddler Everywhere.app/Contents
+
           mv Resources/app/out/main.js Resources/app/out/main.original.js
           cat ../../../server/index.js > Resources/app/out/main.js
           cat Resources/app/out/main.original.js >> Resources/app/out/main.js
@@ -55,4 +62,4 @@ jobs:
           p=$(pwd)
           cd ../../..
           cp -R tmp/* /Applications/
-          node tools/mac-test.js "/Applications/Fiddler Everywhere.app/MacOS/Fiddler Everywhere"
+          node tools/mac-test.js "/Applications/Fiddler Everywhere.app/Contents"
