@@ -55,4 +55,4 @@ jobs:
           p=$(pwd)
           cd ../../..
           cp -R tmp/* /Applications/
-          node tools/mac-test.js "/Applications/Fiddler Everywhere.app"
+          node tools/mac-test.js "/Applications/Fiddler Everywhere.app/MacOS/Fiddler Everywhere"
