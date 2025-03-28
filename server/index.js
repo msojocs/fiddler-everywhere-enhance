@@ -1,5 +1,5 @@
 
-const port = 5678;
+const port = 5679;
 (() => {
   console.info('========== Fiddler-everywhere-enhance start ==========')
   const { app, BrowserWindow } = require('electron')
@@ -18,13 +18,14 @@ const port = 5678;
       data.main = "out/main.original.js"
       fs.writeFileSync(pkg, JSON.stringify(data, null, 4))
       // 还原mian-xxx.js文件
-      console.info('Recover main-XXXXXXX.js (Or main.XXXXXXXXXXXXX.js in old versions)')
+      console.info('Recover mian-xxx.js')
       const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
-      const match = index.match(/main.*?\.js/)
+      const match = index.match(/main-.*?\.js/)
       console.info('Match result:', match)
       const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
       let mainXJs = fs.readFileSync(mainXJsPath).toString()
-      const exp = new RegExp(`http://127.0.0.1:${port}/`, 'g')
+      const exp = new RegExp(`http:\\/\\/127\\.0\\.0\\.1:${port}\\/`, 'g')
+      // console.info('Exp:', exp)
       mainXJs = mainXJs.replace(exp, 'https://')
       fs.writeFileSync(mainXJsPath, mainXJs)
     }
@@ -51,6 +52,7 @@ const port = 5678;
           options.frame = false
           if (options.webPreferences) {
             options.webPreferences.devTools = true
+            // options.webPreferences.preload = path.resolve(__dirname, './translate.js')
           }
         }
         console.info('HookedBrowserWindow:', options)
@@ -101,18 +103,24 @@ const port = 5678;
     // 设置UA，有些番剧播放链接Windows会403
     this.webContents.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) bilibili_pc/1.9.1 Chrome/98.0.4758.141 Electron/17.4.11 Safari/537.36')
     console.info('Call loadURL', args)
+    // 翻译脚本
+    this.webContents.executeJavaScript(fs.readFileSync(path.resolve(__dirname, './translate.js')).toString())
     // DevTools切换
     this.webContents.on("before-input-event", (event, input) => {
       if (input.key === "F12" && input.type === "keyUp") {
         this.webContents.toggleDevTools();
       }
+      else if (input.key === 'F5' && input.type === "keyUp")
+      {
+        this.webContents.executeJavaScript(fs.readFileSync(path.resolve(__dirname, './translate.js')).toString())
+      }
     });
     if (args[0].includes('index.html'))
     {
       // 修改mian-xxx.js文件
-      console.info('Modify main-XXXXXXX.js (Or main.XXXXXXXXXXXXX.js in old versions)')
+      console.info('Modify mian-xxx.js')
       const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
-      const match = index.match(/main.*?\.js/)
+      const match = index.match(/main-.*?\.js/)
       const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
       let mainXJs = fs.readFileSync(mainXJsPath).toString()
       mainXJs = mainXJs.replace(/https:\/\/api\.getfiddler\.com/g, `http://127.0.0.1:${port}/api.getfiddler.com`)
@@ -122,6 +130,7 @@ const port = 5678;
     return originloadURL.apply(this, args)
   };
 })();
+// Server
 (async () => {
   const http = require('http')
   const path = require('path')
