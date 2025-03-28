@@ -40,9 +40,9 @@ jobs:
           yes y | hdiutil attach fiddler.dmg -mountpoint "/Volumes/fiddler"
           ls -l /Volumes
           mkdir -p tmp
-          cp -R /Volumes/fiddler/* ./tmp
+          cp -R /Volumes/fiddler/* /Applications/
           hdiutil detach "/Volumes/fiddler"
-          cd "tmp/Fiddler Everywhere.app/Contents"
+          cd "/Applications/Fiddler Everywhere.app/Contents"
           cd Frameworks
           rm libfiddler.dylib
           wget https://github.com/project-yui/Yui-patch/releases/download/v1.1.3/yui-fiddler-mac-arm64-v1.1.3.dylib -O libfiddler.dylib
