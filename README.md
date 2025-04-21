@@ -87,6 +87,8 @@
 
 > [!NOTE]
 > You may need to recompile `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) by yourself.
+> 
+> You may need to run the command: `sudo codesign -s "-" --deep --force --verbose /Applications/Fiddler\ Everywhere.app`. [issue#96](https://github.com/msojocs/fiddler-everywhere-enhance/issues/96#issuecomment-2814035393)
 
   ---
 
