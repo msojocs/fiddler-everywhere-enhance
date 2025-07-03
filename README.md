@@ -141,6 +141,12 @@ If you want to change default `first & last names` and `email`, you can edit, `r
 
 ---
 
+# Other
+
+本项目 CDN 加速及安全防护由 Tencent EdgeOne 赞助。
+
+[![](https://edgeone.ai/media/34fe3a45-492d-4ea4-ae5d-ea1087ca7b4b.png)](https://edgeone.ai/zh?from=github)
+
 ## 免责声明
 	
 * 本仓库仅供技术学习交流使用，如有下载相关文件，请在学习后24小时内删除相关内容。
