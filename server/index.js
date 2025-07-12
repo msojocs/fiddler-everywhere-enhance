@@ -18,13 +18,14 @@ const port = 5678;
       data.main = "out/main.original.js"
       fs.writeFileSync(pkg, JSON.stringify(data, null, 4))
       // 还原mian-xxx.js文件
-      console.info('Recover main-XXXXXXX.js (Or main.XXXXXXXXXXXXX.js in old versions)')
+      console.info('Recover mian-xxx.js')
       const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
-      const match = index.match(/main.*?\.js/)
+      const match = index.match(/main-.*?\.js/)
       console.info('Match result:', match)
       const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
       let mainXJs = fs.readFileSync(mainXJsPath).toString()
-      const exp = new RegExp(`http://127.0.0.1:${port}/`, 'g')
+      const exp = new RegExp(`http:\\/\\/127\\.0\\.0\\.1:${port}\\/`, 'g')
+      // console.info('Exp:', exp)
       mainXJs = mainXJs.replace(exp, 'https://')
       fs.writeFileSync(mainXJsPath, mainXJs)
     }
@@ -51,6 +52,11 @@ const port = 5678;
           options.frame = false
           if (options.webPreferences) {
             options.webPreferences.devTools = true
+            const p = path.resolve(__dirname, './translate.js')
+            if (fs.existsSync(p)) {
+              // 如果存在translate.js文件，则使用它
+              options.webPreferences.preload = p
+            }
           }
         }
         console.info('HookedBrowserWindow:', options)
@@ -110,9 +116,9 @@ const port = 5678;
     if (args[0].includes('index.html'))
     {
       // 修改mian-xxx.js文件
-      console.info('Modify main-XXXXXXX.js (Or main.XXXXXXXXXXXXX.js in old versions)')
+      console.info('Modify mian-xxx.js')
       const index = fs.readFileSync(path.resolve(__dirname, './WebServer/ClientApp/dist/index.html')).toString()
-      const match = index.match(/main.*?\.js/)
+      const match = index.match(/main-.*?\.js/)
       const mainXJsPath = path.resolve(__dirname, `./WebServer/ClientApp/dist/${match}`)
       let mainXJs = fs.readFileSync(mainXJsPath).toString()
       mainXJs = mainXJs.replace(/https:\/\/api\.getfiddler\.com/g, `http://127.0.0.1:${port}/api.getfiddler.com`)
@@ -122,6 +128,7 @@ const port = 5678;
     return originloadURL.apply(this, args)
   };
 })();
+// Server
 (async () => {
   const http = require('http')
   const path = require('path')

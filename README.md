@@ -133,6 +133,11 @@ If you want to change default `first & last names` and `email`, you can edit, `r
 
 ---
 
+# 多语言支持
+默认不支持，若要支持中文，请将`server/translate.js`复制到`resources\app\out\translate.js`
+
+按<kbd>Ctrl+T</kbd>切换语言。
+
 # Some Extra Information
 
 [Let me see old](./v4.6.2/readme.md)
