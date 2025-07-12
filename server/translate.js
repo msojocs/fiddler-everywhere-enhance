@@ -376,7 +376,7 @@
       zhCn: "输入名称以保存为新过滤器",
     },
     'Save the current filter': {
-      condition: (node) => node?.className === 'button__disabled-title ng-star-inserted',
+      condition: (node) => true,
       en: "Save the current filter",
       zhCn: "保存当前过滤器",
     },
@@ -385,10 +385,30 @@
       en: "Duplicate the current filter",
       zhCn: "复制当前过滤器",
     },
+    'Revert Changes': {
+      condition: (node) => true,
+      en: "Revert Changes",
+      zhCn: "撤销更改",
+    },
     'Delete this filter forever?': {
       condition: (node) => node?.parentNode?.parentNode?.className === 'toolbar__confirmation ng-star-inserted',
       en: "Delete this filter forever?",
       zhCn: "永久删除此过滤器？",
+    },
+    'Clear all conditions?': {
+      condition: (node) => node?.parentNode?.parentNode?.className === 'toolbar__confirmation ng-star-inserted',
+      en: "Clear all conditions?",
+      zhCn: "清除所有条件？",
+    },
+    'Filter name': {
+      condition: (node) => node?.nodeName === 'INPUT' && node?.placeholder === 'Filter name',
+      en: "Filter name",
+      zhCn: "过滤器名称",
+    },
+    'Name is required!': {
+      condition: (node) => true,
+      en: "Name is required!",
+      zhCn: "名称是必填项！",
     },
     'Yes': {
       condition: (node) => node?.parentNode?.className === 'button__text ng-star-inserted',
@@ -574,7 +594,7 @@
   };
 
   const observer = new MutationObserver((mutations) => {
-    console.info('[load]: MutationObserver', mutations);
+    // console.info('[load]: MutationObserver', mutations);
     mutations.forEach((mutation) => {
       if (mutation.type === "childList") {
         mutation.addedNodes.forEach((node) => {
