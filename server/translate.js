@@ -511,8 +511,10 @@
   // TODO: 用于切换语言时更新
   const node2keyword = new Map();
   let lang = "zhCn";
+  let lastSwitchTime = 0;
   window.switchLanguage = async (newLang) => {
     if (newLang === lang) return;
+    lastSwitchTime = new Date().getTime();
     console.info("switchLanguage", newLang);
     lang = newLang;
     for (const [node, keyword] of node2keyword.entries()) {
@@ -615,7 +617,7 @@
       } else if (mutation.type === "attributes") {
         // 处理属性变化
         translate(mutation.target);
-      } else if (mutation.type === "characterData") {
+      } else if (mutation.type === "characterData" && new Date().getTime() - lastSwitchTime > 3000) {
         // 处理文本节点内容变化
         translate(mutation.target);
       }
@@ -652,6 +654,7 @@
         // await window.requestBackground('setStorage', {key: 'lang', value: selectedLanguage})
         // window.biliBridgePc.callNativeSync('config/changeLanguage', selectedLanguage)
         switchLanguage(selectedLanguage)
+        console.info('切换语言成功:', selectedLanguage)
       })
       languageChangePanel.querySelector('#closeLanguageChangePanel').addEventListener('click', () => {
         document.body.removeChild(languageChangePanel)
