@@ -5,7 +5,7 @@
     // #region 标题栏
     "Report an Issue": {
       condition: (node) =>
-        node?.parentNode?.className === "button__text ng-star-inserted",
+        node?.parentNode?.className === "button__text ng-star-inserted" || node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'github',
       en: "Report an Issue",
       zhCn: "报告问题",
     },
@@ -51,7 +51,7 @@
     // #region Home
     "Buy Now": {
       condition: (node) =>
-        node?.parentNode?.className === "button__text ng-star-inserted",
+        node?.parentNode?.className === "button__text ng-star-inserted" || node?.parentNode?.className === "ng-star-inserted",
       en: "Buy Now",
       zhCn: "立即购买",
     },
@@ -163,15 +163,27 @@
     // #region Traffic - Middle Panel
     "Live Traffic": {
       condition: (node) =>
-        node?.parentNode?.parentNode?.className === "k-tab ng-star-inserted",
+        node?.parentNode?.parentNode?.className === "k-tab ng-star-inserted" || node?.parentNode?.parentNode?.className === 'k-window-title k-dialog-title ng-star-inserted',
       en: "Live Traffic",
       zhCn: "实时流量",
     },
     Filters: {
       condition: (node) =>
-        node?.parentNode?.className === "button__text ng-star-inserted",
+        node?.parentNode?.className === "button__text ng-star-inserted" || node?.parentNode?.parentNode?.className === 'k-window-title k-dialog-title ng-star-inserted',
       en: "Filters",
       zhCn: "过滤器",
+    },
+    ' Saved Filters ': {
+      condition: (node) =>
+        node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'filters',
+      en: " Saved Filters ",
+      zhCn: " 已保存的过滤器 ",
+    },
+    ' Clear ': {
+      condition: (node) =>
+        node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'filter-slash',
+      en: " Clear ",
+      zhCn: " 清除 ",
     },
     "System Proxy": {
       condition: (node) =>
@@ -190,6 +202,26 @@
         node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'rectangle-terminal',
       en: "Terminal",
       zhCn: "终端",
+    },
+    ' Save ': {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'floppy-disk',
+      en: "Save ",
+      zhCn: "保存",
+    },
+    ' AutoSave ': {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'autosave',
+      en: "AutoSave ",
+      zhCn: "自动保存",
+    },
+    ' Share ': {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'share',
+      en: "Share ",
+      zhCn: "分享",
+    },
+    ' Columns ': {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'table-columns',
+      en: "Columns ",
+      zhCn: "显示列",
     },
     // #endregion Traffic - Middle Panel
     // #region Traffic - Right Panel
@@ -228,7 +260,221 @@
       en: "Session ID: ",
       zhCn: "会话ID: ",
     },
+    'Add Rule': {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'plus',
+      en: "Add Rule",
+      zhCn: "添加规则",
+    },
+    'Add Group': {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'folder',
+      en: "Add Group",
+      zhCn: "添加组",
+    },
+    Promote: {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'arrow-up',
+      en: "Promote",
+      zhCn: "提升",
+    },
+    Demote: {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'arrow-down',
+      en: "Demote",
+      zhCn: "降级",
+    },
+    Duplicate: {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'clone',
+      en: "Duplicate",
+      zhCn: "复制",
+    },
+    Delete: {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'trash',
+      en: "Delete",
+      zhCn: "删除",
+    },
     // #endregion Traffic - Right Panel
+    // #region Composer - Left Panel
+    'Requests': {
+      condition: (node) => node?.parentNode?.className === '',
+      en: "Requests",
+      zhCn: "请求",
+    },
+    // #endregion Composer - Left Panel
+    // #region Composer - Middle Panel
+    Composer: {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'api-regular',
+      en: "Composer",
+      zhCn: "构建器",
+    },
+    Execute: {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'paper-plane',
+      en: "Execute",
+      zhCn: "执行",
+    },
+    Save: {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'floppy-disk',
+      en: "Save",
+      zhCn: "保存",
+    },
+    'Show autogenerated headers': {
+      condition: (node) => node?.parentNode?.className === 'k-label ng-star-inserted',
+      en: "Show autogenerated headers",
+      zhCn: "显示自动生成的头部",
+    },
+    ' Key ': {
+      condition: (node) => node?.parentNode?.className === 'grid__resizer-hold ng-star-inserted',
+      en: " Key ",
+      zhCn: " 名称 ",
+    },
+    ' Value ': {
+      condition: (node) => node?.parentNode?.className === 'grid__resizer-hold ng-star-inserted',
+      en: " Value ",
+      zhCn: " 值 ",
+    },
+    ' Description ': {
+      condition: (node) => node?.parentNode?.className === 'grid__resizer-hold ng-star-inserted',
+      en: " Description ",
+      zhCn: " 描述 ",
+    },
+    'Description': {
+      condition: (node) => node?.parentNode?.className === 'ng-star-inserted',
+      en: "Description",
+      zhCn: "描述",
+    },
+    // #endregion Composer - Middle Panel
+    // #region Composer - Right Panel
+    'Response': {
+      condition: (node) => {
+        if (node?.parentNode?.className === 'inspector-type-text') {
+          // 样式修正
+          node.parentNode.style.whiteSpace = 'nowrap'
+          return true;
+        }
+        return false
+      },
+      en: "Response",
+      zhCn: "响应",
+    },
+    Preview: {
+      condition: (node) => node?.parentNode?.className === 'ng-star-inserted',
+      en: "Preview",
+      zhCn: "预览",
+    },
+    // #endregion Composer - Right Panel
+    // #region Filters
+    'Name': {
+      condition: (node) => node?.parentNode?.parentNode?.className === 'k-label ng-star-inserted',
+      en: "Name",
+      zhCn: "名称",
+    },
+    'Name ': {
+      condition: (node) => node?.parentNode?.parentNode?.className === 'k-label ng-star-inserted',
+      en: "Name ",
+      zhCn: "名称 ",
+    },
+    'Enter a name to save as a new filter': {
+      condition: (node) => node?.nodeName === 'INPUT' && node?.placeholder === 'Enter a name to save as a new filter',
+      en: "Enter a name to save as a new filter",
+      zhCn: "输入名称以保存为新过滤器",
+    },
+    'Save the current filter': {
+      condition: (node) => node?.className === 'button__disabled-title ng-star-inserted',
+      en: "Save the current filter",
+      zhCn: "保存当前过滤器",
+    },
+    'Duplicate the current filter': {
+      condition: (node) => node?.nodeName === 'BUTTON' && node?.attributes?.title?.value === 'Duplicate the current filter',
+      en: "Duplicate the current filter",
+      zhCn: "复制当前过滤器",
+    },
+    'Delete this filter forever?': {
+      condition: (node) => node?.parentNode?.parentNode?.className === 'toolbar__confirmation ng-star-inserted',
+      en: "Delete this filter forever?",
+      zhCn: "永久删除此过滤器？",
+    },
+    'Yes': {
+      condition: (node) => node?.parentNode?.className === 'button__text ng-star-inserted',
+      en: "Yes",
+      zhCn: "是",
+    },
+    'No': {
+      condition: (node) => node?.parentNode?.className === 'button__text ng-star-inserted',
+      en: "No",
+      zhCn: "否",
+    },
+    'Clear All Conditions': {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'trash',
+      en: "Clear All Conditions",
+      zhCn: "清除所有条件",
+    },
+    'Add Condition': {
+      condition: (node) => node?.parentNode?.previousElementSibling?.attributes?.['data-icon']?.value === 'plus',
+      en: "Add Condition",
+      zhCn: "添加条件",
+    },
+    Contains: {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Contains",
+      zhCn: "包含",
+    },
+    'Does not contain': {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Does not contain",
+      zhCn: "不包含",
+    },
+    'Is equal to': {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Is equal to",
+      zhCn: "等于",
+    },
+    'Is not equal to': {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Is not equal to",
+      zhCn: "不等于",
+    },
+    'Starts with': {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Starts with",
+      zhCn: "以...开头",
+    },
+    'Ends with': {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Ends with",
+      zhCn: "以...结尾",
+    },
+    'Is empty': {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Is empty",
+      zhCn: "为空",
+    },
+    'Is not empty': {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Is not empty",
+      zhCn: "不为空",
+    },
+    'Regular expression': {
+      condition: (node) => node?.parentNode?.className === 'k-input-value-text'
+      || node?.parentNode?.className === 'k-list-item-text ng-star-inserted',
+      en: "Regular expression",
+      zhCn: "正则表达式",
+    },
+    'Close': {
+      condition: (node) => node?.parentNode?.className === 'k-button-text',
+      en: "Close",
+      zhCn: "关闭",
+    },
+    ' Apply ': {
+      condition: (node) => node?.parentNode?.className === 'k-button-text',
+      en: " Apply ",
+      zhCn: " 应用 ",
+    },
+    // #region Filters
   };
   const regExpI18n = [
     {
@@ -236,6 +482,11 @@
       en: ($0, $1) => `Timings (${$1})`,
       zhCn: ($0, $1) => `时序 (${$1})`,
     },
+    {
+      regExp: / (\d+) selected /,
+      en: ($0, $1) => ` ${$1} selected `,
+      zhCn: ($0, $1) => ` ${$1} 选中 `,
+    }
   ];
   // TODO: 用于切换语言时更新
   const node2keyword = new Map();
@@ -323,7 +574,7 @@
   };
 
   const observer = new MutationObserver((mutations) => {
-    // console.info('[load]: MutationObserver', mutations);
+    console.info('[load]: MutationObserver', mutations);
     mutations.forEach((mutation) => {
       if (mutation.type === "childList") {
         mutation.addedNodes.forEach((node) => {
@@ -344,9 +595,49 @@
       } else if (mutation.type === "attributes") {
         // 处理属性变化
         translate(mutation.target);
+      } else if (mutation.type === "characterData") {
+        // 处理文本节点内容变化
+        translate(mutation.target);
       }
     });
   });
+  document.addEventListener('keyup', async (e) => {
+    // Ctrl + T
+    if (e.ctrlKey && (e.key === 't' || e.key === 'T')) {
+      console.info('按下 Ctrl + T 键')
+      document.getElementById('languageChangePanel')?.remove()
+      // const lang = await window.requestBackground('getStorage', {key: 'lang'}) || 'zh_CN'
+      const languageChangePanel = document.createElement('div')
+      languageChangePanel.id = 'languageChangePanel'
+      languageChangePanel.style.position = 'fixed'
+      languageChangePanel.style.bottom = '10px'
+      languageChangePanel.style.left = '10px'
+      languageChangePanel.style.backgroundColor = 'white'
+      languageChangePanel.style.padding = '10px'
+      languageChangePanel.style.border = '1px solid black'
+      languageChangePanel.style.zIndex = '10000'
+      languageChangePanel.innerHTML = `
+        <h3>Language:</h3>
+        <select id="languageSelect">
+          <option value="zhCn" ${lang === 'zhCn' ? 'selected' : ''}>简体中文</option>
+          <option value="en" ${lang === 'en' ? 'selected' : ''}>English</option>
+        </select>
+        <button id="languageChangeButton">OK</button>
+        <button id="closeLanguageChangePanel">X</button>
+      `
+      document.body.appendChild(languageChangePanel)
+      languageChangePanel.querySelector('#languageChangeButton').addEventListener('click', async () => {
+        const selectedLanguage = languageChangePanel.querySelector('#languageSelect').value
+        console.info('选择的语言:', selectedLanguage)
+        // await window.requestBackground('setStorage', {key: 'lang', value: selectedLanguage})
+        // window.biliBridgePc.callNativeSync('config/changeLanguage', selectedLanguage)
+        switchLanguage(selectedLanguage)
+      })
+      languageChangePanel.querySelector('#closeLanguageChangePanel').addEventListener('click', () => {
+        document.body.removeChild(languageChangePanel)
+      })
+    }
+  })
   if (!document.body) {
     console.warn(
       "MutationObserver: document.body is not ready yet, waiting for it to be available."
@@ -359,6 +650,7 @@
         childList: true,
         subtree: true,
         attributes: false,
+        characterData: true,
       });
     });
     return;
