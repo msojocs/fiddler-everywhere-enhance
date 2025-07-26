@@ -53,8 +53,9 @@
    - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-win32-x86_64-vx.x.x.dll` to `fiddler.dll`
 5. Move `fiddler.dll` (or `libfiddler.dll` in `5.16.0` and erlier) to the *root folder* of Fiddler Everywhere
 6. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
-7. Modify file `main.js` as instructed below.
+7. Modify file `main.js` as [instructed below](#how-to-modify-mainjs) .
 8. Copy `server/file` -> `Fiddler/resources/app/out/file`
+9. Run as an Administrator `Fiddler Everywhere.exe`
 
   ---
 
@@ -65,7 +66,7 @@
 3. Download `yui-libfiddler-linux-x86_64-vx.x.x.so` & rename it to `libfiddler.so`
 4. Move `libfiddler.so` to the root path of fiddler.
 5. Copy `resources/app/out/main.js` to `resources/app/out/main.original.js`
-6. Modify file `main.js` as instructed below.
+6. Modify file `main.js` as [instructed below](#how-to-modify-mainjs).
 7. Copy `server/file` -> `Fiddler/resources/app/out/file`
 
 > [!NOTE]
@@ -82,7 +83,7 @@
    - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `fiddler.dylib`
 5. Move `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) to `Contents/Frameworks`
 6. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
-7. Modify file `main.js` as instructed below.
+7. Modify file `main.js` as [instructed below](#how-to-modify-mainjs).
 8. Copy `server/file` -> `Contents/Resources/app/out/file`
 
 > [!NOTE]
