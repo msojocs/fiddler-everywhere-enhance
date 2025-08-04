@@ -1,9 +1,0 @@
-## Fiddler.WebUi.dll
-
-1. `286429000616` -> `286429000618`
-2. `0F1B283627000616` -> `0F1B283627000618`
-3. `2B05284E186D33` -> `172A284E186D33`
-
-## FiddlerBackendSDK.dll
-
-No need to patch.
