@@ -2,7 +2,6 @@ package server
 
 import (
 	"bufio"
-	"errors"
 	"fe-tool/common"
 	"io"
 	"log"
@@ -13,20 +12,6 @@ import (
 const TargetDir = "."
 
 func Download() {
-	_, err := os.Stat("cache")
-	if err != nil {
-		if errors.Is(err, os.ErrNotExist) {
-			// 不存在
-			err := os.Mkdir("cache", 0755)
-			if err != nil {
-				log.Fatalln("Create dir error:", err)
-			} else {
-				log.Println("Create dir ok.")
-			}
-		} else {
-			log.Fatalln("Check cache dir error:", err)
-		}
-	}
 	if s, err := os.Stat("cache/server.zip"); err == nil && !s.IsDir() {
 		log.Println("cache/server.zip exists.")
 		return

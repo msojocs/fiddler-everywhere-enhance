@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sync"
 )
 
 func Apply() {
@@ -55,7 +56,7 @@ func Apply() {
 	log.Println("Apply end.")
 }
 
-func Download() {
+func Download(sg *sync.WaitGroup) {
 	_, err := os.Stat("cache")
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
@@ -99,4 +100,5 @@ func Download() {
 		log.Fatalln("Rename fiddler.dll.tmp error", err)
 	}
 	log.Println("Download end, file size:", fileSize)
+	sg.Done()
 }
