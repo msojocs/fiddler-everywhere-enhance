@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-
+	// 0.准备文件夹
 	_, err := os.Stat("cache")
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
@@ -26,21 +26,30 @@ func main() {
 			log.Fatalln("Check cache dir error:", err)
 		}
 	}
-	// 1.下载FE，解压
+
 	sg := sync.WaitGroup{}
 	sg.Add(3)
 	go func() {
+		// 1.下载FE，解压
+		log.Println("Downloading FE ......")
 		fe.Download()
 		fe.Extract()
 		sg.Done()
 	}()
 	go func() {
-		// 3.下载server数据，解压
+		// 2.下载server数据，解压
+		log.Println("Downloading server ......")
 		server.Download()
 		server.Extract()
 		sg.Done()
 	}()
-	go patch.Download(&sg)
+	// 3. 下载fiddler.dll
+	go func() {
+		log.Println("Downloading fiddler.dll ......")
+		patch.Download(&sg)
+	}()
+
+	// 等待下载与解压任务全部完成
 	sg.Wait()
 	// 4.patch
 	patch.Apply()
