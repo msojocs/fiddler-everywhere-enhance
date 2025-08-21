@@ -46,7 +46,8 @@ func main() {
 	// 3. 下载fiddler.dll
 	go func() {
 		log.Println("Downloading fiddler.dll ......")
-		patch.Download(&sg)
+		patch.Download()
+		sg.Done()
 	}()
 
 	// 等待下载与解压任务全部完成
