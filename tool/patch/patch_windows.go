@@ -34,19 +34,18 @@ func Download(sg *sync.WaitGroup) {
 	if err != nil {
 		log.Fatalln("Create file error:" + err.Error())
 	}
+	defer file.Close()
 
 	writer := bufio.NewWriter(file)
 	client := http.Client{}
 	resp, err := client.Get("https://github.com/project-yui/Yui-patch/releases/download/v1.1.3/yui-fiddler-win32-x86_64-v1.1.3.dll")
 	if err != nil {
-		file.Close()
 		log.Fatalln("Download fiddler.dll error:" + err.Error())
 	}
 	defer resp.Body.Close()
 
 	fileSize, err := io.Copy(writer, resp.Body)
 
-	file.Close()
 	if err != nil {
 		log.Fatalln("Write file error:" + err.Error())
 	}
