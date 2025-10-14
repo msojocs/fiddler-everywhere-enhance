@@ -40,7 +40,7 @@ func Download() {
 	if err != nil {
 		log.Fatalln("Rename server.zip.tmp error", err)
 	}
-	log.Println("Download end, file size:", fileSize)
+	log.Println("Download server.zip end, file size:", fileSize)
 }
 
 func Extract() {

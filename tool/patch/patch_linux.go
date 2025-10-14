@@ -7,10 +7,9 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"sync"
 )
 
-func Download(sg *sync.WaitGroup) {
+func Download() {
 	_, err := os.Stat("cache")
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
@@ -27,7 +26,6 @@ func Download(sg *sync.WaitGroup) {
 	}
 	if s, err := os.Stat("cache/fiddler.so"); err == nil && !s.IsDir() {
 		log.Println("cache/fiddler.so exists.")
-		sg.Done()
 		return
 	}
 	file, err := os.Create("cache/fiddler.so.tmp")
@@ -53,8 +51,7 @@ func Download(sg *sync.WaitGroup) {
 	if err != nil {
 		log.Fatalln("Rename fiddler.so.tmp error", err)
 	}
-	log.Println("Download end, file size:", fileSize)
-	sg.Done()
+	log.Println("Download fiddler.so end, file size:", fileSize)
 }
 
 func replaceFiddler() {

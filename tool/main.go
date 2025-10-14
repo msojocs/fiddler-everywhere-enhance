@@ -5,10 +5,26 @@ import (
 	"fe-tool/fe"
 	"fe-tool/patch"
 	"fe-tool/server"
+	"flag"
 	"log"
 	"os"
 	"sync"
 )
+
+type FlagConfig struct {
+	Version string
+}
+
+// 1. 声明保存命令行参数的变量
+var config FlagConfig
+
+func init() {
+	// 2. 注册需要解析的命令行参: 参数名、默认值、参数说明
+	flag.StringVar(&config.Version, "version", "latest", "Version of FE to download, e.g. 1.0.0")
+
+	// 3. 解析命令行参数
+	flag.Parse()
+}
 
 func main() {
 	// 0.准备文件夹
@@ -32,8 +48,8 @@ func main() {
 	go func() {
 		// 1.下载FE，解压
 		log.Println("Downloading FE ......")
-		fe.Download()
-		fe.Extract()
+		p := fe.Download(config.Version)
+		fe.Extract(p)
 		sg.Done()
 	}()
 	go func() {

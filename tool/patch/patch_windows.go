@@ -32,7 +32,6 @@ func Download() {
 	if err != nil {
 		log.Fatalln("Create file error:" + err.Error())
 	}
-	defer file.Close()
 
 	writer := bufio.NewWriter(file)
 	client := http.Client{}
@@ -43,7 +42,8 @@ func Download() {
 	defer resp.Body.Close()
 
 	fileSize, err := io.Copy(writer, resp.Body)
-
+	writer.Flush()
+	file.Close()
 	if err != nil {
 		log.Fatalln("Write file error:" + err.Error())
 	}
@@ -51,7 +51,7 @@ func Download() {
 	if err != nil {
 		log.Fatalln("Rename fiddler.dll.tmp error", err)
 	}
-	log.Println("Download end, file size:", fileSize)
+	log.Println("Download fiddler.dll end, file size:", fileSize)
 }
 func replaceFiddler() {
 

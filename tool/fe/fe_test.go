@@ -28,10 +28,10 @@ func init() {
 
 }
 func TestDownload(t *testing.T) {
-	fe.Download()
+	fe.Download("latest")
 }
 
 func TestExtract(t *testing.T) {
 	log.Println("---start---")
-	fe.Extract()
+	fe.Extract("")
 }

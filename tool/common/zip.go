@@ -39,11 +39,11 @@ func extractZipFile(file *zip.File, targetDir string) error {
 
 	// 3. 写入文件
 	fw := bufio.NewWriter(f)
-	cnt, err := io.Copy(fw, rc)
+	_, err = io.Copy(fw, rc)
 	if err != nil {
 		log.Fatalln("Extract file error:", err)
 	}
-	log.Println("Extract file ok [", cnt, "]:", file.Name)
+	// log.Println("Extract file ok [", cnt, "]:", file.Name)
 	// 4. 关闭
 
 	return nil

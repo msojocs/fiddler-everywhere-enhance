@@ -2,34 +2,64 @@ package fe
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"os/exec"
+	"regexp"
 )
 
 const TargetDir = "FiddlerEverywhere"
 
-func Download() {
-	if s, err := os.Stat("cache/fe.AppImage"); err == nil && !s.IsDir() {
-		log.Println("cache/fe.AppImage exists.")
-
-		err = os.Chmod("cache/fe.AppImage", 0755)
-		if err != nil {
-			log.Fatalln("Chmod fe.AppImage.tmp error", err)
-		}
-		return
+func Download(version string) string {
+	client := http.Client{
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
 	}
-	file, err := os.Create("cache/fe.AppImage.tmp")
+	log.Println("Downloading FE version:", version)
+	link := "https://api.getfiddler.com/linux/latest-linux"
+	if version != "latest" {
+		resp, err := client.Get(link)
+		if err != nil {
+			log.Fatalln("Download EF error:" + err.Error())
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode == http.StatusFound {
+			link, err := url.QueryUnescape(resp.Header.Get("Location"))
+			if err != nil {
+				log.Fatalln("URL unescape error:", err)
+			}
+			log.Println("Redirecting to:", link)
+			v := regexp.MustCompile(`\d+\.\d+\.\d+`).FindStringSubmatch(link)
+			version = v[0]
+		} else {
+			log.Fatalln("Unexpected status code:", resp.StatusCode)
+		}
+
+	}
+
+	saveFilePath := fmt.Sprintf("cache/fe-%s.AppImage", version)
+	if s, err := os.Stat(saveFilePath); err == nil && !s.IsDir() {
+		log.Println(saveFilePath + " exists.")
+
+		err = os.Chmod(saveFilePath, 0755)
+		if err != nil {
+			log.Fatalln("Chmod "+saveFilePath+" error", err)
+		}
+		return ""
+	}
+	file, err := os.Create(saveFilePath + ".tmp")
 	if err != nil {
 		log.Fatalln("Create file error:" + err.Error())
 	}
 	defer file.Close()
 
 	writer := bufio.NewWriter(file)
-	client := http.Client{}
-	resp, err := client.Get("https://api.getfiddler.com/linux/latest-linux")
+	resp, err := client.Get(link)
 	if err != nil {
 		file.Close()
 		log.Fatalln("Download EF error:" + err.Error())
@@ -42,19 +72,20 @@ func Download() {
 	if err != nil {
 		log.Fatalln("Write file error:" + err.Error())
 	}
-	err = os.Rename("cache/fe.AppImage.tmp", "cache/fe.AppImage")
+	err = os.Rename(saveFilePath+".tmp", saveFilePath)
 	if err != nil {
-		log.Fatalln("Rename fe.AppImage.tmp error", err)
+		log.Fatalln("Rename "+saveFilePath+".tmp error", err)
 	}
-	err = os.Chmod("cache/fe.AppImage", 0755)
+	err = os.Chmod(saveFilePath, 0755)
 	if err != nil {
-		log.Fatalln("Chmod fe.AppImage.tmp error", err)
+		log.Fatalln("Chmod "+saveFilePath+" error", err)
 	}
-	log.Println("Download end, file size:", fileSize)
+	log.Println("Download fe end, file size:", fileSize)
+	return saveFilePath
 }
 
-func Extract() {
-	cmd := exec.Command("cache/fe.AppImage", "--appimage-extract")
+func Extract(path string) {
+	cmd := exec.Command(path, "--appimage-extract")
 	err := cmd.Run()
 	if err != nil {
 		log.Fatalln("AppImage extract error:", err)
