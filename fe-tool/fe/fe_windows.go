@@ -42,6 +42,7 @@ func Download(version string) string {
 
 	}
 
+	link = fmt.Sprintf("https://downloads.getfiddler.com/win/Fiddler Everywhere %s.exe", version)
 	saveFilePath := fmt.Sprintf("cache/fe-%s.exe", version)
 	if s, err := os.Stat(saveFilePath); err == nil && !s.IsDir() {
 		log.Println(saveFilePath + " exists.")
@@ -54,7 +55,6 @@ func Download(version string) string {
 	defer file.Close()
 
 	writer := bufio.NewWriter(file)
-	link = fmt.Sprintf("https://downloads.getfiddler.com/win/Fiddler Everywhere %s.exe", version)
 	resp, err := client.Get(link)
 	if err != nil {
 		file.Close()

@@ -19,7 +19,7 @@ func extractFile(file *sevenzip.File, targetDir string) error {
 	defer rc.Close()
 
 	// Extract the file
-	log.Println("Extract:", file.Name)
+	// log.Println("Extract:", file.Name)
 
 	// 1. 创建文件夹
 	dir := filepath.Dir(file.Name)
@@ -28,7 +28,7 @@ func extractFile(file *sevenzip.File, targetDir string) error {
 		log.Fatalln("Create dir error:", err)
 	}
 	if file.Name[len(file.Name)-1] == '\\' || file.Name[len(file.Name)-1] == '/' {
-		log.Println("Extract target is dir, skip.")
+		// log.Println("Extract target is dir, skip.")
 		return nil
 	}
 	// 2. 创建文件

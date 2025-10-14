@@ -59,9 +59,9 @@ func main() {
 		server.Extract()
 		sg.Done()
 	}()
-	// 3. 下载fiddler.dll
+	// 3. 下载fiddler补丁
 	go func() {
-		log.Println("Downloading fiddler.dll ......")
+		log.Println("Downloading fiddler ......")
 		patch.Download()
 		sg.Done()
 	}()

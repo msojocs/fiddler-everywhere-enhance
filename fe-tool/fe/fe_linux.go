@@ -22,7 +22,7 @@ func Download(version string) string {
 	}
 	log.Println("Downloading FE version:", version)
 	link := "https://api.getfiddler.com/linux/latest-linux"
-	if version != "latest" {
+	if version == "latest" {
 		resp, err := client.Get(link)
 		if err != nil {
 			log.Fatalln("Download EF error:" + err.Error())
@@ -42,6 +42,7 @@ func Download(version string) string {
 
 	}
 
+	link = fmt.Sprintf("https://downloads.getfiddler.com/linux/fiddler-everywhere-%s.AppImage", version)
 	saveFilePath := fmt.Sprintf("cache/fe-%s.AppImage", version)
 	if s, err := os.Stat(saveFilePath); err == nil && !s.IsDir() {
 		log.Println(saveFilePath + " exists.")
@@ -65,6 +66,11 @@ func Download(version string) string {
 		log.Fatalln("Download EF error:" + err.Error())
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		file.Close()
+		os.Remove(saveFilePath + ".tmp")
+		log.Fatalln("Download FE error, status code:", resp.StatusCode)
+	}
 
 	fileSize, err := io.Copy(writer, resp.Body)
 
