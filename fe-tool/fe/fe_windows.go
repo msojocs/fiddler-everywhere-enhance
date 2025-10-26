@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"time"
 )
 
 const TargetDir = "FiddlerEverywhere"
@@ -62,6 +63,21 @@ func Download(version string) string {
 	}
 	defer resp.Body.Close()
 
+	go func() {
+		for {
+			if s, err := os.Stat(saveFilePath + ".tmp"); err == nil {
+				per := float64(s.Size()) / float64(resp.ContentLength) * 100
+				fmt.Printf("\rDownloading FE... %.2f%%", per)
+				if s.Size() >= resp.ContentLength {
+					break
+				}
+			} else {
+				fmt.Printf("\rDownloading FE... 100.00%%\n")
+				break
+			}
+			time.Sleep(1 * time.Second)
+		}
+	}()
 	fileSize, err := io.Copy(writer, resp.Body)
 
 	file.Close()

@@ -69,5 +69,5 @@ func main() {
 	// 等待下载与解压任务全部完成
 	sg.Wait()
 	// 4.patch
-	patch.Apply()
+	patch.Apply(config.Version)
 }

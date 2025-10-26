@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func Apply() {
+func Apply(version string) {
 	log.Println("Apply patch.")
 	os.RemoveAll("FiddlerEverywhere/resources/app/out/file")
 	// 2. Copy server/file -> fe/resources/app/out/file
@@ -42,6 +42,6 @@ func Apply() {
 		log.Fatalln("Append main.js error:", err)
 	}
 
-	replaceFiddler()
+	replaceFiddler(version)
 	log.Println("Apply end.")
 }

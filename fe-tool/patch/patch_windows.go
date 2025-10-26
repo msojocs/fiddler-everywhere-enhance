@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func Download() {
@@ -53,17 +54,22 @@ func Download() {
 	}
 	log.Println("Download fiddler.dll end, file size:", fileSize)
 }
-func replaceFiddler() {
+func replaceFiddler(version string) {
 
-	os.Remove("FiddlerEverywhere/fiddler.dll")
-	fiddlerFileDst, err := os.Create("FiddlerEverywhere/fiddler.dll")
+	verInfo := strings.Split(version, ".")
+	name := "fiddler.dll"
+	if verInfo[0] <= "5" && verInfo[1] <= "16" {
+		name = "libfiddler.dll"
+	}
+	os.Remove("FiddlerEverywhere/" + name)
+	fiddlerFileDst, err := os.Create("FiddlerEverywhere/" + name)
 	if err != nil {
-		log.Fatalln("Open FiddlerEverywhere/fiddler.dll file error:", err)
+		log.Fatalln("Open FiddlerEverywhere/"+name+" file error:", err)
 	}
 	defer fiddlerFileDst.Close()
 	fiddlerFileSrc, err := os.Open("cache/fiddler.dll")
 	if err != nil {
-		log.Fatalln("Open cache/fiddler.dll file error:", err)
+		log.Fatalln("Open cache/"+name+" file error:", err)
 	}
 	defer fiddlerFileSrc.Close()
 	io.Copy(fiddlerFileDst, fiddlerFileSrc)

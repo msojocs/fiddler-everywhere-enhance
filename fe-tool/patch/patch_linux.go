@@ -54,7 +54,7 @@ func Download() {
 	log.Println("Download fiddler.so end, file size:", fileSize)
 }
 
-func replaceFiddler() {
+func replaceFiddler(version string) {
 
 	os.Remove("FiddlerEverywhere/libfiddler.so")
 	fiddlerFileDst, err := os.Create("FiddlerEverywhere/libfiddler.so")
