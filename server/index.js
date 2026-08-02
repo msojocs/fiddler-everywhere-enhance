@@ -210,7 +210,7 @@ const port = 5678;
 })();
 // Server
 (async () => {
-  const http = require('http')
+  const https = require('https')
   const path = require('path')
   const fs = require('fs')
   const { subtle } = require('crypto').webcrypto;
@@ -221,16 +221,18 @@ const port = 5678;
     hash: 'SHA-256',
     namedCurve: 'P-256',
     length: 256,
-  }, true, ['sign', 'verify']);
+  }, false, ['sign', 'verify']);
   const pubKey = await subtle.exportKey('spki', key.publicKey)
-  const priKey = await subtle.exportKey('pkcs8', key.privateKey)
   /**!SECTION
    * {
     key: '-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCwMz2E8tIIXOXL\nnxxXnEmbZr47HJ79DIj7d9IEKY9hLbl8E6iXqPg0AOhGw3pNG4izt+z3zVOkZ0NV\nccl7//Evs9LU8MyU1tvzhpt/D98s7S/L/1BBsmLSX4xS3W651zOxiK5Oxt2aSJhI\nVKMzd5BsewgML7eduaT+b+nRzr/aXO2oaQA6w0ianhRBc21Zes03Fkz7Zz6Sigug\n7bqoTzEhSML9BbPOZqtilkdPNnVDuwt+6U88ip9X1oHuvirW/LXggVzBrxNC1n1Y\nbqm+U7sanojZ5mFzG4gFCxg71qpxGgLVRY+UtunvgEUcTyGk7dbxi/k61uxy9cM7\nxpdE8TLzAgMBAAECggEALhdhTt9UCOMAK6k1+UcFTDTuqzjb8Bbw2FMqKXOTsZiL\n7kSYM//72WKpYCVvXy9GLbj9sH7SE+39Q6Mt0RWNCmzwSEqrQX4I8GW0VGMa/r4W\n5Dan0F+xERX0d5K8DboZKCY4bpv/yQWXbEhTnrl2mqH+Y22yCvzOh85PrFX4gs6g\nLr/rvS67nyTyoSMd7o0jEM6Jv33aW0Oj4pWDAvw+zAiFJNIy23M1xn2YxQE8D4Sw\n5p6KMVI0/onY3JH9rZ2PkABOpuRvs+r1q3Tz8j2Ssvm4/4yCpjyikfhwWuoEr9ct\nCjMPYRKO9+yiMKz5rz1mOGLuQKYTmtc9w0NBWec4/QKBgQDXJN+/Ww8YJIpMgCUj\niNyePzhxojcx1zEPaYTgK5ezlvhmMtUzBbLOEfU3GsDNm9iMC5WHsyq9ZyedXRPs\nXTUpinJZcZILD90I0XSkcxBD+D39QJgGofYN4bAsmE4RQ7dfdLE4fcI6X2eGGah4\noKOayOtQ3UY3315RhM+pZMCsnQKBgQDRqSC7THPDyEf5RVpHQF3E6qCOlgW1yp3M\n+SgJTSyn+4eLO6xlynD2Wq5KM8mdCtNXoKvoc1XT/yua+0WUGUAexgL3pcBlKGZM\ngjf+PirOBwGrmmseqgDbe7g+1NvB6JWoZYNj7CMS50XN12kjqAqhIycHNbZVCbJ6\neu1VTDogzwKBgQCCsBGCacv3fGrOIaFtvntVXU3qKQGiMvfIRu7CRXi3TOPDIOnF\nPpbo+pucR5IK07ptB7RjZAB4YSr9OkcZ81yRyVnA3245bf90lddm9cZRo3/0UMKI\ndOXEdO3RiQsTDbFcOMRWbn4He2ClYvylmd8H7TiUPHWlBviCSEzktyEbOQKBgQCS\nwNCBac0qQFlouMutTfeUqyqBQ69xhQaZf9kvUY6tcll48ucERQR23BhdJgy8WOR/\n1J4f0gNEpbqu+6zDMj14jN9s2t9lrzaT3R42Xut1VOAtbqQGTbbV6q6XhETiYNvI\niG3ElngidjGdGGempqvyCHn8CPO8aFI+eyb+6qFRbwKBgFYvdEBp7OwrOvrj91jy\ncuEBYT5w57k6injPXxwP1tbBbUQxjyQW+cvmwmTP1aZ8ZgKtL0o0VJK4I5IhnGk1\nd4HdnIWVkrucajUOX+Onkj27M3RVZR403F7QfBUwVlCxBTkd7ZJgINEM37HJYz0F\ntGNmY8zJcOly/Q7MK+PCTmGG\n-----END PRIVATE KEY-----\n',
     cert: '-----BEGIN CERTIFICATE-----\nMIIDlzCCAn8CFGyRBww8wXXedLc+e5hZc/9qmLUhMA0GCSqGSIb3DQEBCwUAMIGH\nMQswCQYDVQQGEwJVUzELMAkGA1UECAwCU1MxDTALBgNVBAcMBGNpdHkxEDAOBgNV\nBAoMB2NvbXBhbnkxEDAOBgNVBAsMB3NlY3Rpb24xGTAXBgNVBAMMECouZ2V0Zmlk\nZGxlci5jb20xHTAbBgkqhkiG9w0BCQEWDmZha2VAZ21haWwuY29tMB4XDTI2MDcy\nNTExMjEzNFoXDTI2MDgyNDExMjEzNFowgYcxCzAJBgNVBAYTAlVTMQswCQYDVQQI\nDAJTUzENMAsGA1UEBwwEY2l0eTEQMA4GA1UECgwHY29tcGFueTEQMA4GA1UECwwH\nc2VjdGlvbjEZMBcGA1UEAwwQKi5nZXRmaWRkbGVyLmNvbTEdMBsGCSqGSIb3DQEJ\nARYOZmFrZUBnbWFpbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQCwMz2E8tIIXOXLnxxXnEmbZr47HJ79DIj7d9IEKY9hLbl8E6iXqPg0AOhGw3pN\nG4izt+z3zVOkZ0NVccl7//Evs9LU8MyU1tvzhpt/D98s7S/L/1BBsmLSX4xS3W65\n1zOxiK5Oxt2aSJhIVKMzd5BsewgML7eduaT+b+nRzr/aXO2oaQA6w0ianhRBc21Z\nes03Fkz7Zz6Sigug7bqoTzEhSML9BbPOZqtilkdPNnVDuwt+6U88ip9X1oHuvirW\n/LXggVzBrxNC1n1Ybqm+U7sanojZ5mFzG4gFCxg71qpxGgLVRY+UtunvgEUcTyGk\n7dbxi/k61uxy9cM7xpdE8TLzAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAKpPQPtJ\nR1dm8MFGYka3HWOOPhHaKp+jyC33WcoYD/O9hcmN91GzBQPWmV5XSnA2yXITnxOm\nIEff+rd8zHSr2pbuMjbi1fQfo63iZ9rpFfLOXpjGPWkuqdXp+4coeOAfy4OdTS5N\nzuboQ1cmIFI0M5jHtEgFql8H2trmqExAOCpZRhA2ey6dD+TuyBv4HsWBXsQnqFcF\nTppnbDWLWpD7f1SURytsAmj9hXHch1Fm1QnM7+ZZP+QVrlbHf/xhBqwcKt/klq8S\nZ/xdpFYlYUJparcDCQZY2nTM6Rk1tJjUF6fIPwiki5IXjZsQlwmkCG2W80ZXcSP6\nIkjMll/23PumDd0=\n-----END CERTIFICATE-----\n',
   },
    */
-  http.createServer( async (req, res) => {
+  // TLS certificate material (self-signed, for localhost mock server)
+  const tlsKey = '-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCwMz2E8tIIXOXL\nnxxXnEmbZr47HJ79DIj7d9IEKY9hLbl8E6iXqPg0AOhGw3pNG4izt+z3zVOkZ0NV\nccl7//Evs9LU8MyU1tvzhpt/D98s7S/L/1BBsmLSX4xS3W651zOxiK5Oxt2aSJhI\nVKMzd5BsewgML7eduaT+b+nRzr/aXO2oaQA6w0ianhRBc21Zes03Fkz7Zz6Sigug\n7bqoTzEhSML9BbPOZqtilkdPNnVDuwt+6U88ip9X1oHuvirW/LXggVzBrxNC1n1Y\nbqm+U7sanojZ5mFzG4gFCxg71qpxGgLVRY+UtunvgEUcTyGk7dbxi/k61uxy9cM7\nxpdE8TLzAgMBAAECggEALhdhTt9UCOMAK6k1+UcFTDTuqzjb8Bbw2FMqKXOTsZiL\n7kSYM//72WKpYCVvXy9GLbj9sH7SE+39Q6Mt0RWNCmzwSEqrQX4I8GW0VGMa/r4W\n5Dan0F+xERX0d5K8DboZKCY4bpv/yQWXbEhTnrl2mqH+Y22yCvzOh85PrFX4gs6g\nLr/rvS67nyTyoSMd7o0jEM6Jv33aW0Oj4pWDAvw+zAiFJNIy23M1xn2YxQE8D4Sw\n5p6KMVI0/onY3JH9rZ2PkABOpuRvs+r1q3Tz8j2Ssvm4/4yCpjyikfhwWuoEr9ct\nCjMPYRKO9+yiMKz5rz1mOGLuQKYTmtc9w0NBWec4/QKBgQDXJN+/Ww8YJIpMgCUj\niNyePzhxojcx1zEPaYTgK5ezlvhmMtUzBbLOEfU3GsDNm9iMC5WHsyq9ZyedXRPs\nXTUpinJZcZILD90I0XSkcxBD+D39QJgGofYN4bAsmE4RQ7dfdLE4fcI6X2eGGah4\noKOayOtQ3UY3315RhM+pZMCsnQKBgQDRqSC7THPDyEf5RVpHQF3E6qCOlgW1yp3M\n+SgJTSyn+4eLO6xlynD2Wq5KM8mdCtNXoKvoc1XT/yua+0WUGUAexgL3pcBlKGZM\ngjf+PirOBwGrmmseqgDbe7g+1NvB6JWoZYNj7CMS50XN12kjqAqhIycHNbZVCbJ6\neu1VTDogzwKBgQCCsBGCacv3fGrOIaFtvntVXU3qKQGiMvfIRu7CRXi3TOPDIOnF\nPpbo+pucR5IK07ptB7RjZAB4YSr9OkcZ81yRyVnA3245bf90lddm9cZRo3/0UMKI\ndOXEdO3RiQsTDbFcOMRWbn4He2ClYvylmd8H7TiUPHWlBviCSEzktyEbOQKBgQCS\nwNCBac0qQFlouMutTfeUqyqBQ69xhQaZf9kvUY6tcll48ucERQR23BhdJgy8WOR/\n1J4f0gNEpbqu+6zDMj14jN9s2t9lrzaT3R42Xut1VOAtbqQGTbbV6q6XhETiYNvI\niG3ElngidjGdGGempqvyCHn8CPO8aFI+eyb+6qFRbwKBgFYvdEBp7OwrOvrj91jy\ncuEBYT5w57k6injPXxwP1tbBbUQxjyQW+cvmwmTP1aZ8ZgKtL0o0VJK4I5IhnGk1\nd4HdnIWVkrucajUOX+Onkj27M3RVZR403F7QfBUwVlCxBTkd7ZJgINEM37HJYz0F\ntGNmY8zJcOly/Q7MK+PCTmGG\n-----END PRIVATE KEY-----\n'
+  const tlsCert = '-----BEGIN CERTIFICATE-----\nMIIDlzCCAn8CFGyRBww8wXXedLc+e5hZc/9qmLUhMA0GCSqGSIb3DQEBCwUAMIGH\nMQswCQYDVQQGEwJVUzELMAkGA1UECAwCU1MxDTALBgNVBAcMBGNpdHkxEDAOBgNV\nBAoMB2NvbXBhbnkxEDAOBgNVBAsMB3NlY3Rpb24xGTAXBgNVBAMMECouZ2V0Zmlk\nZGxlci5jb20xHTAbBgkqhkiG9w0BCQEWDmZha2VAZ21haWwuY29tMB4XDTI2MDcy\nNTExMjEzNFoXDTI2MDgyNDExMjEzNFowgYcxCzAJBgNVBAYTAlVTMQswCQYDVQQI\nDAJTUzENMAsGA1UEBwwEY2l0eTEQMA4GA1UECgwHY29tcGFueTEQMA4GA1UECwwH\nc2VjdGlvbjEZMBcGA1UEAwwQKi5nZXRmaWRkbGVyLmNvbTEdMBsGCSqGSIb3DQEJ\nARYOZmFrZUBnbWFpbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB\nAQCwMz2E8tIIXOXLnxxXnEmbZr47HJ79DIj7d9IEKY9hLbl8E6iXqPg0AOhGw3pN\nG4izt+z3zVOkZ0NVccl7//Evs9LU8MyU1tvzhpt/D98s7S/L/1BBsmLSX4xS3W65\n1zOxiK5Oxt2aSJhIVKMzd5BsewgML7eduaT+b+nRzr/aXO2oaQA6w0ianhRBc21Z\nes03Fkz7Zz6Sigug7bqoTzEhSML9BbPOZqtilkdPNnVDuwt+6U88ip9X1oHuvirW\n/LXggVzBrxNC1n1Ybqm+U7sanojZ5mFzG4gFCxg71qpxGgLVRY+UtunvgEUcTyGk\n7dbxi/k61uxy9cM7xpdE8TLzAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAKpPQPtJ\nR1dm8MFGYka3HWOOPhHaKp+jyC33WcoYD/O9hcmN91GzBQPWmV5XSnA2yXITnxOm\nIEff+rd8zHSr2pbuMjbi1fQfo63iZ9rpFfLOXpjGPWkuqdXp+4coeOAfy4OdTS5N\nzuboQ1cmIFI0M5jHtEgFql8H2trmqExAOCpZRhA2ey6dD+TuyBv4HsWBXsQnqFcF\nTppnbDWLWpD7f1SURytsAmj9hXHch1Fm1QnM7+ZZP+QVrlbHf/xhBqwcKt/klq8S\nZ/xdpFYlYUJparcDCQZY2nTM6Rk1tJjUF6fIPwiki5IXjZsQlwmkCG2W80ZXcSP6\nIkjMll/23PumDd0=\n-----END CERTIFICATE-----\n'
+  https.createServer({ key: tlsKey, cert: tlsCert }, async (req, res) => {
     const fullPath = req.url
     const url = new URL(fullPath, `http://127.0.0.1:${port}`)
     let host = req.headers.host.split(':')[0]
@@ -253,7 +255,12 @@ const port = 5678;
     let data = ''
     if (url != null) {
       try {
-        const loc = path.resolve(__dirname, `./file/${url.pathname}`)
+        const baseDir = path.resolve(__dirname, './file')
+        const loc = path.resolve(baseDir, url.pathname.replace(/^\/+/, ''))
+        if (!loc.startsWith(baseDir + path.sep) && loc !== baseDir) {
+          res.end('not found')
+          return
+        }
         if (fs.existsSync(loc + '.json'))
         {
           if (req.headers['x-request-nonce'])
@@ -272,11 +279,9 @@ const port = 5678;
           data = body
           const signData = Object.keys(headers).map(k => `${k}:${headers[k]}`).join('\n') + body
           // console.log('原始数据：', signData)
-          const signPriKey = await subtle.importKey('pkcs8', priKey, { name: "ECDSA", namedCurve: "P-256" }, true, ['sign'])
-          // console.log('signPriKey ok')
           const bodyBuf = Buffer.from(signData, 'binary')
           // console.log('signData length:', bodyBuf.length)
-          const signature = await subtle.sign({ name: "ECDSA", hash: "SHA-256" }, signPriKey, bodyBuf)
+          const signature = await subtle.sign({ name: "ECDSA", hash: "SHA-256" }, key.privateKey, bodyBuf)
           // console.log('signature ok')
       
           // 生成签名头数据
