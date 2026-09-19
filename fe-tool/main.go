@@ -63,6 +63,8 @@ func main() {
 	go func() {
 		log.Println("Downloading fiddler ......")
 		patch.Download()
+		// 下载各平台通用补丁
+		patch.DownloadCommon()
 		sg.Done()
 	}()
 

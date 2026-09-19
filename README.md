@@ -50,16 +50,17 @@
 ## Windows
 
 1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+).
-2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `yui-fiddler-win32-x86_64-vx.x.x.dll`
-4. - If you patch Fiddler Everywhere 5.16.0 or earlier, rename `yui-fiddler-win32-x86_64-vx.x.x.dll` to `libfiddler.dll`
+2. Go to https://github.com/project-yui/Yui-patch/releases, Download `yui-fiddler-win32-x86_64-vx.x.x.dll`
+3. - If you patch Fiddler Everywhere 5.16.0 or earlier, rename `yui-fiddler-win32-x86_64-vx.x.x.dll` to `libfiddler.dll`
    - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-win32-x86_64-vx.x.x.dll` to `fiddler.dll`
-5. Move `fiddler.dll` (or `libfiddler.dll` in `5.16.0` and erlier) to the *root folder* of Fiddler Everywhere
-6. Extract file `app.asar` as instructed below.
-7. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
-8. Modify file `main.js` as instructed below.
-9. Copy `server/file` -> `Fiddler/resources/app/out/file`
-10. Setting hosts:
+4. Move `fiddler.dll` (or `libfiddler.dll` in `5.16.0` and erlier) to the *root folder* of Fiddler Everywhere
+5. Go to https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1, Download `System.Linq.dll`.
+6. Replace `Fiddler/resources/app/out/WebServer/System.Linq.dll`.
+7. Extract file `app.asar` as instructed below.
+8. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
+9. Modify file `main.js` as instructed below.
+10. Copy `server/file` -> `Fiddler/resources/app/out/file`
+11.  Setting hosts:
     - Open `C:\Windows\System32\drivers\etc\hosts` in a text editor with administrator privileges.
     - Add the following lines to the end of the file:
       ```
@@ -73,6 +74,8 @@
 2. Go to https://github.com/project-yui/Yui-patch/releases
 3. Download `yui-libfiddler-linux-x86_64-vx.x.x.so` & rename it to `libfiddler.so`
 4. Move `libfiddler.so` to the root path of fiddler.
+5. Go to https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1, Download `System.Linq.dll`.
+6. Replace `Fiddler/resources/app/out/WebServer/System.Linq.dll`.
 5. Extract file `app.asar` as instructed below.
 6. Copy `resources/app/out/main.js` to `resources/app/out/main.original.js`
 7. Modify file `main.js` as instructed below.
@@ -96,6 +99,8 @@
 4. - If you patch Fiddler Everywhere 5.16.0 or earlier, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `libfiddler.dylib`
    - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `fiddler.dylib`
 5. Move `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) to `Contents/Frameworks`
+5. Go to https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1, Download `System.Linq.dll`.
+6. Replace `Contents/Resources/app/out/WebServer/System.Linq.dll`.
 6. Extract file `app.asar` as instructed below.
 7. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
 8. Modify file `main.js` as instructed below.

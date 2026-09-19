@@ -169,46 +169,48 @@ const port = 5678;
 
   // version 8.x
   if (Number(pkg.version.split('.')[0]) >= 8){
-      // 签名公钥白名单检查
-    const cfg = {
-      '8.0.0': [
-        {
-          from: '162a28b104000A',
-          to: '172a28b104000A',
-        },
-      ],
-      '8.1.0': [
-        {
-          from: '162a28b304000A',
-          to: '172a28b304000A',
-        },
-      ],
-      default: [
-        {
-          from: '162a28b304000A',
-          to: '172a28b304000A',
-        },
-      ]
-    }
-    const cfgList = cfg[pkg.version] || cfg.default
-    // patch resources\app.asar.unpacked\out\WebServer\FiddlerBackendSDK.dll
-    const p = path.resolve(__dirname, '../../app/out/WebServer/FiddlerBackendSDK.dll')
-    const file = fs.readFileSync(p)
-    for (const cfg of cfgList) {
-      // 1. search code position
-      const from = Buffer.from(cfg.from, 'hex')
-      const to = Buffer.from(cfg.to, 'hex')
-      const pos = file.indexOf(from)
-      if (pos < 0) {
-        console.error(`Error: Not found ${cfg.from} in ${p}`)
-        continue
-      }
-      console.info(`Found ${cfg.from} in ${p} at position ${pos}`)
-      // 2. replace code
-      to.copy(file, pos)
-      console.info(`Replace ${cfg.from} with ${cfg.to} in ${p}`)
-    }
-    fs.writeFileSync(p, file)
+    // {
+    //   // 签名公钥白名单检查
+    //   const cfg = {
+    //     '8.0.0': [
+    //       {
+    //         from: '162a28b104000A',
+    //         to: '172a28b104000A',
+    //       },
+    //     ],
+    //     '8.1.0': [
+    //       {
+    //         from: '162a28b304000A',
+    //         to: '172a28b304000A',
+    //       },
+    //     ],
+    //     default: [
+    //       {
+    //         from: '162a28b304000A',
+    //         to: '172a28b304000A',
+    //       },
+    //     ]
+    //   }
+    //   const cfgList = cfg[pkg.version] || cfg.default
+    //   // patch resources\app.asar.unpacked\out\WebServer\FiddlerBackendSDK.dll
+    //   const p = path.resolve(__dirname, '../../app/out/WebServer/FiddlerBackendSDK.dll')
+    //   const file = fs.readFileSync(p)
+    //   for (const cfg of cfgList) {
+    //     // 1. search code position
+    //     const from = Buffer.from(cfg.from, 'hex')
+    //     const to = Buffer.from(cfg.to, 'hex')
+    //     const pos = file.indexOf(from)
+    //     if (pos < 0) {
+    //       console.error(`Error: Not found ${cfg.from} in ${p}`)
+    //       continue
+    //     }
+    //     console.info(`Found ${cfg.from} in ${p} at position ${pos}`)
+    //     // 2. replace code
+    //     to.copy(file, pos)
+    //     console.info(`Replace ${cfg.from} with ${cfg.to} in ${p}`)
+    //   }
+    //   fs.writeFileSync(p, file)
+    // }
     const U = global.URL
     global.URL = class extends U {
       constructor(u, base) {
