@@ -169,13 +169,28 @@ const port = 5678;
 
   // version 8.x
   if (Number(pkg.version.split('.')[0]) >= 8){
-    const cfgList = [
       // 签名公钥白名单检查
-      {
-        from: '162a28b104000A',
-        to: '172a28b104000A',
-      },
-    ]
+    const cfg = {
+      '8.0.0': [
+        {
+          from: '162a28b104000A',
+          to: '172a28b104000A',
+        },
+      ],
+      '8.1.0': [
+        {
+          from: '162a28b304000A',
+          to: '172a28b304000A',
+        },
+      ],
+      default: [
+        {
+          from: '162a28b304000A',
+          to: '172a28b304000A',
+        },
+      ]
+    }
+    const cfgList = cfg[pkg.version] || cfg.default
     // patch resources\app.asar.unpacked\out\WebServer\FiddlerBackendSDK.dll
     const p = path.resolve(__dirname, '../../app/out/WebServer/FiddlerBackendSDK.dll')
     const file = fs.readFileSync(p)
