@@ -1,12 +1,26 @@
 const { spawn } = require('child_process')
+const fs = require('fs')
 const path = require('path')
 
 const processPath = process.argv[2]
 console.log('Process path:', processPath)
 
-const run = spawn(path.resolve(processPath, './MacOS/Fiddler Everywhere'), ['--disable-gpu'], {
+if (!processPath || typeof processPath !== 'string') {
+    console.error('Invalid process path')
+    process.exit(1)
+}
+
+const resolvedBase = path.resolve(processPath)
+const binaryPath = path.resolve(resolvedBase, './MacOS/Fiddler Everywhere')
+
+if (!binaryPath.startsWith(resolvedBase + path.sep) || !fs.existsSync(binaryPath)) {
+    console.error('Invalid or non-existent binary path')
+    process.exit(1)
+}
+
+const run = spawn(binaryPath, ['--disable-gpu'], {
     env: process.env,
-    cwd: processPath
+    cwd: resolvedBase
 })
 
 run.stdout.on('data', (data) => {
