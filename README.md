@@ -29,6 +29,112 @@
 
 ---
 
+# 工作原理与时序图
+
+项目分为安装准备和应用运行两个阶段：
+
+- **安装准备**：[fe-tool/main.go](./fe-tool/main.go) 在 Windows / Linux 上并行准备 Fiddler 安装包、仓库中的 `server` 资源和补丁文件，等待全部完成后调用 [patch.Apply](./fe-tool/patch/patch.go)。它解包 `app.asar`，将 `server/file` 放入 `resources/app/out/file`，备份原入口为 `main.original.js`，再将 `server/index.js` 与原入口拼接成新的 `main.js`，并替换原生库及存在的 `System.Linq.dll`。
+- **启动增强**：[server/index.js](./server/index.js) 随 Electron 主进程执行，挂钩进程启动、窗口创建和页面加载，同时异步启动端口为 `5678` 的本地 HTTP 服务。原程序启动 `Fiddler.WebUi` 前，挂钩会将 `package.json` 的入口临时指向 `out/main.original.js`，并恢复磁盘上的前端接口地址；加载 `index.html` 前再将接口地址改到本地，页面加载完成后恢复磁盘文件。
+- **原程序后端**：`Fiddler.WebUi` 是独立的 .NET 子进程，负责启动脚本完整性检查、提供本地业务 API 和实时通信，并在运行期间重复检查脚本。Electron 通过 `--port` 传入后端端口，等待它输出 `Server ready`，再请求 `/api/ControlPanel/Status` 确认就绪后加载主窗口。
+- **后端公钥匹配补丁**：替换到 `WebServer/System.Linq.dll` 的库修改了 `Enumerable.Any(source, predicate)` 的行为，使特定公钥字节前缀直接命中。`FiddlerBackendSDK` 使用它检查响应签名公钥是否在预置白名单中；通过该检查后，后端仍使用响应中的公钥验证 ECDSA 签名。
+- **本地响应**：HTTP 服务将请求映射到 [server/file](./server/file) 中的文件，优先读取追加 `.json` 后缀的路径，并为该分支的响应生成签名。用户、令牌、配额等数据来自这些预置文件。
+
+下面展示安装准备完成后的主要运行时序。后端行为依据 Fiddler Everywhere **8.1.0** 的原始入口、`Fiddler.WebUi.dll` 与 `FiddlerBackendSDK.dll` 核对。本地 HTTP 服务与挂钩代码运行在同一个 Electron 主进程中；`System.Linq.dll` 则是后端进程内调用的库，图中分别列出以说明职责。原程序会等待 `Fiddler.WebUi` 就绪，但注入代码没有等待 `5678` 服务就绪后再加载窗口。
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as 用户
+    participant Main as Electron 主进程
+    participant Backend as Fiddler.WebUi 后端
+    participant Linq as System.Linq.dll 补丁
+    participant UI as 前端页面
+    participant Server as 本地 HTTP 服务
+
+    User->>Main: 启动应用
+    Main->>Main: 执行注入代码<br/>注册启动及窗口挂钩
+    par 异步初始化本地服务
+        Main-)Server: 启动 HTTP 服务初始化
+        Server->>Server: 生成 ECDSA P-256 密钥对
+        Server->>Server: 监听 5678 端口
+    and 执行原入口并加载窗口
+        Main->>Main: 继续执行原入口代码
+        Main->>Main: spawn 前将 package.json 的 main<br/>设为 out/main.original.js，并恢复前端脚本
+        Main->>Backend: 原 spawn 启动子进程<br/>传入 --port 等参数
+        Backend->>Backend: 校验 Electron 入口与前端主脚本
+        Note over Main,Backend: 校验读取磁盘内容<br/>必须先恢复，再启动后端
+        Backend->>Backend: 初始化本地业务服务<br/>启动完整性检查后台任务
+        Backend-->>Main: stdout 输出 Server ready
+        Main->>Backend: GET /api/ControlPanel/Status
+        Backend-->>Main: HTTP 200<br/>fiddler-orchestra-generated 响应头为 *
+        Main->>Main: loadURL(index.html) 前<br/>将前端接口地址改到本地
+        Note over UI,Server: api / identity 接口改到本地 5678 端口
+        Main->>UI: 从本地 index.html 加载页面<br/>执行改写后的前端脚本
+        UI-->>Main: did-finish-load
+        Main->>Main: 恢复磁盘上的前端接口地址
+        Note over Main,UI: 内存中的脚本继续使用本地地址<br/>磁盘恢复供后续完整性检查使用
+        Main->>UI: 注入响应签名公钥匹配相关逻辑
+    end
+
+    UI->>Backend: 调用本地业务 API<br/>建立 SignalR 实时连接
+    Backend-->>UI: 返回业务结果，推送事件
+
+    Note over UI,Server: 以下请求以本地服务已开始监听为前提
+    UI->>Server: 请求接口，例如<br/>/api.getfiddler.com/users
+    Server->>Server: 规范化 Host 和路径<br/>将 .be 映射为 .com
+    Server->>Server: 查找 file 下的对应路径
+    alt 存在追加 .json 后缀的文件
+        Server->>Server: 读取 JSON 内容
+        opt 请求带有 x-request-nonce
+            Server->>Server: 设置同值的 x-response-nonce
+        end
+        Server->>Server: 序列化 JSON，加入时间戳<br/>并生成 ECDSA 签名
+        Server-->>UI: JSON + Signature + 时间戳响应头
+    else 仅存在原路径文件
+        Server->>Server: 读取原文件内容
+        Server-->>UI: 文件内容，例如授权跳转 HTML
+    else 未找到文件
+        Server-->>UI: not implement（默认 HTTP 200）
+    end
+
+    opt 后端收到带 Signature 的接口响应
+        Backend->>Backend: SignedResponseHelper<br/>解析响应中的公钥与签名
+        Backend->>Linq: Any(预置公钥列表, 与响应公钥比较)
+        Linq->>Linq: 遍历列表，检查 byte[] 元素前缀
+        alt 命中补丁指定的公钥前缀
+            Linq-->>Backend: 直接返回 true，公钥白名单检查通过
+        else 未命中特定前缀
+            Linq-->>Backend: 按原 predicate 判断并返回结果
+        end
+        opt 公钥检查通过
+            Backend->>Backend: 导入响应公钥<br/>执行 ECDSA / SHA-256 验签
+        end
+    end
+
+    loop 运行期间每 15 分钟（8.1.0）
+        Backend->>Backend: IntegrityCheckService<br/>重新校验磁盘上的两类脚本
+        Note over Main,Backend: 校验失败会触发后端关闭<br/>主进程检测到后端退出后退出应用
+    end
+
+    User->>Main: 正常退出应用
+    Main->>Backend: POST /api/ControlPanel/Shutdown
+    Main->>Main: quit 时将 package.json 的 main<br/>恢复为 out/main.js
+```
+
+**启动前恢复用于通过启动检查。** `Fiddler.WebUi` 的启动代码会调用 `ScriptHelper.TryOpenElectronMainScript` 和 `TryOpenClientMainScript`，读取脚本并核对哈希。前者根据 `package.json` 的 `main` 定位 Electron 入口，因此挂钩将它指向保留原始内容的 `main.original.js`；后者检查前端主脚本，因此 `mainXHandle.reset()` 要先撤销其中的接口地址改写。这些操作发生在调用原 `spawn` 之前，让新启动的后端读到原始脚本。此时 Electron 已经执行了增强入口，修改磁盘上的 `package.json` 不会撤销当前进程中已安装的挂钩。
+
+**加载后恢复用于通过周期检查。** 后端的 `IntegrityCheckService` 在 8.1.0 中每 15 分钟重新检查上述脚本，检查失败会请求关闭后端。因此只在 `loadURL(index.html)` 前临时改写前端脚本，让页面将改写后的内容加载到内存，然后在 `did-finish-load` 时恢复磁盘内容。恢复文件不会替换当前页面已经执行的 JavaScript，所以后续接口仍指向本地服务。仓库提交 [a21aa8b](https://github.com/msojocs/fiddler-everywhere-enhance/commit/a21aa8b2f30dd554df7069fa5c920812c8e836d4) 正是为修复“15 分钟间隔检测导致退出”加入这次恢复。这里恢复的是接口地址替换；其他手动修改的脚本内容不会自动还原。
+
+**`System.Linq.dll` 补丁用于后端响应签名的公钥白名单匹配。** 自动工具通过 `DownloadCommon()` 下载 [v10.0.9-1 的补丁库](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1)，再由 `replaceSystemLinq()` 替换 `WebServer` 下已有的同名 DLL。该补丁在带 predicate 的 `Enumerable.Any` 中加入 `HasAnyByteArrayPrefix`：遍历到以 `30 59 30 13 06 07 2A 86 48 CE` 开头的 `byte[]` 时直接返回 `true`，其余元素仍按原 predicate 判断。
+
+8.1.0 的 `SignedResponseHelper` 原本通过 `Any` 遍历预置公钥，并用 `SequenceEqual` 与响应公钥比较；补丁使该白名单检查在命中前缀时通过，随后仍调用 `ImportSubjectPublicKeyInfo` 和 `ECDsa.VerifyData` 验证响应。因此本地服务仍需生成与响应内容匹配的签名，前述脚本文件的哈希检查也仍需通过。前端对应的公钥匹配处理由 `server/index.js` 注入的 `Array.prototype.some` 挂钩完成。
+
+接口地址有两种改写形式：完整 URL 改为 `http://127.0.0.1:5678/<原域名>/...`；分段拼接的域名改为 `http://api.getfiddler.be:5678` 或 `http://identity.getfiddler.be:5678`，因此需要按下文配置 hosts。服务根据 Host 补齐原域名目录，例如 `/api.getfiddler.com/users` 最终读取 `file/api.getfiddler.com/users.json`。未命中文件的请求返回 `not implement`，不会转发到远程接口。
+
+窗口挂钩还会启用开发者工具（`F12` 切换）；若存在 `out/translate.js`，则将其设置为 preload 脚本以提供多语言支持。上图使用 GitHub 原生支持的 Mermaid `sequenceDiagram`，在 README 页面即可查看。
+
+---
+
 # Get Started - Patch / Enhance For v5.9.0 and later (Maybe for all)
   > [!IMPORTANT]
   > **For Windows**:
