@@ -1,35 +1,37 @@
-# [耻辱柱（Hall of Shame)](./shame.md)
+# Fiddler Everywhere Enhance
 
-# Download Link
+**简体中文** | [English](./README.en.md)
 
-## Latest Version
+[耻辱柱](./shame.md)
 
-| Platform | Link |
-|----------|-------|
+## 下载地址
+
+### 最新版本
+
+| 平台 | 下载地址 |
+|------|----------|
 | Linux | https://api.getfiddler.com/linux/latest-linux |
 | Windows | https://api.getfiddler.com/win/latest |
-| Mac(Intel) | https://api.getfiddler.com/mac/latest-mac |
-| Mac(Arm64) | https://api.getfiddler.com/mac-arm64/latest-mac|
+| macOS（Intel） | https://api.getfiddler.com/mac/latest-mac |
+| macOS（Arm64） | https://api.getfiddler.com/mac-arm64/latest-mac |
 
-## Old Versions
+### 历史版本
 
-| Platform | Link |
-|----------|-------|
+| 平台 | 下载地址 |
+|------|----------|
 | Linux | https://downloads.getfiddler.com/linux/fiddler-everywhere-[version].AppImage |
 | Windows | https://downloads.getfiddler.com/win/Fiddler%20Everywhere%20[version].exe |
-| Mac(Intel)| https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20[version].dmg |
-| Mac(Arm64) | https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%20[version].dmg |
+| macOS（Intel） | https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20[version].dmg |
+| macOS（Arm64） | https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%20[version].dmg |
 
-  > [!NOTE]
-  > In the above links replace `[version]` with the version you want to download <br>
-  > Ex: https://downloads.getfiddler.com/win/Fiddler%20Everywhere%205.19.0.exe to download `5.19.0` for Windows.
-  
-  > [!TIP] 
-  > You can find a list of available versions here: [Version History](https://www.telerik.com/support/whats-new/fiddler-everywhere/release-history)
+> [!NOTE]
+> 将上述链接中的 `[version]` 替换为需要下载的版本号。
+> 例如，Windows 版 `5.19.0` 的下载地址为 https://downloads.getfiddler.com/win/Fiddler%20Everywhere%205.19.0.exe 。
 
----
+> [!TIP]
+> 可用版本列表见[版本历史](https://www.telerik.com/support/whats-new/fiddler-everywhere/release-history)。
 
-# 工作原理与时序图
+## 工作原理与时序图
 
 项目分为安装准备和应用运行两个阶段：
 
@@ -133,179 +135,162 @@ sequenceDiagram
 
 窗口挂钩还会启用开发者工具（`F12` 切换）；若存在 `out/translate.js`，则将其设置为 preload 脚本以提供多语言支持。上图使用 GitHub 原生支持的 Mermaid `sequenceDiagram`，在 README 页面即可查看。
 
----
+## 快速开始：为 v5.9.0 及后续版本打补丁或增强
 
-# Get Started - Patch / Enhance For v5.9.0 and later (Maybe for all)
-  > [!IMPORTANT]
-  > **For Windows**:
-  >  - If you're using Fiddler Everywhere 5.16.0 or earlier, look for `libfiddler.dll` instead of `fiddler.dll`.
-  >  - In version 5.17.0 and later, it was renamed to `fiddler.dll`.
+这些步骤也可能适用于其他版本。
 
----
+> [!IMPORTANT]
+> Windows 版 Fiddler Everywhere 5.16.0 及更早版本使用 `libfiddler.dll`；从 5.17.0 开始，该文件更名为 `fiddler.dll`。
 
 > [!TIP]
->  ## [Auto Patch Tool](https://github.com/msojocs/fiddler-everywhere-enhance/releases)
->  ## [You Can Patch Fiddler Everywhere Automatically for Windows & Linux!](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
+>
+> - [本项目自动补丁工具](https://github.com/msojocs/fiddler-everywhere-enhance/releases)
+> - [另一个适用于 Windows 和 Linux 的自动补丁项目](https://github.com/auto-yui-patch/fiddler-everywhere-patch-automated)
 
-## Auto Tool
+### 自动工具
 
-1. Download AutoTool from [release](https://github.com/msojocs/fiddler-everywhere-enhance/releases).
-2. Run `fe-tool.exe -version latest` for windows or `fe-tool -version latest` for linux.
-3. When the tool is done, the output will be available in `FiddlerEverywhere`.
+1. 从 [Releases](https://github.com/msojocs/fiddler-everywhere-enhance/releases) 下载自动工具。
+2. Windows 运行 `fe-tool.exe -version latest`；Linux 运行 `fe-tool -version latest`。
+3. 工具执行完成后，处理后的应用位于 `FiddlerEverywhere` 目录。
 
-## Windows
+### Windows
 
-1. Delete libfiddler.dll, (or fiddler.dll in 5.17.0+).
-2. Go to https://github.com/project-yui/Yui-patch/releases, Download `yui-fiddler-win32-x86_64-vx.x.x.dll`
-3. - If you patch Fiddler Everywhere 5.16.0 or earlier, rename `yui-fiddler-win32-x86_64-vx.x.x.dll` to `libfiddler.dll`
-   - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-win32-x86_64-vx.x.x.dll` to `fiddler.dll`
-4. Move `fiddler.dll` (or `libfiddler.dll` in `5.16.0` and erlier) to the *root folder* of Fiddler Everywhere
-5. Go to https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1, Download `System.Linq.dll`.
-6. Replace `Fiddler/resources/app/out/WebServer/System.Linq.dll`.
-7. Extract file `app.asar` as instructed below.
-8. Copy `resources\app\out\main.js` to `resources\app\out\main.original.js`
-9. Modify file `main.js` as instructed below.
-10. Copy `server/file` -> `Fiddler/resources/app/out/file`
-11.  Setting hosts:
-    - Open `C:\Windows\System32\drivers\etc\hosts` in a text editor with administrator privileges.
-    - Add the following lines to the end of the file:
-      ```
-      127.0.0.1 api.getfiddler.be
-      127.0.0.1 identity.getfiddler.be
-      ```
+1. 删除 `libfiddler.dll`（5.17.0 及后续版本为 `fiddler.dll`）。
+2. 从 [Yui-patch Releases](https://github.com/project-yui/Yui-patch/releases) 下载 `yui-fiddler-win32-x86_64-vx.x.x.dll`。
+3. 5.16.0 及更早版本将其重命名为 `libfiddler.dll`；5.17.0 及后续版本重命名为 `fiddler.dll`。
+4. 将重命名后的 DLL 放入 Fiddler Everywhere 的根目录。
+5. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
+6. 替换 `Fiddler/resources/app/out/WebServer/System.Linq.dll`。
+7. 按[下文步骤](#解包-appasar)解包 `app.asar`。
+8. 将 `resources/app/out/main.js` 复制为 `resources/app/out/main.original.js`。
+9. 按[下文步骤](#修改-mainjs)修改 `main.js`。
+10. 将仓库的 `server/file` 复制到 `Fiddler/resources/app/out/file`。
+11. 以管理员权限打开 `C:\Windows\System32\drivers\etc\hosts`，在末尾添加：
 
-## Linux
-
-1. Delete `libfiddler.so`.
-2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `yui-libfiddler-linux-x86_64-vx.x.x.so` & rename it to `libfiddler.so`
-4. Move `libfiddler.so` to the root path of fiddler.
-5. Go to https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1, Download `System.Linq.dll`.
-6. Replace `Fiddler/resources/app/out/WebServer/System.Linq.dll`.
-5. Extract file `app.asar` as instructed below.
-6. Copy `resources/app/out/main.js` to `resources/app/out/main.original.js`
-7. Modify file `main.js` as instructed below.
-8. Copy `server/file` -> `Fiddler/resources/app/out/file`
-9. Setting hosts:
-    - Open `/etc/hosts` in a text editor with root privileges.
-    - Add the following lines to the end of the file:
-      ```
-      127.0.0.1 api.getfiddler.be
-      127.0.0.1 identity.getfiddler.be
-      ```
-
-> [!NOTE]
-> You may need to recompile `libfiddler.so` by yourself.
-
-## Mac 
-
-1. Delete `libfiddler.dylib`. (or fiddler.dylib in 5.17.0+) which's in `Contents/Frameworks`
-2. Go to https://github.com/project-yui/Yui-patch/releases
-3. Download `yui-fiddler-mac-[arch]-vx.x.x.dylib`
-4. - If you patch Fiddler Everywhere 5.16.0 or earlier, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `libfiddler.dylib`
-   - If you patch Fiddler Everywhere 5.17.0 or later, rename `yui-fiddler-mac-[arch]-vx.x.x.dylib` to `fiddler.dylib`
-5. Move `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) to `Contents/Frameworks`
-5. Go to https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1, Download `System.Linq.dll`.
-6. Replace `Contents/Resources/app/out/WebServer/System.Linq.dll`.
-6. Extract file `app.asar` as instructed below.
-7. Copy `Resources/app/out/main.js` to `Resources/app/out/main.original.js`
-8. Modify file `main.js` as instructed below.
-9. Copy `server/file` -> `Contents/Resources/app/out/file`
-10. Setting hosts:
-    - Open `/etc/hosts` in a text editor with root privileges.
-    - Add the following lines to the end of the file:
-      ```
-      127.0.0.1 api.getfiddler.be
-      127.0.0.1 identity.getfiddler.be
-      ```
-
-> [!NOTE]
-> You may need to recompile `fiddler.dylib` (or `libfiddler.dylib` in `5.16.0` and erlier) by yourself.
-> 
-> You may need to run the command: `sudo codesign -s "-" --deep --force --verbose /Applications/Fiddler\ Everywhere.app`. [issue#96](https://github.com/msojocs/fiddler-everywhere-enhance/issues/96#issuecomment-2814035393)
-
-  ---
-
-# How to Extract `app.asar`
-
-1. Open `resources/app.asar.unpacked` folder, then create empty file `NOTICES-reporter.txt`.
-2. Open `resources` folder, then extract `app.asar` to `app` folder by using [asar](https://www.npmjs.com/package/asar), command `asar e app.asar app`.
-3. Delete `app.asar` file.
-
-# How to Modify `main.js`
-
-1. Open `resources/app/out/main.js` in a text editor
-2. Open & copy content of `{github-repo}/server/index.js` & append to `resources/app/out/main.js` at the begining.
-
-# Change **First Name**, **Last Name** & **Email** (Additional)
-If you want to change default `first & last names` and `email`, you can edit, `resources/app/out/file/identity.getfiddler.com/oauth/token.json`. 
-  - Content of `token.json`
-    ```json
-      {
-        "id_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU4MDY4OTQzLWNlYmItNDY1OS1iNjZkLWZmZjY5NTg2NzA1ZCIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTU5MTE3ODcsImp0aSI6ImIwNWIxNjhiLTFiNjQtNDRlNy1iN2QzLWZiNWIzZDE3N2Y5YiIsInN1YiI6IjRmZGYzOWYzMmYyODRiMjhhMjFhYWFkMWYzNGI2OTk0IiwiZW1haWwiOiJqaXllY2FmZUBnbWFpbC5jb20iLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiIifV0sImN1c3RvbTpmaXJzdF9uYW1lIjoiam9jcyIsImN1c3RvbTpsYXN0X25hbWUiOiJtc28iLCJjdXN0b206Y291bnRyeSI6IjgzIiwibmJmIjoxNjk1OTExNzg3LCJleHAiOjE2OTU5MTUzODcsImlzcyI6Imh0dHBzOi8vaWRlbnRpdHkuZ2V0ZmlkZGxlci5jb20vIiwiYXVkIjoiZmlkZGxlciJ9.9sLm19DExaTaraNtdJnTWUibua3toHENsTcDwxg6022rcHHshA0esnebks7WLWBAG7svYVyWkPWKDuHbB3syTA",
-        "expires_in": 3539,
-        "token_type": "Bearer",
-        "user_info": {
-          "id": "4fdf39f32f284b28a21aaad1f34b6994",
-          "email": "user@gmail.com",
-          "firstName": "first",
-          "lastName": "last",
-          "country": "83",
-          "identities": [
-            {
-              "providerName": "Google"
-            }
-          ]
-        }
-      }
+    ```text
+    127.0.0.1 api.getfiddler.be
+    127.0.0.1 identity.getfiddler.be
     ```
-  - And in the json, you can edit `email: user@gmail.com`, `firstName: first` & `lastName: last` by replacing json values. You can also change `country` and `provider`.
+
+### Linux
+
+1. 删除 `libfiddler.so`。
+2. 从 [Yui-patch Releases](https://github.com/project-yui/Yui-patch/releases) 下载 `yui-libfiddler-linux-x86_64-vx.x.x.so`。
+3. 将其重命名为 `libfiddler.so`，放入 Fiddler Everywhere 的根目录。
+4. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
+5. 替换 `Fiddler/resources/app/out/WebServer/System.Linq.dll`。
+6. 按[下文步骤](#解包-appasar)解包 `app.asar`。
+7. 将 `resources/app/out/main.js` 复制为 `resources/app/out/main.original.js`。
+8. 按[下文步骤](#修改-mainjs)修改 `main.js`。
+9. 将仓库的 `server/file` 复制到 `Fiddler/resources/app/out/file`。
+10. 以 root 权限打开 `/etc/hosts`，在末尾添加：
+
+    ```text
+    127.0.0.1 api.getfiddler.be
+    127.0.0.1 identity.getfiddler.be
+    ```
+
+> [!NOTE]
+> 你可能需要自行重新编译 `libfiddler.so`。
+
+### macOS
+
+以下应用内部路径均相对于 Fiddler Everywhere 的 `.app` 应用包；包内的 `Resources` 位于 `Contents/Resources`。
+
+1. 删除 `Contents/Frameworks` 下的 `libfiddler.dylib`（5.17.0 及后续版本为 `fiddler.dylib`）。
+2. 从 [Yui-patch Releases](https://github.com/project-yui/Yui-patch/releases) 下载对应架构的 `yui-fiddler-mac-[arch]-vx.x.x.dylib`。
+3. 5.16.0 及更早版本将其重命名为 `libfiddler.dylib`；5.17.0 及后续版本重命名为 `fiddler.dylib`。
+4. 将重命名后的文件放入 `Contents/Frameworks`。
+5. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
+6. 替换 `Contents/Resources/app/out/WebServer/System.Linq.dll`。
+7. 按[下文步骤](#解包-appasar)解包 `app.asar`，将步骤中的 `resources` 对应为 `Contents/Resources`。
+8. 将 `Contents/Resources/app/out/main.js` 复制为 `Contents/Resources/app/out/main.original.js`。
+9. 按[下文步骤](#修改-mainjs)修改 `main.js`。
+10. 将仓库的 `server/file` 复制到 `Contents/Resources/app/out/file`。
+11. 以 root 权限打开 `/etc/hosts`，在末尾添加：
+
+    ```text
+    127.0.0.1 api.getfiddler.be
+    127.0.0.1 identity.getfiddler.be
+    ```
+
+> [!NOTE]
+> 你可能需要自行重新编译 `fiddler.dylib`（5.16.0 及更早版本为 `libfiddler.dylib`）。
+>
+> 你也可能需要执行 `sudo codesign -s "-" --deep --force --verbose "/Applications/Fiddler Everywhere.app"`，参见 [issue #96](https://github.com/msojocs/fiddler-everywhere-enhance/issues/96#issuecomment-2814035393)。
+
+## 解包 `app.asar`
+
+1. 打开 `resources/app.asar.unpacked` 目录，创建空文件 `NOTICES-reporter.txt`。
+2. 在 `resources` 目录中使用 [asar](https://www.npmjs.com/package/asar) 执行 `asar e app.asar app`，将 `app.asar` 解包到 `app` 目录。
+3. 删除 `app.asar` 文件。
+
+## 修改 `main.js`
+
+1. 使用文本编辑器打开 `resources/app/out/main.js`。
+2. 将本仓库 [server/index.js](./server/index.js) 的全部内容插入 `main.js` 的最前面，保留后面的原始代码。
+
+## 修改姓名和邮箱（可选）
+
+如需修改默认姓名和邮箱，请编辑 `resources/app/out/file/identity.getfiddler.com/oauth/token.json`。文件内容示例：
+
+```json
+{
+  "id_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjU4MDY4OTQzLWNlYmItNDY1OS1iNjZkLWZmZjY5NTg2NzA1ZCIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTU5MTE3ODcsImp0aSI6ImIwNWIxNjhiLTFiNjQtNDRlNy1iN2QzLWZiNWIzZDE3N2Y5YiIsInN1YiI6IjRmZGYzOWYzMmYyODRiMjhhMjFhYWFkMWYzNGI2OTk0IiwiZW1haWwiOiJqaXllY2FmZUBnbWFpbC5jb20iLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiIifV0sImN1c3RvbTpmaXJzdF9uYW1lIjoiam9jcyIsImN1c3RvbTpsYXN0X25hbWUiOiJtc28iLCJjdXN0b206Y291bnRyeSI6IjgzIiwibmJmIjoxNjk1OTExNzg3LCJleHAiOjE2OTU5MTUzODcsImlzcyI6Imh0dHBzOi8vaWRlbnRpdHkuZ2V0ZmlkZGxlci5jb20vIiwiYXVkIjoiZmlkZGxlciJ9.9sLm19DExaTaraNtdJnTWUibua3toHENsTcDwxg6022rcHHshA0esnebks7WLWBAG7svYVyWkPWKDuHbB3syTA",
+  "expires_in": 3539,
+  "token_type": "Bearer",
+  "user_info": {
+    "id": "4fdf39f32f284b28a21aaad1f34b6994",
+    "email": "user@gmail.com",
+    "firstName": "first",
+    "lastName": "last",
+    "country": "83",
+    "identities": [
+      {
+        "providerName": "Google"
+      }
+    ]
+  }
+}
+```
+
+修改 `user_info` 中的 `email`、`firstName` 和 `lastName` 即可更换邮箱和姓名，也可以修改 `country` 和 `identities` 中的 `providerName`。
 
 > [!TIP]
-> You may need to sign out and sign again after changing these values.
+> 修改后可能需要退出登录并重新登录。
 
 > [!CAUTION]
-> - If you change email of above `token.json`, Fiddler Everywhere consider that it's a new user and your "Saved Snapshots" will be unavailable to new user (new email).
-> - If you want to get those snapshots back, you'll have to change the email back.
-> - Changing `firstname`, `lastname`, `country`, `provider` won't affect.
+>
+> - 修改 `token.json` 中的邮箱后，Fiddler Everywhere 会将其视为新用户，原用户的“已保存快照”将不可用。
+> - 如需重新访问原有快照，请将邮箱改回原值。
+> - 修改姓名、国家或身份提供方不会影响已有快照。
 
----
+## 多语言支持
 
-# 多语言支持
+默认不启用中文翻译。如需启用，请将 [server/translate.js](./server/translate.js) 复制到 `resources/app/out/translate.js`（macOS 为 `Contents/Resources/app/out/translate.js`）。
 
-默认不支持，若要支持中文，请将`server/translate.js`复制到`resources\app\out\translate.js`
+按 <kbd>Ctrl+T</kbd> 切换语言。
 
-按<kbd>Ctrl+T</kbd>切换语言。
+## 历史文档
 
-# Some Extra Information
+以下链接指向仓库历史提交中保留的旧版说明：
 
-[Let me see old](./v4.6.2/readme.md)
+- [v4.6.2 说明](https://github.com/msojocs/fiddler-everywhere-enhance/blob/6cb1e9b30f5c0dddcd1f181247ad8aab553fa097/v4.6.2/readme.md)
+- [更早版本的详细说明](https://github.com/msojocs/fiddler-everywhere-enhance/blob/6cb1e9b30f5c0dddcd1f181247ad8aab553fa097/old/DETAIL.MD)
 
-[Let me see old old](./old/DETAIL.MD)
+## 赞助
 
----
+本项目 CDN 加速及安全防护由 Tencent EdgeOne 赞助。EdgeOne 提供长期有效的免费套餐，包含不限量的流量和请求，覆盖中国大陆节点，且无任何超额收费。感兴趣的朋友可以点击下面的链接领取。
 
-# Other
+[亚洲最佳 CDN、边缘和安全解决方案 - Tencent EdgeOne](https://edgeone.ai/zh?from=github)
 
-本项目 CDN 加速及安全防护由 Tencent EdgeOne 赞助：EdgeOne 提供长期有效的免费套餐，包含不限量的流量和请求，覆盖中国大陆节点，且无任何超额收费，感兴趣的朋友可以点击下面的链接领取。
-
-[亚洲最佳CDN、边缘和安全解决方案 - Tencent EdgeOne](https://edgeone.ai/zh?from=github)
-[![](https://edgeone.ai/media/34fe3a45-492d-4ea4-ae5d-ea1087ca7b4b.png)](https://edgeone.ai/zh?from=github)
+[![Tencent EdgeOne](https://edgeone.ai/media/34fe3a45-492d-4ea4-ae5d-ea1087ca7b4b.png)](https://edgeone.ai/zh?from=github)
 
 ## 免责声明
-	
-* 本仓库仅供技术学习交流使用，如有下载相关文件，请在学习后24小时内删除相关内容。
-* 如果你觉得软件很好用，请购买官方正版：https://www.telerik.com/purchase/fiddler
-* 切勿在 tb/pdd 等商城的非法渠道付费此软件。
-* 如将本仓库教程/文件用于获利，那么：你妈死了。
-* 请勿将本项目内容用于非法用途，使用者在使用时即视为对行为可能产生的任何不良后果负责。
-* 由于传播、利用此工具所提供的信息而造成的任何直接或者间接的后果及损失，均由使用者本人负责，作者不为此承担任何责任。
 
-## Disclaimer
-
-* This repository is only for technical learning and communication. If you download related files, please delete the related content within 24 hours after learning.
-* If you think the software is useful, please buy the official version: https://www.telerik.com/purchase/fiddler
-* Do not pay for this software through illegal channels such as tb/pdd.
-* If you use this repository tutorial/file for profit, then: your mother is dead.
-* Please do not use the content of this project for illegal purposes. When using it, the user is deemed to be responsible for any adverse consequences that may arise from the behavior.
-* Any direct or indirect consequences and losses caused by the dissemination and use of the information provided by this tool are the responsibility of the user himself, and the author does not assume any responsibility for this.
+- 本仓库仅供技术学习交流使用，如有下载相关文件，请在学习后 24 小时内删除相关内容。
+- 如果你觉得软件很好用，请购买[官方正版](https://www.telerik.com/purchase/fiddler)。
+- 切勿在 tb/pdd 等商城的非法渠道付费此软件。
+- 如将本仓库教程/文件用于获利，那么：你妈死了。
+- 请勿将本项目内容用于非法用途，使用者在使用时即视为对行为可能产生的任何不良后果负责。
+- 由于传播、利用此工具所提供的信息而造成的任何直接或者间接的后果及损失，均由使用者本人负责，作者不为此承担任何责任。
