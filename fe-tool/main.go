@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fe-tool/fe"
+	"fe-tool/hosts"
 	"fe-tool/patch"
 	"fe-tool/server"
 	"flag"
@@ -13,6 +14,7 @@ import (
 
 type FlagConfig struct {
 	Version string
+	Hosts   bool
 }
 
 // 1. 声明保存命令行参数的变量
@@ -21,6 +23,7 @@ var config FlagConfig
 func init() {
 	// 2. 注册需要解析的命令行参: 参数名、默认值、参数说明
 	flag.StringVar(&config.Version, "version", "latest", "Version of FE to download, e.g. 1.0.0")
+	flag.BoolVar(&config.Hosts, "hosts", true, "Patch the system hosts file automatically")
 
 	// 3. 解析命令行参数
 	flag.Parse()
@@ -72,4 +75,8 @@ func main() {
 	sg.Wait()
 	// 4.patch
 	patch.Apply(config.Version)
+	// 5.hosts 补丁（无权限时自动申请管理员权限）
+	if config.Hosts {
+		hosts.Apply()
+	}
 }

@@ -151,7 +151,8 @@ These steps may also work with other versions.
 
 1. Download the automatic tool from [Releases](https://github.com/msojocs/fiddler-everywhere-enhance/releases).
 2. Run `fe-tool.exe -version latest` on Windows or `fe-tool -version latest` on Linux.
-3. When the tool finishes, the patched application is available in the `FiddlerEverywhere` directory.
+3. The tool automatically appends the required entries to the system hosts file: Windows shows a UAC elevation prompt, and Linux asks for the sudo password. Add `-hosts=false` to skip this step.
+4. When the tool finishes, the patched application is available in the `FiddlerEverywhere` directory.
 
 ### Windows
 

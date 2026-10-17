@@ -151,7 +151,9 @@ sequenceDiagram
 
 1. 从 [Releases](https://github.com/msojocs/fiddler-everywhere-enhance/releases) 下载自动工具。
 2. Windows 运行 `fe-tool.exe -version latest`；Linux 运行 `fe-tool -version latest`。
-3. 工具执行完成后，处理后的应用位于 `FiddlerEverywhere` 目录。
+3. 工具会自动将增强所需的域名解析条目写入系统 hosts 文件：Windows 弹出 UAC 提权确认框，Linux 请求输入 sudo 密码；如需跳过该步骤，可加 `-hosts=false` 参数。
+4. 工具执行完成后，处理后的应用位于 `FiddlerEverywhere` 目录。
+5. 第3步失败，或者是Mac系统，请参考后面的hosts相关描述，手动添加。
 
 ### Windows
 
