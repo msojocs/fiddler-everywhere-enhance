@@ -133,7 +133,7 @@ In 8.1.0, `SignedResponseHelper` normally uses `Any` to iterate over predefined 
 
 API URLs are rewritten in two forms: complete URLs become `http://127.0.0.1:5678/<original-domain>/...`, while domains assembled from string segments become `http://api.getfiddler.be:5678` or `http://identity.getfiddler.be:5678`. The latter require the hosts entries described below. The server adds the original domain directory based on the Host header. For example, `/api.getfiddler.com/users` reads `file/api.getfiddler.com/users.json`. Requests without a matching file return `not implement` and are not forwarded to a remote endpoint.
 
-The window hook also enables developer tools, toggled with `F12`. If `out/translate.js` exists, the hook uses it as the preload script to provide language support. The diagram uses Mermaid `sequenceDiagram`, which GitHub renders directly in the README.
+The window hook also enables developer tools, toggled with `F12`. If `out/translate.js` exists, the hook loads translation in a separate isolated world after the application DOM is ready, preserving the installed preload and its IPC initialization. The diagram uses Mermaid `sequenceDiagram`, which GitHub renders directly in the README.
 
 ## Getting started: patch or enhance v5.9.0 and later
 
@@ -269,6 +269,8 @@ Update `email`, `firstName`, and `lastName` under `user_info` to change your ema
 ## Language support
 
 Chinese translation is not enabled by default. To enable it, copy [server/translate.js](./server/translate.js) to `resources/app/out/translate.js`, or `Contents/Resources/app/out/translate.js` on macOS.
+
+When upgrading an older patch, also rebuild `out/main.js` using this version of `server/index.js` as described above, and update `out/translate.js`. Do not set `translate.js` as the preload: version 8.2 and later need the original preload to expose page IPC, otherwise startup reports an Electron shell error. Translation runs only in the local application frontend and its popouts, excluding external login or help pages. Delete `out/translate.js` and restart to disable it.
 
 Press <kbd>Ctrl+T</kbd> to switch languages.
 

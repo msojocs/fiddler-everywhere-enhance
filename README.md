@@ -133,7 +133,7 @@ sequenceDiagram
 
 接口地址有两种改写形式：完整 URL 改为 `http://127.0.0.1:5678/<原域名>/...`；分段拼接的域名改为 `http://api.getfiddler.be:5678` 或 `http://identity.getfiddler.be:5678`，因此需要按下文配置 hosts。服务根据 Host 补齐原域名目录，例如 `/api.getfiddler.com/users` 最终读取 `file/api.getfiddler.com/users.json`。未命中文件的请求返回 `not implement`，不会转发到远程接口。
 
-窗口挂钩还会启用开发者工具（`F12` 切换）；若存在 `out/translate.js`，则将其设置为 preload 脚本以提供多语言支持。上图使用 GitHub 原生支持的 Mermaid `sequenceDiagram`，在 README 页面即可查看。
+窗口挂钩还会启用开发者工具（`F12` 切换）；若存在 `out/translate.js`，则在应用页面 DOM 就绪后，在独立的隔离环境中加载翻译，保留安装版本自带的 preload 和 IPC 初始化。上图使用 GitHub 原生支持的 Mermaid `sequenceDiagram`，在 README 页面即可查看。
 
 ## 快速开始：为 v5.9.0 及后续版本打补丁或增强
 
@@ -270,6 +270,8 @@ sequenceDiagram
 ## 多语言支持
 
 默认不启用中文翻译。如需启用，请将 [server/translate.js](./server/translate.js) 复制到 `resources/app/out/translate.js`（macOS 为 `Contents/Resources/app/out/translate.js`）。
+
+从旧补丁升级时，请同时按上文步骤用本版本的 `server/index.js` 重新生成 `out/main.js`，并更新 `out/translate.js`。请勿将 `translate.js` 设置为 preload；8.2 及后续版本需要原始 preload 暴露页面 IPC，否则会显示 Electron shell 启动错误。翻译仅加载到本地应用前端及其弹出窗口，不加载到外部登录或帮助页面。删除 `out/translate.js` 并重启即可禁用翻译。
 
 按 <kbd>Ctrl+T</kbd> 切换语言。
 
