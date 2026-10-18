@@ -105,6 +105,7 @@ async function checkTranslation(win) {
     text: '设置', title: '设置', placeholder: '设置', zoom: '缩放: 50%',
     userText: 'Settings', pageGlobal: 'undefined', textFactoryUnchanged: true,
   });
+  assert.equal(await win.webContents.executeJavaScript("document.querySelector('#namespaced-logo').textContent"), 'Settings', 'namespaced SVG content is left unchanged');
   await win.webContents.executeJavaScript(`{
     const item = document.createElement('button');
     item.id = 'dynamic'; item.title = 'Settings';
@@ -160,7 +161,16 @@ app.whenReady().then(async () => {
   const html = `<!doctype html><html><head><meta http-equiv="Content-Security-Policy" content="script-src 'nonce-bootstrap'; style-src 'unsafe-inline'"></head><body>
     <button id="label" title="Settings">Settings</button><input placeholder="Settings">
     <span id="zoom">Zoom: 50%</span><div id="bare"></div><div class="rule-title">Settings</div>
-    <script nonce="bootstrap">window.originalCreateTextNode = document.createTextNode;${bootstrap}</script>
+    <script nonce="bootstrap">
+      window.originalCreateTextNode = document.createTextNode;
+      const logo = document.createElementNS('http://www.w3.org/2000/svg', 'svg:svg');
+      logo.id = 'namespaced-logo';
+      const logoText = document.createElementNS('http://www.w3.org/2000/svg', 'svg:text');
+      logoText.textContent = 'Settings';
+      logo.appendChild(logoText);
+      document.body.prepend(logo);
+      ${bootstrap}
+    </script>
     </body></html>`;
   const results = [];
   let baselineIpc;
