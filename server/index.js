@@ -78,11 +78,6 @@ const port = 5678;
           options.frame = false
           if (options.webPreferences) {
             options.webPreferences.devTools = true
-            const p = path.resolve(__dirname, './translate.js')
-            if (fs.existsSync(p)) {
-              // 如果存在translate.js文件，则使用它
-              options.webPreferences.preload = p
-            }
           }
         }
         console.info('HookedBrowserWindow:', options)
@@ -90,7 +85,27 @@ const port = 5678;
 
       }
       // 使用修改后的选项调用原始构造函数
-      return new OriginalBrowserWindow(options);
+      const window = new OriginalBrowserWindow(options);
+      const translationPath = path.resolve(__dirname, './translate.js');
+      if (fs.existsSync(translationPath)) {
+        // 保留安装版本自带的 preload（包括 IPC、缩放等初始化）。翻译只需要 DOM，
+        // 不在 sandbox preload 中 require 文件，也不向页面暴露 Node/Electron。
+        window.webContents.on('dom-ready', async () => {
+          try {
+            const { fileURLToPath } = require('url');
+            const url = window.webContents.getURL();
+            const appPage = path.resolve(__dirname, './WebServer/ClientApp/dist/index.html');
+            // 主窗口和使用同一前端的弹出窗口；不注入登录、帮助等外部页面。
+            if (!url.startsWith('file:') || path.resolve(fileURLToPath(url)) !== appPage) return;
+            await window.webContents.executeJavaScriptInIsolatedWorld(1001, [{
+              code: fs.readFileSync(translationPath, 'utf8'),
+            }]);
+          } catch (error) {
+            console.error('Unable to load translation:', error);
+          }
+        });
+      }
+      return window;
     }
 
     // 复制原始构造函数的原型链并进行替换

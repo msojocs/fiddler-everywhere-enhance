@@ -1,5 +1,7 @@
-"use strict";var l=require("electron"),g=process;process.once("loaded",()=>{let c=e=>{l.ipcRenderer?.send("preload-script-error",e?.message)};try{window.global=window,global.process=g,window.ipc=l.ipcRenderer}catch(e){c(e)}try{let e=window.process.argv.find(t=>t.startsWith("--fiddler-zoom-factor="));e&&l.webFrame.setZoomFactor(parseFloat(e.substring(22)))}catch(e){c(e)}try{let e=document.cookie}catch{return}if(document.cookie||(document.cookie="FiddlerTestCookie=true; path=/"),!document.cookie){let e="__fiddler_file_cookies__";try{let t=new Date().getTime(),o=JSON.parse(localStorage.getItem(e)||"[]");for(let r=o.length-1;r>=0;r--){let i=o[r]?.key||"";if(!i.startsWith("_g")&&i!=="ssid")o.splice(r,1);else{let s=o[r]?.cookie?.indexOf("xpires=")+7;if(s!==6&&s<o[r].cookie.length){let n=o[r].cookie.indexOf(";",s+1),a=o[r].cookie.substring(s,n===-1?void 0:n);a&&new Date(a).getTime()<t&&o.splice(r,1)}}}localStorage.setItem(e,JSON.stringify(o))}catch(t){c(t)}document.__defineGetter__("cookie",()=>{let t=[];try{t=JSON.parse(localStorage.getItem(e)||"[]")}catch(o){c(o)}return t?t.map(o=>o.key+"="+o.value).join("; "):""}),document.__defineSetter__("cookie",t=>{let r=(t.indexOf(";")?t.substring(0,t.indexOf(";")):t).trim().split("=");if(r.length!==2)return;let i=r[0].trim(),s=r[1].trim();if(i?.startsWith("WZRK_"))return;let n=[];try{n=JSON.parse(localStorage.getItem(e)||"[]")}catch(d){c(d)}let a=n.findIndex(d=>d&&d.key===i);a!==-1?n[a]={key:i,value:s,cookie:t}:n.push({key:i,value:s,cookie:t}),localStorage.setItem(e,JSON.stringify(n))})}});
-(async () => {
+(() => {
+  // Runs in a DOM-only isolated world, after the installed preload has initialized.
+  if (window.__fiddlerTranslation) return;
+  window.__fiddlerTranslation = true;
   console.info("-------Translation----------");
   // 用于切换语言时更新
   const node2keyword = new Map();
@@ -1077,39 +1079,6 @@
   }
   let currentDict = trnaslationData[lang]
 
-  class ReplaceText extends Text {
-    constructor(data) {
-      super(data)
-    }
-    get nodeValue() {
-      return super.nodeValue
-    }
-    set nodeValue(value) {
-      super.nodeValue = value
-      // 白名单翻译
-      if (this.parentElement?.className === 'ng-star-inserted'
-        || this.parentElement?.className === 'k-button-text'
-        || this.parentElement?.className === 'k-text-ellipsis'
-        || this.parentElement?.previousElementSibling?.dataset?.icon === 'autosave'
-        || (this.parentElement?.tagName === 'STRONG' && value === 'All Folders') // 保存请求时，显示的当前文件夹名称
-        || this.parentElement?.nextElementSibling?.attributes?.name?.value === 'circle-question' // 帮助提示
-        || value?.includes('matches in the current tab') // Rule匹配数
-        || this.parentElement?.className === 'k-input-value-text' // Rule条件匹配中选择框的当前选中项文字
-      ) {
-        translate(this);
-      }
-    }
-  }
-  /**
-   *  TODO: 改成是否全英文判断
-   * @param {*} str 
-   * @returns 
-   */
-  const containsFullChinese = (str) => {
-    // 匹配大多数汉字、繁体中文和部分中文标点
-    const fullChineseRegex = /[\u4e00-\u9FFF\u3002\uff1b\uff0c\uff1a\u201c\u201d\uff08\uff09\u3001\uff1f\u300a\u300b\uff01\u3010\u3011\uffe5]/;
-    return fullChineseRegex.test(str);
-  }
   const isSkipEle = (ele) => {
     // 忽略image
     if (ele.nodeName === "IMG") return true;
@@ -1125,8 +1094,10 @@
     if (ele.nodeName === "rect") return true;
     // 忽略circle
     if (ele.nodeName === "circle") return true;
-    // 忽略script
-    if (ele.nodeName === "SCRIPT") return true;
+    // Scripts, styles, editable content and the language controls are not UI labels.
+    if (["SCRIPT", "STYLE", "TEXTAREA"].includes(ele.nodeName)) return true;
+    if (ele.nodeType === Node.ELEMENT_NODE &&
+      (ele.isContentEditable || ele.id === 'languageChangePanel')) return true;
     if (
       ele.nodeType === Node.ELEMENT_NODE && ele instanceof HTMLElement &&
       (ele.className.includes("rule-title") // 规则列表
@@ -1145,7 +1116,7 @@
       }
     }
     if (ele.nodeType === Node.ELEMENT_NODE && ele instanceof HTMLElement && ele.className.includes('toolbar__menu-item')) {
-      if (ele.parentNode.parentElement.id && ele.parentElement.parentElement.firstElementChild.nextElementSibling.className.includes('k-separator')) {
+      if (ele.parentElement?.parentElement?.id && ele.parentElement.parentElement.firstElementChild?.nextElementSibling?.className.includes('k-separator')) {
         return true;
       }
     }
@@ -1159,142 +1130,94 @@
       )
     ) return true
   }
-  const getSingleNode = (node) => {
-    // element get
-    // console.info('getSingleNode:', node);
-    const eles = [node];
-    const result = [];
-    while (eles.length > 0) {
-      const ele = eles.pop();
-      if (!ele) continue;
-      if (isSkipEle(ele)) continue;
-      if (ele.hasChildNodes()) {
-        for (let i = 0; i < ele.childNodes.length; i++) {
-          const child = ele.childNodes[i];
-          if (isSkipEle(child)) continue;
-          eles.push(child);
-          if (child instanceof HTMLElement) {
-            const title = child.attributes.getNamedItem("title");
-            if (title && title.textContent && title.textContent.length > 0) {
-              result.push(title);
-            }
-            const placeholder = child.attributes.getNamedItem("placeholder");
-            if (placeholder && placeholder.textContent && placeholder.textContent.length > 0) {
-              result.push(placeholder);
-            }
-          }
+  // Keep both the source and our last output. Observer records caused by our
+  // writes must not replace the English source; application writes must do so.
+  const translate = (node) => {
+    const value = node.textContent;
+    let entry = node2keyword.get(node);
+    if (entry && value === entry.translated) return;
+    if (!entry || value !== entry.original) {
+      entry = { original: value, translated: value };
+      node2keyword.set(node, entry);
+    }
+    let translated = entry.original;
+    if (currentDict && translated) {
+      const key = translated.trim();
+      const simple = currentDict.simple[key];
+      if (typeof simple === 'string') {
+        translated = translated.replace(key, simple);
+      } else {
+        for (const [pattern, replacement] of Object.entries(currentDict.regexp)) {
+          const regexp = new RegExp(pattern, 'g');
+          if (!regexp.test(translated)) continue;
+          translated = translated.replace(regexp, (_match, ...args) =>
+            replacement.replace(/\{(\d+)\}/g, (_token, index) => args[index]));
+          break;
         }
+      }
+    }
+    entry.translated = translated;
+    if (value !== translated) node.textContent = translated;
+  };
+  const scan = (node) => {
+    if (isSkipEle(node)) return;
+    if (node.nodeType === Node.TEXT_NODE) {
+      translate(node);
+      return;
+    }
+    if (node instanceof HTMLElement) {
+      for (const name of ['title', 'placeholder']) {
+        const attribute = node.getAttributeNode(name);
+        if (attribute) translate(attribute);
+      }
+    }
+    // Only translate text nodes and attributes, preserving elements/listeners.
+    for (const child of node.childNodes) scan(child);
+  };
+  const isSkipped = (node) => {
+    for (let element = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+      element; element = element.parentElement) {
+      if (isSkipEle(element)) return true;
+    }
+    return false;
+  };
+  const switchLanguage = (newLang) => {
+    if (newLang === lang) return;
+    lang = newLang;
+    currentDict = trnaslationData[lang];
+    document.body.setAttribute('lang', lang);
+    for (const [node, entry] of [...node2keyword]) {
+      const owner = node.nodeType === Node.ATTRIBUTE_NODE ? node.ownerElement : node;
+      if (!owner?.isConnected) {
+        node2keyword.delete(node);
         continue;
       }
-      // 单元素节点
-      if (!ele.textContent || ele.textContent.length === 0) continue;
-  
-      if (!isNaN(Number(ele.textContent))) continue
-      
-      result.push(ele);
-    } // end while
-    return result;
-  };
-  /** @param {Node} node */
-  const translate = (node) => {
-    if (!node.textContent) return false
-    // log.info('translate:', node.textContent);
-    if (!currentDict) return false
-    const key = node.textContent.trim()
-    const langText = currentDict.simple[key]
-    if (!langText) {
-      for (const [reg, text] of Object.entries(currentDict.regexp)) {
-        const regExp = new RegExp(reg, 'g')
-        if (regExp.test(node.textContent)) {
-          node.textContent = node.textContent.replace(regExp, (_ss, ...args) => {
-            let t = text
-            for (let i = 0; i < args.length; i++) {
-              t = t.replace(`{${i}}`, args[i])
-            }
-            // log.info('reg translation:', t)
-            return t
-          })
-          // log.info('reg trnslation result:', node.textContent)
-          return true
-        }
-      }
-      return false
-    }
-    // 使用replace，因为trim会把换行空格移除掉
-    node.textContent = node.textContent.replace(key, langText)
-    return true
-  };
-  window.switchLanguage = async (newLang) => {
-    if (newLang === lang) return;
-    document.body.setAttribute('lang', newLang)
-    currentDict = trnaslationData[newLang]
-    console.info("switchLanguage -> ", newLang);
-    lang = newLang;
-    for (const [node, keyword] of node2keyword.entries()) {
-      const r = translate(node)
-      if (!r) {
-        node.textContent = keyword
-      }
-    }
-  };
-
-  {
-    // 用于动态的“展开/收起”
-    // 这些元素直接更新nodeValue，不会触发Observer
-    document.createTextNode = (data) => {
-      return new ReplaceText(data)
+      // A page update can precede delivery of its MutationObserver record.
+      if (node.textContent !== entry.translated) entry.original = node.textContent;
+      node.textContent = entry.original;
+      node2keyword.delete(node);
+      translate(node);
     }
   };
   const observer = new MutationObserver((mutations) => {
-    // console.info('[load]: MutationObserver', mutations);
-    mutations.forEach((mutation) => {
-      if (mutation.type === "childList") {
-        mutation.addedNodes.forEach((node) => {
-          // console.info('added node:', node);
-          if (node.nodeType === Node.ELEMENT_NODE && node instanceof HTMLElement) {
-            // console.info('element text:', node.textContent);
-            const list = getSingleNode(node)
-            // console.info('list:', node, node.outerHTML, list, mutations)
-            for (const item of list) {
-              if (!item.textContent) continue
-              if (!node2keyword.has(item)) {
-                node2keyword.set(item, item.textContent);
-              } else if (!containsFullChinese(item.textContent) && node2keyword.get(item) !== item.textContent) {
-                node2keyword.set(item, item.textContent);
-              }
-              translate(item);
-            }
-          } else if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE && node instanceof ShadowRoot) {
-            const list = getSingleNode(node)
-            // console.info('list:', list)
-            for (const item of list) {
-              if (!item.textContent) continue
-              if (!node2keyword.has(item)) {
-                node2keyword.set(item, item.textContent);
-              } else if (!containsFullChinese(item.textContent) && node2keyword.get(item) !== item.textContent) {
-                node2keyword.set(item, item.textContent);
-              }
-              translate(item);
-            }
-            // 设置part，使css生效
-            for (let i=0; i < node.childNodes.length; i++) {
-              const child = node.childNodes[i]
-              if (!child) continue
-              if (child.nodeType === Node.ELEMENT_NODE && child instanceof HTMLElement && child.id) {
-                child.setAttribute('part', child.id)
-              }
-            }
-            // 每层都设置part导出
-            node.host?.setAttribute('exportparts', 'options')
-          } else if (node.nodeType === Node.TEXT_NODE) {
-            // console.info('text node:', node);
-            if (node.nodeValue.includes('Zoom:')) {
-              translate(node);
-            }
-          }
-        });
+    for (const mutation of mutations) {
+      if (isSkipped(mutation.target)) continue;
+      if (mutation.type === 'childList') {
+        for (const node of mutation.addedNodes) scan(node);
+      } else if (mutation.type === 'characterData') {
+        translate(mutation.target);
+      } else if (mutation.type === 'attributes') {
+        const attribute = mutation.target.getAttributeNode(mutation.attributeName);
+        if (attribute) translate(attribute);
       }
-    });
+    }
+    // Drop removed nodes without losing entries for nodes moved in the document.
+    if (mutations.some((mutation) => mutation.removedNodes.length > 0)) {
+      for (const node of node2keyword.keys()) {
+        const owner = node.nodeType === Node.ATTRIBUTE_NODE ? node.ownerElement : node;
+        if (!owner?.isConnected) node2keyword.delete(node);
+      }
+    }
   });
   document.addEventListener('keyup', async (e) => {
     // Ctrl + T
@@ -1334,37 +1257,23 @@
       })
     }
   })
-  if (!document.body) {
-    console.warn(
-      "MutationObserver: document.body is not ready yet, waiting for it to be available."
-    );
-    document.addEventListener("DOMContentLoaded", () => {
-      console.info(
-        "MutationObserver: document.body is now ready, starting to observe."
-      );
-      document.body.setAttribute('lang', lang)
-      document.head.insertAdjacentHTML('beforeend', `
-        <style>
-          /* 中文样式调整 */
-          [lang="zhCn"] #requestInspectorsPane .inspector-type-text, [lang="zhCn"] #responseInspectorsPane .inspector-type-text {
-            width: 9%;
-          }
-      `)
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-        attributes: false,
-        characterData: true,
-      });
+  const start = () => {
+    document.body.setAttribute('lang', lang);
+    const style = document.createElement('style');
+    style.textContent = `
+      [lang="zhCn"] #requestInspectorsPane .inspector-type-text,
+      [lang="zhCn"] #responseInspectorsPane .inspector-type-text { width: 9%; }
+    `;
+    document.head.appendChild(style);
+    scan(document.body);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['title', 'placeholder'],
+      characterData: true,
     });
-    return;
-  }
-  console.info(
-    "MutationObserver: document.body is ready, starting to observe."
-  );
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-    attributes: false,
-  });
+  };
+  if (document.body) start();
+  else document.addEventListener('DOMContentLoaded', start, { once: true });
 })();
