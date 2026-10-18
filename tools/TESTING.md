@@ -33,8 +33,8 @@ runtime's `resources` directory. Use a separate runtime copy and profile.
 
 Assertions cover translation enabled/disabled, installed preload and zoom,
 send/invoke, duplicate subscriptions, once/off/removeListener/removeAllListeners,
-initial labels/attributes, appended elements and bare text, nodeValue/data and
-attribute updates, repeated Ctrl+T English/Chinese switching, regex restoration,
+initial labels/attributes, namespaced SVG exclusion, appended elements and bare
+text, nodeValue/data and attribute updates, repeated Ctrl+T English/Chinese switching, regex restoration,
 retained click listeners, reload, popouts, and exclusion of auxiliary pages.
 The fixture's CSP forbids ordinary inline scripts without a nonce.
 

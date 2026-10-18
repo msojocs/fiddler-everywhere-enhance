@@ -1080,6 +1080,9 @@
   let currentDict = trnaslationData[lang]
 
   const isSkipEle = (ele) => {
+    // Namespaced SVG tags (e.g. svg:svg) also have an SVGAnimatedString
+    // className, so skip vectors before inspecting HTML class names.
+    if (ele instanceof SVGElement) return true;
     // 忽略image
     if (ele.nodeName === "IMG") return true;
     // 忽略path
