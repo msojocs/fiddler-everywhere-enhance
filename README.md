@@ -161,9 +161,9 @@ sequenceDiagram
 2. 从 [Yui-patch Releases](https://github.com/project-yui/Yui-patch/releases) 下载 `yui-fiddler-win32-x86_64-vx.x.x.dll`。
 3. 5.16.0 及更早版本将其重命名为 `libfiddler.dll`；5.17.0 及后续版本重命名为 `fiddler.dll`。
 4. 将重命名后的 DLL 放入 Fiddler Everywhere 的根目录。
-5. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
-6. 替换 `Fiddler/resources/app/out/WebServer/System.Linq.dll`。
-7. 按[下文步骤](#解包-appasar)解包 `app.asar`。
+5. 按[下文步骤](#解包-appasar)解包 `app.asar`。
+6. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
+7. 替换 `Fiddler/resources/app/out/WebServer/System.Linq.dll`。
 8. 将 `resources/app/out/main.js` 复制为 `resources/app/out/main.original.js`。
 9. 按[下文步骤](#修改-mainjs)修改 `main.js`。
 10. 将仓库的 `server/file` 复制到 `Fiddler/resources/app/out/file`。
@@ -179,9 +179,9 @@ sequenceDiagram
 1. 删除 `libfiddler.so`。
 2. 从 [Yui-patch Releases](https://github.com/project-yui/Yui-patch/releases) 下载 `yui-libfiddler-linux-x86_64-vx.x.x.so`。
 3. 将其重命名为 `libfiddler.so`，放入 Fiddler Everywhere 的根目录。
-4. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
-5. 替换 `Fiddler/resources/app/out/WebServer/System.Linq.dll`。
-6. 按[下文步骤](#解包-appasar)解包 `app.asar`。
+4. 按[下文步骤](#解包-appasar)解包 `app.asar`。
+5. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
+6. 替换 `Fiddler/resources/app/out/WebServer/System.Linq.dll`。
 7. 将 `resources/app/out/main.js` 复制为 `resources/app/out/main.original.js`。
 8. 按[下文步骤](#修改-mainjs)修改 `main.js`。
 9. 将仓库的 `server/file` 复制到 `Fiddler/resources/app/out/file`。
@@ -195,7 +195,7 @@ sequenceDiagram
 > [!NOTE]
 > 你可能需要自行重新编译 `libfiddler.so`。
 
-### macOS
+### macOS（未验证）
 
 以下应用内部路径均相对于 Fiddler Everywhere 的 `.app` 应用包；包内的 `Resources` 位于 `Contents/Resources`。
 
@@ -203,9 +203,9 @@ sequenceDiagram
 2. 从 [Yui-patch Releases](https://github.com/project-yui/Yui-patch/releases) 下载对应架构的 `yui-fiddler-mac-[arch]-vx.x.x.dylib`。
 3. 5.16.0 及更早版本将其重命名为 `libfiddler.dylib`；5.17.0 及后续版本重命名为 `fiddler.dylib`。
 4. 将重命名后的文件放入 `Contents/Frameworks`。
-5. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
-6. 替换 `Contents/Resources/app/out/WebServer/System.Linq.dll`。
-7. 按[下文步骤](#解包-appasar)解包 `app.asar`，将步骤中的 `resources` 对应为 `Contents/Resources`。
+5. 按[下文步骤](#解包-appasar)解包 `app.asar`，将步骤中的 `resources` 对应为 `Contents/Resources`。
+6. 从 [v10.0.9-1 发布页](https://github.com/msojocs/dotnet-runtime-for-fildder/releases/tag/v10.0.9-1) 下载 `System.Linq.dll`。
+7. 替换 `Contents/Resources/app/out/WebServer/System.Linq.dll`。
 8. 将 `Contents/Resources/app/out/main.js` 复制为 `Contents/Resources/app/out/main.original.js`。
 9. 按[下文步骤](#修改-mainjs)修改 `main.js`。
 10. 将仓库的 `server/file` 复制到 `Contents/Resources/app/out/file`。
